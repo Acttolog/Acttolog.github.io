@@ -2,6 +2,7 @@
 varying vec2 vUv;
 varying vec3 vWorldNormal;
 varying vec3 vWorldPos;
+#include <common>
 #include <logdepthbuf_pars_vertex>
 void main() {
   vUv = uv;
@@ -37,6 +38,7 @@ void main() {
 }`,b=`
 varying vec3 vNormal;
 varying vec3 vViewDir;
+#include <common>
 #include <logdepthbuf_pars_vertex>
 void main() {
   vec4 wp = modelMatrix * vec4(position, 1.0);
