@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /my
+Disallow: /api/
+
+Sitemap: https://acttolog.github.io/sitemap.xml
