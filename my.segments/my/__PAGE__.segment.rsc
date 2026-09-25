@@ -1,0 +1,21 @@
+1:"$Sreact.fragment"
+2:I[7166,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5572","static/chunks/5572-0f99af52d7d4e1a5.js","369","static/chunks/app/my/page-1d9bbcd3695adc0d.js"],"MyDashboard"]
+3:I[484,[],"OutletBoundary"]
+4:"$Sreact.suspense"
+8:I[484,[],"ViewportBoundary"]
+9:I[484,[],"MetadataBoundary"]
+a:I[6869,[],"IconMark"]
+c:I[7121,[],""]
+d:I[4581,[],""]
+7:X
+f:X
+f:C
+0:{"buildId":"oISaP_87iid8g0Uwpp9lg","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"serverUser":null}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":"$@6","staleTime":"$7","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L8",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#05060c"}]]}],["$","div",null,{"hidden":true,"children":["$","$L9",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"My Acttolog | ACTTOLOG"}],["$","meta","1",{"name":"description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","meta","3",{"name":"robots","content":"noindex, nofollow"}],["$","link","4",{"rel":"canonical","href":"http://localhost:3000"}],["$","meta","5",{"property":"og:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","6",{"property":"og:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","meta","7",{"property":"og:url","content":"http://localhost:3000"}],["$","meta","8",{"property":"og:site_name","content":"ACTTOLOG"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","12",{"name":"twitter:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","13",{"rel":"icon","href":"/brand/favicon.svg","type":"image/svg+xml"}],["$","link","14",{"rel":"apple-touch-icon","href":"/brand/icon-dark.svg"}],["$","$La","15",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@b","staleTime":"$7","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@e","staleTime":"$7","varyParams":"$f"}],"isUpgradeableISRFallback":false,"a":"$@10","rootVaryParams":null,"needsRuntimeRequest":"$@11"}
+5:null
+11:true
+7:300
+7:C
+10:0
+b:"$undefined"
+e:"$undefined"
+6:"$undefined"

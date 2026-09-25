@@ -1,0 +1,24 @@
+1:"$Sreact.fragment"
+2:I[2430,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5250","static/chunks/5250-37aa7bc5ede7619a.js","2430","static/chunks/2430-61ca34d0bcaed999.js","8275","static/chunks/8275-5e0cec110c2c95c8.js","8020","static/chunks/app/admin/intelligence/page-4a0207baefc9e4b7.js"],"AHead"]
+3:I[6899,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5250","static/chunks/5250-37aa7bc5ede7619a.js","2430","static/chunks/2430-61ca34d0bcaed999.js","8275","static/chunks/8275-5e0cec110c2c95c8.js","8020","static/chunks/app/admin/intelligence/page-4a0207baefc9e4b7.js"],"IntelligenceClient"]
+4:I[484,[],"OutletBoundary"]
+5:"$Sreact.suspense"
+9:I[484,[],"ViewportBoundary"]
+a:I[484,[],"MetadataBoundary"]
+b:I[6869,[],"IconMark"]
+d:I[7121,[],""]
+e:I[4581,[],""]
+11:I[6470,["8500","static/chunks/8500-f4d7bfbe7500f274.js","7581","static/chunks/app/admin/layout-406f97c023620351.js"],"AdminGate"]
+8:X
+10:X
+10:C
+0:{"buildId":"oISaP_87iid8g0Uwpp9lg","data":[{"rsc":["$","$1","c",{"children":[["$","div",null,{"children":[["$","$L2",null,{"title":"Acttolog Intelligence","desc":"Private Owner/Admin command centre. Measured facts are always separated from automated interpretation. Reports are never emailed automatically — export manually."}],["$","$L3",null,{"variant":"intelligence"}]]}],null,["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":"$@7","staleTime":"$8","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L9",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#05060c"}]]}],["$","div",null,{"hidden":true,"children":["$","$La",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Acttolog Intelligence | ACTTOLOG Admin"}],["$","meta","1",{"name":"description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","meta","3",{"name":"robots","content":"noindex, nofollow"}],["$","link","4",{"rel":"canonical","href":"http://localhost:3000"}],["$","meta","5",{"property":"og:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","6",{"property":"og:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","meta","7",{"property":"og:url","content":"http://localhost:3000"}],["$","meta","8",{"property":"og:site_name","content":"ACTTOLOG"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","12",{"name":"twitter:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","13",{"rel":"icon","href":"/brand/favicon.svg","type":"image/svg+xml"}],["$","link","14",{"rel":"apple-touch-icon","href":"/brand/icon-dark.svg"}],["$","$Lb","15",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@c","staleTime":"$8","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Ld",null,{"parallelRouterKey":"children","template":["$","$Le",null,{}]}]]}],"isPartial":"$@f","staleTime":"$8","varyParams":"$10"},{"rsc":["$","$1","c",{"children":[null,["$","$L11",null,{"children":["$","$Ld",null,{"parallelRouterKey":"children","template":["$","$Le",null,{}]}]}]]}],"isPartial":"$@12","staleTime":"$8","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@13","rootVaryParams":null,"needsRuntimeRequest":"$@14"}
+6:null
+14:true
+8:300
+8:C
+13:0
+c:"$undefined"
+f:"$undefined"
+12:"$undefined"
+7:"$undefined"
