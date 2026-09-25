@@ -1,0 +1,25 @@
+1:"$Sreact.fragment"
+2:I[2430,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5250","static/chunks/5250-37aa7bc5ede7619a.js","2430","static/chunks/2430-61ca34d0bcaed999.js","5325","static/chunks/app/admin/scene/page-5be632c45eb4717f.js"],"AHead"]
+3:I[2430,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5250","static/chunks/5250-37aa7bc5ede7619a.js","2430","static/chunks/2430-61ca34d0bcaed999.js","5325","static/chunks/app/admin/scene/page-5be632c45eb4717f.js"],"DbNotice"]
+4:I[7326,["8500","static/chunks/8500-f4d7bfbe7500f274.js","5250","static/chunks/5250-37aa7bc5ede7619a.js","2430","static/chunks/2430-61ca34d0bcaed999.js","5325","static/chunks/app/admin/scene/page-5be632c45eb4717f.js"],"SceneEditorClient"]
+5:I[484,[],"OutletBoundary"]
+6:"$Sreact.suspense"
+a:I[484,[],"ViewportBoundary"]
+b:I[484,[],"MetadataBoundary"]
+c:I[6869,[],"IconMark"]
+e:I[7121,[],""]
+f:I[4581,[],""]
+12:I[6470,["8500","static/chunks/8500-f4d7bfbe7500f274.js","7581","static/chunks/app/admin/layout-5c444040449fce13.js"],"AdminGate"]
+9:X
+11:X
+11:C
+0:{"buildId":"aIURN08RMiMzs9XHB4iDC","data":[{"rsc":["$","$1","c",{"children":[["$","div",null,{"children":[["$","$L2",null,{"title":"Scene Editor","desc":"Structured 3D scene configuration (spec §19/§43): objects, scale, position, rotation, camera presets, lighting, animation, visibility, quality. No arbitrary-code editing. Values persist to the CMS database once connected; until then edits are preview-local and exportable."}],["$","$L3",null,{"configured":false}],["$","$L4",null,{}]]}],null,["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":"$@8","staleTime":"$9","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$La",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#05060c"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lb",null,{"children":["$","$6",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Scene Editor | ACTTOLOG Admin"}],["$","meta","1",{"name":"description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","meta","3",{"name":"robots","content":"noindex, nofollow"}],["$","link","4",{"rel":"canonical","href":"http://localhost:3000"}],["$","meta","5",{"property":"og:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","6",{"property":"og:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","meta","7",{"property":"og:url","content":"http://localhost:3000"}],["$","meta","8",{"property":"og:site_name","content":"ACTTOLOG"}],["$","meta","9",{"property":"og:type","content":"website"}],["$","meta","10",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","11",{"name":"twitter:title","content":"ACTTOLOG — Welcome to Acttolog World"}],["$","meta","12",{"name":"twitter:description","content":"Acttolog is a digital ecosystem connecting technology, research, education, entertainment, creativity, useful resources and emerging digital opportunities."}],["$","link","13",{"rel":"icon","href":"/brand/favicon.svg","type":"image/svg+xml"}],["$","link","14",{"rel":"apple-touch-icon","href":"/brand/icon-dark.svg"}],["$","$Lc","15",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@d","staleTime":"$9","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Le",null,{"parallelRouterKey":"children","template":["$","$Lf",null,{}]}]]}],"isPartial":"$@10","staleTime":"$9","varyParams":"$11"},{"rsc":["$","$1","c",{"children":[null,["$","$L12",null,{"children":["$","$Le",null,{"parallelRouterKey":"children","template":["$","$Lf",null,{}]}]}]]}],"isPartial":"$@13","staleTime":"$9","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@14","rootVaryParams":null,"needsRuntimeRequest":"$@15"}
+7:null
+15:true
+9:300
+9:C
+14:0
+d:"$undefined"
+10:"$undefined"
+13:"$undefined"
+8:"$undefined"
