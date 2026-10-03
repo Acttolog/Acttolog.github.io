@@ -3,5 +3,5 @@
 :HL["/_next/static/media/85ec3505000466ce-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/ca60b95d975a0530-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/e4af272ccee01ff0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/_next/static/css/1301ba7e5abe5cfd.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"academy","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"data-analysis-econometrics-lab","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"GcktM6s5vvimvIxjoJgOz"}
+:HL["/_next/static/css/e7a096fbac405d40.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"academy","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"data-analysis-econometrics-lab","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"9Ndl3SeQArJfaaear8rk8"}
