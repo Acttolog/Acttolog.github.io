@@ -2,4 +2,4 @@
 :HL["/media/world.jpg","image"]
 :HL["/media/founder-pro.jpg","image"]
 :HL["/media/founder-casual.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"about","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"PFzbVaWSMLS5qsSaHWP5L"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"about","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"4rHusdVlEOB9PG4vKbo3l"}
