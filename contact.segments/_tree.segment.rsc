@@ -1,4 +1,4 @@
-:HL["/_next/static/css/014daafd037d6a78.css","style"]
+:HL["/_next/static/css/6af583314897adf2.css","style"]
 :HL["/media/world.jpg","image"]
 :HL["/media/founder-avatar.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"contact","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"d7kJ8nX0Q09Gm4Rze6-V6"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"contact","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"PFzbVaWSMLS5qsSaHWP5L"}
