@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="ACTTOLOG ARCADE — five free browser games made in Nepal. Find places on the map, merge mountains, stack a Himalaya, type the story of Nepal and play the daily quiz.">
+  <meta name="theme-color" content="#06070b">
+  <title>ACTTOLOG ARCADE — Nepal Series</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090c12'/%3E%3Cpath d='M12 46 27 18l7 13 9-17 13 32z' fill='%2343e0d3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="app" id="app">
+    <header class="topbar" id="topbar">
+      <a class="brand" href="./" data-home aria-label="ACTTOLOG ARCADE home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26"><path d="M3 25 13 6l4.4 8.2L22.6 7 30 25z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#43e0d3"/><stop offset=".55" stop-color="#7b8cff"/><stop offset="1" stop-color="#ff9f6e"/></linearGradient></defs></svg>
+        </span>
+        <span class="brand-word">ACTTOLOG</span>
+        <span class="brand-chip">ARCADE</span>
+      </a>
+      <div class="topbar-right">
+        <span class="series-tag">NEPAL SERIES</span>
+        <span class="series-note">5 games · free · no account</span>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="launcher" id="launcher">
+        <div class="wrap">
+          <div class="hero">
+            <div class="hero-copy">
+              <p class="kicker"><span class="dot" aria-hidden="true"></span> MADE IN NEPAL · BUILT BY ACTTOLOG</p>
+              <h1>Play <span class="grad">Nepal.</span></h1>
+              <p class="hero-sub">Five original browser games about the places, peaks and stories of Nepal. Instant play, nothing to install, no account needed.</p>
+              <div class="hero-tags">
+                <span class="pill">🎮 Five games</span>
+                <span class="pill">🏔️ Nepal focus</span>
+                <span class="pill">⚡ Play in seconds</span>
+              </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="hero-sun"></div>
+              <div class="hero-ridge r1"></div>
+              <div class="hero-ridge r2"></div>
+              <div class="hero-ridge r3"></div>
+              <div class="hero-pin"><span></span></div>
+              <p class="hero-alt">8,848 m</p>
+            </div>
+          </div>
+
+          <div class="game-grid" id="gameGrid" aria-label="Games"></div>
+
+          <div class="launcher-foot">
+            <details class="credits">
+              <summary>Photo credits &amp; licences</summary>
+              <p class="small dim">Photographs in Khoja Nepal come from Wikimedia Commons under CC BY-SA / CC BY / CC0 licences. Each photo shows its author and licence in-game. Map data © OpenStreetMap contributors, tiles © CARTO.</p>
+              <ul id="creditList" class="credit-list"></ul>
+            </details>
+            <p class="small dim">ACTTOLOG ARCADE · Nepal Series · Built and tested by ACTTOLOG. Progress and best scores stay in your browser.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="gameview" id="gameview" hidden aria-live="polite">
+        <div class="gamebar">
+          <button type="button" class="btn ghost" id="backBtn">
+            <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            All games
+          </button>
+          <div class="gamebar-title">
+            <strong id="gvTitle">Game</strong>
+            <span id="gvNe" class="ne"></span>
+          </div>
+          <div class="gamebar-meta" id="gvMeta"></div>
+        </div>
+        <div class="gamemount" id="gamemount"></div>
+      </section>
+    </main>
+
+    <footer class="sitefoot">
+      <div class="wrap footrow">
+        <span><b>ACTTOLOG</b> ARCADE — Nepal Series</span>
+        <span class="dim">Free browser games · Built by ACTTOLOG</span>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="cover-stage" id="coverStage" hidden></div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

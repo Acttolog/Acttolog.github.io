@@ -1,0 +1,493 @@
+:root{
+  --bg:#06070b;
+  --bg2:#090c13;
+  --panel:#0c111a;
+  --panel2:#101724;
+  --line:#1b2433;
+  --line2:#263247;
+  --txt:#e9eef7;
+  --mut:#95a3b8;
+  --dim:#5f6d81;
+  --cy:#43e0d3;
+  --vi:#8b9bff;
+  --pe:#ff9f6e;
+  --gold:#ffc46b;
+  --ok:#4ade80;
+  --bad:#ff6b7a;
+  --grad:linear-gradient(100deg,#43e0d3,#7b8cff 52%,#ff9f6e);
+  --r:16px;
+  --nav:56px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(900px 520px at 78% -10%, rgba(123,140,255,.14), transparent 62%),
+    radial-gradient(760px 440px at 12% 0%, rgba(67,224,211,.10), transparent 60%),
+    var(--bg);
+  color:var(--txt);
+  font:400 15px/1.55 "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+a{color:inherit}
+::selection{background:rgba(67,224,211,.28)}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px;border-radius:8px}
+.skip{position:absolute;left:-999px;top:0;background:var(--panel);padding:10px 14px;z-index:90}
+.skip:focus{left:12px;top:12px}
+
+.app{min-height:100vh;display:flex;flex-direction:column}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+
+/* ── top bar ─────────────────────────────────────────────── */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  height:var(--nav);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  padding:0 clamp(14px,3vw,28px);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;min-width:0}
+.brand-mark{display:grid;place-items:center;filter:drop-shadow(0 0 12px rgba(67,224,211,.35))}
+.brand-word{font-weight:800;letter-spacing:.16em;font-size:14.5px}
+.brand-chip{
+  font:700 9.5px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.18em;
+  padding:5px 7px;border-radius:6px;color:var(--cy);
+  border:1px solid rgba(67,224,211,.34);
+  background:rgba(67,224,211,.08);
+}
+.topbar-right{display:flex;align-items:center;gap:12px;min-width:0}
+.series-tag{
+  font:700 9.8px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.2em;
+  color:var(--gold);
+}
+.series-note{font-size:11.6px;color:var(--dim);white-space:nowrap}
+@media (max-width:640px){.series-note{display:none}}
+
+/* ── buttons & pills ─────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line2);background:var(--panel2);color:var(--txt);
+  padding:10px 16px;border-radius:11px;font-weight:650;font-size:13.5px;
+  cursor:pointer;transition:.18s ease;text-decoration:none;white-space:nowrap;
+}
+.btn:hover{border-color:rgba(67,224,211,.45);background:#141c2b;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.primary{
+  border-color:transparent;color:#04110f;
+  background:var(--grad);
+  box-shadow:0 8px 26px -10px rgba(67,224,211,.55);
+}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--mut);padding:8px 10px}
+.btn.ghost:hover{color:var(--txt);background:var(--panel2)}
+.btn.small{padding:7px 12px;font-size:12.4px;border-radius:9px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.6px;color:var(--mut);
+  border:1px solid var(--line);background:rgba(16,23,36,.6);
+  padding:6px 11px;border-radius:999px;
+}
+.kicker{
+  display:flex;align-items:center;gap:8px;
+  font:700 10px/1.2 "Cascadia Mono",Consolas,monospace;letter-spacing:.22em;color:var(--cy);
+  margin:0 0 16px;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--cy);box-shadow:0 0 12px var(--cy)}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ne{font-family:"Nirmala UI","Segoe UI",system-ui,sans-serif}
+.dim{color:var(--dim)}
+.small{font-size:11.8px}
+.mono{font-family:"Cascadia Mono",Consolas,monospace}
+
+/* ── launcher hero ───────────────────────────────────────── */
+.launcher{flex:1;padding:clamp(26px,5vw,54px) 0 40px}
+.hero{
+  position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:24px;
+  align-items:center;margin-bottom:34px;
+}
+.hero h1{
+  font-size:clamp(2.4rem,6.2vw,4.5rem);
+  line-height:.98;letter-spacing:-.035em;margin:0 0 16px;font-weight:800;
+}
+.hero-sub{max-width:56ch;color:var(--mut);font-size:clamp(13.5px,1.6vw,15.5px);margin:0 0 20px;line-height:1.65}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px}
+.hero-art{
+  position:relative;height:250px;border-radius:22px;overflow:hidden;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(160% 100% at 50% 110%,rgba(67,224,211,.20),transparent 58%),
+    linear-gradient(180deg,#0a0e17,#141b2a 58%,#1d1420);
+}
+.hero-sun{
+  position:absolute;left:50%;top:44px;width:86px;height:86px;border-radius:50%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle at 50% 42%,#ffe0b8,#ff9f6e 58%,rgba(255,159,110,0) 71%);
+  filter:blur(.4px);
+}
+.hero-ridge{position:absolute;left:-8%;right:-8%;bottom:0;height:64%;clip-path:polygon(0 100%,0 66%,14% 48%,24% 60%,38% 28%,49% 52%,61% 34%,73% 58%,86% 40%,100% 62%,100% 100%)}
+.r1{background:#1b2435;height:72%;bottom:-2%}
+.r2{background:#2b3a52;height:55%;clip-path:polygon(0 100%,0 72%,12% 54%,25% 68%,40% 42%,55% 64%,70% 44%,84% 66%,100% 50%,100% 100%);opacity:.9}
+.r3{background:#3d5271;height:36%;clip-path:polygon(0 100%,0 76%,18% 60%,34% 78%,52% 55%,68% 75%,84% 60%,100% 74%,100% 100%);opacity:.8}
+.hero-pin{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50% 50% 50% 0;rotate:-45deg;background:var(--grad);box-shadow:0 0 26px rgba(67,224,211,.6)}
+.hero-pin span{position:absolute;inset:8px;border-radius:50%;background:#06120f}
+.hero-alt{
+  position:absolute;right:14px;bottom:10px;margin:0;
+  font:700 10px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.18em;color:rgba(233,238,247,.66);
+}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .hero-art{height:170px}
+  .hero-sun{top:22px;width:56px;height:56px}
+}
+
+/* ── game cards ──────────────────────────────────────────── */
+.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gcard{
+  position:relative;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  text-decoration:none;transition:.22s ease;min-width:0;
+}
+.gcard:hover{transform:translateY(-3px);border-color:rgba(67,224,211,.36);box-shadow:0 22px 46px -26px rgba(67,224,211,.35)}
+.gcard-cover{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0b1019}
+.gcard-cover img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.gcard:hover .gcard-cover img{transform:scale(1.045)}
+.gcard-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,7,11,0) 46%,rgba(6,7,11,.72));pointer-events:none}
+.gcard-play{
+  position:absolute;right:12px;bottom:12px;z-index:2;
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--grad);color:#04110f;box-shadow:0 10px 28px -10px rgba(67,224,211,.8);
+  transition:.2s ease;
+}
+.gcard:hover .gcard-play{transform:scale(1.08)}
+.gcard-body{padding:14px 15px 15px;display:flex;flex-direction:column;gap:6px;flex:1}
+.gcard-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.gcard-title h3{margin:0;font-size:16.5px;letter-spacing:-.01em;font-weight:750}
+.gcard-badge{font:700 8.8px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.14em;color:var(--dim);border:1px solid var(--line);padding:4px 6px;border-radius:5px;white-space:nowrap}
+.gcard p{margin:0;color:var(--mut);font-size:12.5px;line-height:1.5}
+.gcard-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px;color:var(--dim);font-size:10.6px;font-family:"Cascadia Mono",Consolas,monospace;letter-spacing:.06em}
+.gcard-cta{color:var(--cy);font-weight:700}
+@media (max-width:960px){.game-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){
+  .game-grid{grid-template-columns:1fr}
+  .launcher{padding-top:20px}
+}
+.launcher-foot{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.credits{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:12px 14px}
+.credits summary{cursor:pointer;font-size:12.4px;font-weight:650;color:var(--mut)}
+.credits[open] summary{color:var(--txt);margin-bottom:8px}
+.credit-list{
+  margin:8px 0 0;padding:0 0 0 18px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 22px;
+  font-size:11.4px;color:var(--dim);
+}
+.credit-list a{color:var(--mut)}
+@media (max-width:700px){.credit-list{grid-template-columns:1fr}}
+.sitefoot{border-top:1px solid var(--line);padding:16px 0 22px;background:rgba(6,7,11,.6)}
+.footrow{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11.6px;color:var(--dim)}
+.footrow b{color:var(--mut);letter-spacing:.1em;font-size:11px}
+
+/* ── game view ───────────────────────────────────────────── */
+.gameview{flex:1;padding:14px clamp(10px,2vw,22px) 26px;width:min(1220px,100%);margin-inline:auto}
+.gamebar{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 6px 12px;border-bottom:1px solid var(--line);margin-bottom:14px;
+}
+.gamebar-title{display:flex;align-items:baseline;gap:10px;min-width:0}
+.gamebar-title strong{font-size:15.5px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gamebar-title .ne{color:var(--dim);font-size:12.2px;white-space:nowrap}
+.gamebar-meta{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.gamebar-meta .pill{font-size:10px;padding:4px 8px}
+.gamemount{position:relative}
+@media (max-width:700px){
+  .gamebar{flex-wrap:wrap;gap:8px}
+  .gamebar-title{flex:1;min-width:0}
+  .gamebar-meta{flex:1 0 100%;margin-left:0;justify-content:flex-start}
+}
+@media (max-width:480px){
+  .gamebar-title .ne{display:none}
+}
+
+/* ── shared game surface ─────────────────────────────────── */
+.g-wrap{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.g-pad{padding:clamp(14px,2.2vw,22px)}
+.g-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.g-head h2{margin:0;font-size:clamp(17px,2.4vw,22px);letter-spacing:-.02em}
+.g-head .sub{margin:0;color:var(--mut);font-size:12.4px}
+.g-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.g-row.end{margin-left:auto}
+.stat{
+  display:flex;flex-direction:column;gap:1px;padding:7px 12px;border-radius:10px;
+  border:1px solid var(--line);background:rgba(16,23,36,.7);min-width:78px;
+}
+.stat b{font-size:16px;letter-spacing:-.02em;line-height:1.1}
+.stat span{font:600 8.8px/1.2 "Cascadia Mono",Consolas,monospace;letter-spacing:.14em;color:var(--dim)}
+.stat.accent b{color:var(--cy)}
+.progress{height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width .35s ease}
+.overlay{
+  position:absolute;inset:0;z-index:20;display:grid;place-items:center;
+  background:rgba(5,7,11,.78);backdrop-filter:blur(8px);padding:18px;
+  animation:fade .25s ease;
+}
+.overlay-card{
+  width:min(560px,100%);border:1px solid var(--line2);border-radius:18px;
+  background:linear-gradient(180deg,#111826,#0b0f18);
+  padding:22px;box-shadow:0 30px 80px -30px #000;
+  animation:pop .28s cubic-bezier(.2,.9,.3,1.2);
+}
+.overlay-card h3{margin:0 0 6px;font-size:22px;letter-spacing:-.02em}
+.overlay-card p{margin:0;color:var(--mut);font-size:13px;line-height:1.6}
+.overlay-card .score-big{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1;margin:12px 0 4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.overlay-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 0}
+.ov-grid .stat{min-width:0}
+.share-box{
+  margin-top:14px;border:1px dashed var(--line2);border-radius:12px;
+  padding:10px 12px;color:var(--mut);font:12px/1.7 "Cascadia Mono",Consolas,monospace;
+  white-space:pre-wrap;word-break:break-word;background:rgba(67,224,211,.04);
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);z-index:80;
+  background:#111a28;border:1px solid var(--line2);border-radius:10px;
+  padding:9px 14px;font-size:12.4px;color:var(--txt);opacity:0;pointer-events:none;
+  transition:.25s ease;box-shadow:0 18px 40px -20px #000;max-width:90vw;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ── Khoja Nepal ─────────────────────────────────────────── */
+.kh-wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);height:clamp(520px,74vh,760px)}
+.kh-photo{position:relative;min-height:0;background:#080b11;overflow:hidden}
+.kh-photo img{width:100%;height:100%;object-fit:cover}
+.kh-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,7,11,.35),transparent 30%,transparent 62%,rgba(6,7,11,.92))}
+.kh-top{position:absolute;top:0;left:0;right:0;z-index:2;padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.kh-round{
+  font:700 10px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.18em;color:var(--txt);
+  background:rgba(6,7,11,.56);border:1px solid rgba(255,255,255,.14);border-radius:7px;padding:7px 9px;
+  backdrop-filter:blur(6px);
+}
+.kh-credit{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px 16px;font-size:10.6px;color:rgba(233,238,247,.72);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.kh-credit a{color:rgba(233,238,247,.86);text-decoration:underline;text-underline-offset:2px}
+.kh-hint{
+  position:absolute;left:16px;bottom:58px;z-index:3;max-width:80%;
+  font-size:11.8px;color:var(--txt);background:rgba(6,7,11,.72);
+  border:1px solid rgba(67,224,211,.32);border-radius:9px;padding:7px 10px;
+  backdrop-filter:blur(6px);
+}
+.kh-map-pane{display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--line);background:#0a0e15}
+.kh-map{flex:1;min-height:0;background:#0d1420}
+.leaflet-container{background:#0d1420;font:inherit;outline:none}
+.leaflet-control-attribution{background:rgba(6,7,11,.72)!important;color:#8c99ad!important;font-size:9px!important}
+.leaflet-control-attribution a{color:#b8c4d6!important}
+.leaflet-bar a{background:#121b29;color:#e9eef7;border-color:#263247}
+.leaflet-bar a:hover{background:#1a2537}
+.kh-pin{
+  width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  background:var(--grad);border:2px solid #06110f;box-shadow:0 0 0 2px rgba(67,224,211,.35),0 6px 18px rgba(0,0,0,.6);
+}
+.kh-pin.truth{background:#fff;border-color:#43e0d3;box-shadow:0 0 0 2px rgba(255,255,255,.4),0 6px 18px rgba(0,0,0,.6)}
+.kh-controls{border-top:1px solid var(--line);padding:12px 14px;display:flex;align-items:center;gap:10px;background:rgba(9,13,20,.9)}
+.kh-controls .msg{font-size:12.2px;color:var(--mut);flex:1;min-width:0}
+.kh-controls .msg b{color:var(--txt)}
+.kh-result{
+  position:relative;left:auto;right:auto;bottom:auto;
+  margin:10px 14px 0;z-index:12;
+  border:1px solid var(--line2);border-radius:13px;background:rgba(9,13,20,.92);
+  padding:12px 14px;font-size:12.2px;color:var(--mut);
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.kh-result .pts{font-size:22px;font-weight:800;color:var(--cy);letter-spacing:-.03em}
+.kh-result .place{font-weight:700;color:var(--txt)}
+@media (max-width:860px){
+  .kh-wrap{grid-template-columns:1fr;grid-template-rows:minmax(190px,32vh) 1fr;height:auto}
+  .kh-photo{min-height:190px;height:32vh;max-height:280px}
+  .kh-map-pane{border-left:0;border-top:1px solid var(--line)}
+  .kh-map{height:min(46vh,380px);min-height:250px}
+  .kh-credit{font-size:9.8px;padding:10px 12px}
+  .kh-top{padding:10px 12px}
+  .kh-hint{bottom:46px;left:12px;font-size:10.8px}
+  .kh-controls{padding:10px 12px;gap:8px;flex-wrap:wrap}
+  .kh-controls .msg{font-size:11.2px;flex:1 0 100%;margin:0}
+  .kh-controls .btn{flex:1;justify-content:center;padding-inline:8px}
+}
+
+/* ── Merge Himalaya ──────────────────────────────────────── */
+.mh-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,300px);gap:18px;align-items:start}
+.mh-boardwrap{position:relative;border-radius:14px;background:#0a111c;border:1px solid var(--line2);padding:10px;user-select:none;touch-action:none;width:100%;max-width:540px;margin-inline:auto}
+.mh-board{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;aspect-ratio:1/1;background:#0b1320;border-radius:10px;padding:8px}
+.mh-cell{border-radius:8px;background:rgba(255,255,255,.035);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.mh-tile{
+  position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  width:calc(25% - 10px);height:calc(25% - 10px);
+  border-radius:9px;font-weight:800;letter-spacing:-.03em;color:#04110f;
+  transition:left .12s ease,top .12s ease,transform .12s ease;
+  will-change:left,top;
+}
+.mh-tile b{font-size:clamp(15px,2.4vw,24px);line-height:1}
+.mh-tile span{font:700 clamp(6.6px,.9vw,8.4px)/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.72;text-align:center;padding:0 3px}
+.mh-tile.new{animation:mhpop .18s ease}
+@keyframes mhpop{from{transform:scale(.4);opacity:.2}to{transform:scale(1);opacity:1}}
+.mh-side{display:flex;flex-direction:column;gap:12px}
+.mh-ladder{border:1px solid var(--line);border-radius:12px;background:rgba(16,23,36,.5);padding:10px 12px;max-height:320px;overflow:auto}
+.mh-ladder h4{margin:0 0 8px;font:700 9.6px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.18em;color:var(--dim)}
+.mh-ladder ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.mh-ladder li{display:flex;align-items:center;gap:8px;font-size:11.2px;color:var(--mut)}
+.mh-ladder i{display:inline-block;width:20px;height:20px;border-radius:5px;flex:none}
+.mh-dpad{display:grid;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(2,40px);gap:6px;justify-content:center}
+.mh-dpad button{border:1px solid var(--line2);background:var(--panel2);border-radius:9px;cursor:pointer;font-size:15px;color:var(--mut)}
+.mh-dpad button:hover{color:var(--txt);border-color:rgba(67,224,211,.4)}
+.mh-dpad .up{grid-column:2}
+@media (max-width:860px){
+  .mh-grid{grid-template-columns:1fr}
+  .mh-side{display:grid;grid-template-columns:1fr 1fr;align-items:start}
+  .mh-ladder{max-height:170px}
+  .mh-dpad{grid-row:span 2}
+}
+@media (max-width:480px){
+  .mh-side{grid-template-columns:1fr}
+  .mh-dpad{grid-row:auto}
+  .mh-board{gap:6px;padding:6px}
+  .mh-boardwrap{padding:7px}
+}
+
+/* ── Himalaya Stack ──────────────────────────────────────── */
+.hs-wrap{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:#0a0f18}
+.hs-canvas{display:block;width:100%;height:clamp(420px,62vh,640px);touch-action:none;cursor:pointer}
+.hs-hud{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;pointer-events:none}
+.hs-hud .stat{background:rgba(7,10,16,.58);backdrop-filter:blur(6px);border-color:rgba(255,255,255,.14)}
+.hs-hint{
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  font:600 10.4px/1.2 "Cascadia Mono",Consolas,monospace;letter-spacing:.12em;
+  color:rgba(233,238,247,.74);background:rgba(6,7,11,.5);border:1px solid rgba(255,255,255,.12);
+  border-radius:99px;padding:7px 12px;pointer-events:none;white-space:nowrap;
+}
+
+/* ── TypeRush Nepal ──────────────────────────────────────── */
+.tr-top{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tr-modes{display:flex;gap:5px;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--panel)}
+.tr-modes button{border:0;background:transparent;color:var(--dim);font-size:11.4px;font-weight:650;padding:6px 11px;border-radius:7px;cursor:pointer}
+.tr-modes button[aria-pressed="true"]{background:var(--panel2);color:var(--txt);box-shadow:0 1px 0 rgba(255,255,255,.04)}
+.tr-stage{position:relative;border:1px solid var(--line);border-radius:12px;background:rgba(9,13,20,.65);padding:clamp(14px,2.4vw,22px);min-height:190px;max-height:340px;overflow:auto}
+.tr-text{font:500 clamp(16px,2.2vw,21px)/1.85 "Cascadia Mono",Consolas,monospace;letter-spacing:.005em;color:#5c6a7e;word-break:break-word;white-space:pre-wrap}
+.tr-char{position:relative;transition:color .05s linear}
+.tr-char.done{color:var(--txt)}
+.tr-char.bad{color:var(--bad);background:rgba(255,107,122,.12);border-radius:2px}
+.tr-char.cur{color:var(--cy)}
+.tr-char.cur::before{content:"";position:absolute;left:-1px;top:4%;bottom:4%;width:2px;background:var(--cy);border-radius:2px;animation:caret 1s steps(2) infinite}
+@keyframes caret{50%{opacity:0}}
+.tr-type{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0;top:0}
+.tr-input{
+  width:100%;margin-top:12px;border:1px solid var(--line);background:#0a0f18;color:var(--txt);
+  border-radius:10px;padding:10px 12px;font:500 13px/1.5 "Cascadia Mono",Consolas,monospace;resize:none;
+}
+.tr-input:focus{outline:none;border-color:rgba(67,224,211,.45)}
+.tr-start{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tr-stats{display:flex;gap:8px;margin-left:auto}
+.tr-mobile-note{display:none;font-size:10.4px;color:var(--dim)}
+@media (max-width:700px){
+  .tr-stats{width:100%;margin-left:0;justify-content:space-between}
+  .tr-stats .stat{flex:1;min-width:0}
+  .tr-text{font-size:15.5px;line-height:1.95}
+  .tr-mobile-note{display:block}
+}
+
+/* ── Nepal Daily ─────────────────────────────────────────── */
+.nd-wrap{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:16px;align-items:start}
+.nd-main{border:1px solid var(--line);border-radius:14px;background:rgba(9,13,20,.6);padding:clamp(14px,2.4vw,22px)}
+.nd-qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.nd-cat{font:700 9.2px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.nd-count{font:600 10.4px/1 "Cascadia Mono",Consolas,monospace;color:var(--dim);letter-spacing:.1em}
+.nd-q{margin:0 0 14px;font-size:clamp(17px,2.4vw,21px);line-height:1.35;letter-spacing:-.015em}
+.nd-options{display:flex;flex-direction:column;gap:7px}
+.nd-opt{
+  display:flex;align-items:center;gap:10px;text-align:left;
+  border:1px solid var(--line);background:var(--panel2);border-radius:10px;
+  padding:10px 12px;cursor:pointer;font-size:13.4px;color:var(--txt);transition:.14s ease;
+}
+.nd-opt:hover:not(:disabled){border-color:rgba(67,224,211,.4);background:#131c2b}
+.nd-opt kbd{
+  flex:none;width:20px;height:20px;display:grid;place-items:center;border-radius:5px;
+  border:1px solid var(--line2);font:600 10px/1 "Cascadia Mono",Consolas,monospace;color:var(--dim);
+  background:rgba(255,255,255,.03);
+}
+.nd-opt .txt{flex:1;min-width:0}
+.nd-opt.right{border-color:rgba(74,222,128,.6);background:rgba(74,222,128,.1)}
+.nd-opt.wrong{border-color:rgba(255,107,122,.6);background:rgba(255,107,122,.08)}
+.nd-opt:disabled{cursor:default}
+.nd-why{margin-top:10px;border-left:2px solid var(--cy);padding:6px 0 6px 10px;color:var(--mut);font-size:12.2px;line-height:1.55}
+.nd-side{display:flex;flex-direction:column;gap:10px}
+.nd-streak{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:12px;background:rgba(16,23,36,.6);padding:12px}
+.nd-streak b{font-size:30px;letter-spacing:-.04em;line-height:1.1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nd-streak span{font:600 9px/1.2 "Cascadia Mono",Consolas,monospace;letter-spacing:.16em;color:var(--dim)}
+.nd-share{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.nd-share i{width:11px;height:11px;border-radius:3px;background:rgba(255,255,255,.08)}
+.nd-share i.hit{background:var(--ok)}
+.nd-share i.miss{background:var(--bad)}
+.nd-side .btn{width:100%}
+@media (max-width:820px){
+  .nd-wrap{grid-template-columns:1fr}
+  .nd-side{flex-direction:row;flex-wrap:wrap}
+  .nd-side .btn{width:auto;flex:1}
+  .nd-streak{flex:1;min-width:120px}
+}
+@media (max-width:480px){
+  .nd-opt{font-size:12.6px;padding:9px 10px}
+  .nd-q{font-size:16px}
+}
+
+/* ── covers (for marketing thumbnails) ──────────────────── */
+.cover-stage{position:fixed;inset:0;background:#06070b;z-index:100;display:grid;place-items:center;overflow:hidden}
+.cover-stage[hidden]{display:none}
+.cover{position:relative;width:1200px;height:675px;overflow:hidden;background:#080c14;font-family:"Segoe UI",system-ui,sans-serif;color:#e9eef7}
+.cover-art{position:absolute;inset:0}
+.cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.cover-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,7,11,.94) 8%,rgba(5,7,11,.72) 46%,rgba(5,7,11,.18))}
+.cover-top{position:absolute;top:34px;left:46px;right:46px;display:flex;justify-content:space-between;align-items:center}
+.cover-brand{display:flex;align-items:center;gap:12px;font:800 16px/1 "Segoe UI",sans-serif;letter-spacing:.18em}
+.cover-chip{font:700 10px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.2em;color:#43e0d3;border:1px solid rgba(67,224,211,.4);border-radius:6px;padding:6px 8px;background:rgba(67,224,211,.08)}
+.cover-nepal{font:700 10px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.24em;color:#ffc46b}
+.cover-copy{position:absolute;left:46px;bottom:118px;max-width:660px}
+.cover-kicker{font:700 11px/1 "Cascadia Mono",Consolas,monospace;letter-spacing:.24em;color:#43e0d3;margin:0 0 16px}
+.cover-title{margin:0;font-size:84px;line-height:.92;letter-spacing:-.045em;font-weight:800}
+.cover-title .grad{background:linear-gradient(100deg,#43e0d3,#8b9bff 52%,#ff9f6e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-sub{margin:16px 0 0;font-size:20px;color:#a9b5c7;line-height:1.4;max-width:540px}
+.cover-foot{position:absolute;left:46px;right:46px;bottom:34px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.14);padding-top:18px;font-size:13px;color:#8a97aa}
+.cover-foot b{color:#e9eef7;letter-spacing:.08em}
+.cover-art .mh-art,.cover-art .hs-art,.cover-art .tr-art,.cover-art .nd-art{position:absolute;right:44px;top:50%;transform:translateY(-50%);width:470px;height:400px;border-radius:22px;border:1px solid rgba(255,255,255,.12);overflow:hidden;background:rgba(9,13,20,.55);box-shadow:0 40px 90px -40px #000}
+.cover-art .mini-board{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:22px;height:100%;align-content:center;background:rgba(8,13,22,.72)}
+.cover-art .mini-tile{aspect-ratio:1/1;border-radius:9px;display:grid;place-items:center;font:800 22px/1 "Segoe UI",sans-serif;color:#04110f}
+.cover-art .hs-art{background:linear-gradient(180deg,#0d1727,#2b3d5c 62%,#101722)}
+.cover-art .hs-blocks{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:240px;display:flex;flex-direction:column-reverse;align-items:center}
+.cover-art .hs-block{height:44px;border-radius:5px;margin-top:3px;background:linear-gradient(180deg,#dbe9ff,#8fa9cc);box-shadow:inset 0 -6px 0 rgba(0,0,0,.16)}
+.cover-art .hs-art .peak{position:absolute;inset:0;clip-path:polygon(0 100%,0 70%,25% 46%,38% 60%,55% 30%,70% 54%,85% 38%,100% 58%,100% 100%);background:#16233a;opacity:.9}
+.cover-art .tr-art{padding:30px;background:rgba(8,13,22,.8);font:500 22px/1.9 "Cascadia Mono",Consolas,monospace;color:#56647a}
+.cover-art .tr-art .done{color:#e9eef7}
+.cover-art .tr-art .cur{color:#43e0d3;border-left:3px solid #43e0d3;margin-left:-3px}
+.cover-art .nd-art{padding:26px;background:rgba(8,13,22,.82)}
+.cover-art .nd-art .q{font-size:20px;font-weight:750;line-height:1.4;margin-bottom:20px}
+.cover-art .nd-art .opt{border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:11px 14px;margin-bottom:8px;font-size:14px;color:#a9b5c7}
+.cover-art .nd-art .opt.on{border-color:rgba(67,224,211,.55);background:rgba(67,224,211,.1);color:#e9eef7}
+.cover-art .kh-art{position:absolute;inset:0;background:
+  radial-gradient(600px 300px at 72% 42%,rgba(67,224,211,.18),transparent 60%),
+  linear-gradient(180deg,#0a101b,#111a29)}
+.cover-art .kh-grid{position:absolute;right:70px;top:110px;width:440px;height:390px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:44px 44px;box-shadow:0 40px 90px -40px #000;overflow:hidden}
+.cover-art .kh-pin2{position:absolute;left:52%;top:46%;width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg) translate(-50%,-50%);background:linear-gradient(100deg,#43e0d3,#8b9bff);box-shadow:0 0 0 8px rgba(67,224,211,.12),0 0 40px rgba(67,224,211,.5)}
+.cover-art .kh-route{position:absolute;left:22%;top:66%;width:46%;border-top:2px dashed rgba(255,255,255,.35);transform:rotate(-18deg)}
+.cover-art .kh-stat{position:absolute;left:46px;bottom:34px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
