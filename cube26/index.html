@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" data-phase="Idle">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07080c" />
+  <meta name="description" content="CUBE/26 — a studio-grade 3D cube studio for 2×2 and 3×3 puzzles that scrambles, solves and lets you paint any position." />
+  <title>CUBE/26 — Self-solving Rubik's studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2307080c'/%3E%3Crect x='11' y='11' width='19' height='19' rx='5' fill='%235eead4'/%3E%3Crect x='34' y='11' width='19' height='19' rx='5' fill='%23a78bfa'/%3E%3Crect x='11' y='34' width='19' height='19' rx='5' fill='%23fbbf24'/%3E%3Crect x='34' y='34' width='19' height='19' rx='5' fill='%234ade80'/%3E%3C/svg%3E" />
+  <link rel="preload" href="./vendor/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="./vendor/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three.module.js",
+        "three/addons/": "./vendor/addons/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__glow backdrop__glow--a"></div>
+    <div class="backdrop__glow backdrop__glow--b"></div>
+    <div class="backdrop__glow backdrop__glow--c"></div>
+    <div class="backdrop__vignette"></div>
+    <div class="backdrop__grain"></div>
+  </div>
+
+  <canvas id="stage" class="stage" touch-action="none" aria-label="Interactive 3D Rubik's cube"></canvas>
+
+  <div class="progress" aria-hidden="true"><span class="progress__fill" id="progressFill"></span></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="CUBE/26 home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <rect x="1" y="1" width="9.5" height="9.5" rx="2.2" fill="currentColor" opacity=".75"/>
+          <rect x="13.5" y="1" width="9.5" height="9.5" rx="2.2" fill="var(--accent)"/>
+          <rect x="1" y="13.5" width="9.5" height="9.5" rx="2.2" fill="currentColor" opacity=".4"/>
+          <rect x="13.5" y="13.5" width="9.5" height="9.5" rx="2.2" fill="currentColor" opacity=".75"/>
+        </svg>
+      </span>
+      <span class="brand__text">
+        <strong>CUBE<span class="brand__slash">/</span>26</strong>
+        <small>Self-solving studio</small>
+      </span>
+    </a>
+
+    <div class="topbar__right">
+      <div class="sizes" data-size-switch role="group" aria-label="Puzzle size">
+        <button class="sizes__btn" type="button" data-size="2" aria-pressed="false" title="Switch to the 2×2 pocket cube">2×2</button>
+        <button class="sizes__btn" type="button" data-size="3" aria-pressed="true" title="Switch to the 3×3 classic cube">3×3</button>
+      </div>
+      <div class="status" id="status" data-state="booting">
+        <span class="status__dot" aria-hidden="true"></span>
+        <span class="status__label" id="statusLabel" aria-live="polite">Booting</span>
+      </div>
+      <button class="icon-btn" id="soundBtn" type="button" aria-pressed="true" aria-label="Toggle sound (M)" title="Sound (M)">
+        <svg class="icon icon--on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"/>
+          <path d="M15 9.2a4 4 0 0 1 0 5.6M17.8 6.4a8 8 0 0 1 0 11.2"/>
+        </svg>
+        <svg class="icon icon--off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z"/>
+          <path d="m15.5 9.5 5 5M20.5 9.5l-5 5"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="helpBtn" type="button" aria-label="Open the studio guide (H)" title="Guide (H)">
+        <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M9.6 9.2a2.5 2.5 0 0 1 4.8.8c0 1.7-2.4 2-2.4 3.5"/>
+          <path d="M12 17.1h.01"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="readout panel" id="readout" aria-label="Solve status">
+    <p class="eyebrow"><span class="eyebrow__line"></span><span id="methodLabel">Layer-by-layer</span></p>
+    <h1 class="readout__title" id="phaseTitle">Standing by</h1>
+    <p class="readout__desc" id="phaseDesc">A studio-grade cube that scrambles and solves itself. Drag to orbit, or take the controls.</p>
+
+    <dl class="metrics">
+      <div class="metric">
+        <dt>Move</dt>
+        <dd id="metricMoves">—</dd>
+      </div>
+      <div class="metric">
+        <dt>Time</dt>
+        <dd id="metricTime">0:00.0</dd>
+      </div>
+      <div class="metric">
+        <dt>Rate</dt>
+        <dd id="metricRate">—</dd>
+      </div>
+    </dl>
+
+    <ol class="steps" id="steps" aria-label="Solve phases"></ol>
+
+    <p class="readout__note" id="methodNote">Optimal cross · verified macro search</p>
+  </aside>
+
+  <aside class="sequence panel" id="sequencePanel" aria-label="Move sequence">
+    <div class="sequence__head">
+      <span class="sequence__title" id="sequenceTitle">Sequence</span>
+      <span class="sequence__count" id="sequenceCount">000</span>
+    </div>
+    <div class="sequence__scroll" id="sequenceScroll">
+      <div class="sequence__empty" id="sequenceEmpty">Awaiting a run.<br /><span>Scramble or solve to populate the queue.</span></div>
+    </div>
+    <div class="sequence__meta">Phase-tagged · standard notation</div>
+  </aside>
+
+  <div class="dock-wrap">
+    <div class="dock panel">
+      <div class="dock__actions">
+        <button class="btn btn--primary" id="solveBtn" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10-6.5-10-6.5Z"/></svg>
+          Solve
+        </button>
+        <button class="btn" id="scrambleBtn" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3.2c4.4 0 5.2 10 9.6 10H20"/><path d="m17 14 3 3-3 3"/><path d="M4 17h3.2c1.5 0 2.6-1.2 3.6-2.7M20 7h-3.2c-1.5 0-2.6 1.2-3.6 2.7"/><path d="m17 4 3 3-3 3"/></svg>
+          Scramble
+        </button>
+        <button class="btn btn--custom" id="customBtn" type="button" aria-label="Open the Cube Lab (C)" title="Cube Lab (C)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.6h6M10 3.6v5.1L5.9 16a2.6 2.6 0 0 0 2.3 3.9h7.6a2.6 2.6 0 0 0 2.3-3.9L14 8.7V3.6"/><path d="M7.4 14.2h9.2"/></svg>
+          <span class="btn__label">Lab</span>
+        </button>
+        <button class="btn btn--icon" id="resetBtn" type="button" aria-label="Reset cube (Backspace)" title="Reset (Backspace)">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.6 9A8 8 0 1 1 4 12.6"/><path d="M4.2 4.8V9h4.2"/></svg>
+        </button>
+      </div>
+
+      <span class="dock__divider" aria-hidden="true"></span>
+
+      <label class="pace" for="pace">
+        <span class="pace__head"><span class="dock__label">Pace</span><output class="pace__value" id="paceValue">1.0×</output></span>
+        <input id="pace" type="range" min="0.5" max="2.5" step="0.1" value="1" aria-label="Animation pace" />
+      </label>
+
+      <span class="dock__divider" aria-hidden="true"></span>
+
+      <label class="toggle" for="autoToggle">
+        <span class="dock__label">Auto</span>
+        <input id="autoToggle" type="checkbox" checked />
+        <span class="toggle__track" aria-hidden="true"><span class="toggle__knob"></span></span>
+      </label>
+    </div>
+    <p class="hint">Drag to orbit · Scroll to zoom · <kbd>S</kbd> solve · <kbd>N</kbd> scramble · <kbd>C</kbd> lab · <kbd>Space</kbd> auto</p>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="guide" id="guide" aria-labelledby="guideTitle">
+    <div class="guide__inner">
+      <div class="guide__head">
+        <p class="eyebrow"><span class="eyebrow__line"></span>Studio guide</p>
+        <button class="icon-btn" id="guideClose" type="button" aria-label="Close guide">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <h2 class="guide__title" id="guideTitle">A cube that solves itself.</h2>
+      <p class="guide__lede">Every solve is computed live in the browser — nothing is pre-recorded. Switch between the 2×2 pocket cube and the 3×3 classic in the top bar. The 3×3 solves layer by layer; the 2×2 runs a two-phase corner search. The Cube Lab lets you paint any position, checks that a real cube could reach it, and plans the solve.</p>
+
+      <div class="guide__grid">
+        <section>
+          <h3>3×3 — layer by layer</h3>
+          <ol class="guide__phases">
+            <li><span class="dot" style="--dot:#5eead4"></span><strong>Cross</strong><span>Four white edges, placed optimally.</span></li>
+            <li><span class="dot" style="--dot:#a78bfa"></span><strong>Corners</strong><span>White corners into the first layer.</span></li>
+            <li><span class="dot" style="--dot:#f472b6"></span><strong>F2L</strong><span>Middle edges finish two layers.</span></li>
+            <li><span class="dot" style="--dot:#fbbf24"></span><strong>OLL</strong><span>Nine yellow stickers face up.</span></li>
+            <li><span class="dot" style="--dot:#4ade80"></span><strong>PLL</strong><span>Last-layer pieces permute home.</span></li>
+          </ol>
+          <h3 class="guide__sub">2×2 — two phases</h3>
+          <ol class="guide__phases">
+            <li><span class="dot" style="--dot:#5eead4"></span><strong>Orient</strong><span>All eight corners twisted upright.</span></li>
+            <li><span class="dot" style="--dot:#a78bfa"></span><strong>Permute</strong><span>Half-turns send every corner home.</span></li>
+          </ol>
+          <p class="guide__method-note">The 2×2 search is exact: a full orientation table (2,187 states) plus a full permutation table (40,320 states) built in your browser in well under a second. Typical solves run about eight moves.</p>
+          <h3 class="guide__sub">Cube Lab builder</h3>
+          <p class="guide__method-note">Paint one sticker, drag a run, fill a whole face, or switch to Turn and use real layer moves. Type a sequence such as <kbd>R</kbd> <kbd>U</kbd> <kbd>R′</kbd> <kbd>U′</kbd>, pick a preset, or load the cube from the stage. Every build gets a rule check, a verified solve plan and a live 3D preview. Name positions in Library and export a JSON backup.</p>
+        </section>
+        <section>
+          <h3>Controls</h3>
+          <dl class="keys">
+            <div><dt>Orbit / zoom</dt><dd>Drag · scroll</dd></div>
+            <div><dt>Puzzle size</dt><dd>Top bar · 2×2 / 3×3</dd></div>
+            <div><dt>Solve</dt><dd><kbd>S</kbd></dd></div>
+            <div><dt>Scramble</dt><dd><kbd>N</kbd></dd></div>
+            <div><dt>Cube Lab</dt><dd><kbd>C</kbd></dd></div>
+            <div><dt>Auto loop</dt><dd><kbd>Space</kbd></dd></div>
+            <div><dt>Sound</dt><dd><kbd>M</kbd></dd></div>
+            <div><dt>Reset</dt><dd><kbd>Backspace</kbd></dd></div>
+            <div><dt>Turn a layer</dt><dd><kbd>U</kbd><kbd>R</kbd><kbd>F</kbd><kbd>D</kbd><kbd>L</kbd><kbd>B</kbd></dd></div>
+            <div><dt>Reverse turn</dt><dd><kbd>Shift</kbd> + face</dd></div>
+            <div><dt>Lab undo</dt><dd><kbd>Ctrl</kbd> + <kbd>Z</kbd></dd></div>
+            <div><dt>Lab layer turn</dt><dd><kbd>U</kbd><kbd>R</kbd><kbd>F</kbd><kbd>D</kbd><kbd>L</kbd><kbd>B</kbd></dd></div>
+            <div><dt>Lab reverse turn</dt><dd><kbd>Shift</kbd> + face</dd></div>
+          </dl>
+        </section>
+      </div>
+
+      <p class="guide__foot">Runs entirely client-side · WebGL · no network calls during a solve</p>
+    </div>
+  </dialog>
+
+  <dialog class="guide custom lab" id="labDialog" aria-labelledby="labTitle" data-mode="easy">
+    <div class="guide__inner custom__inner lab__inner">
+      <div class="guide__head">
+        <p class="eyebrow"><span class="eyebrow__line"></span>Cube Lab</p>
+        <div class="lab__head-tools">
+          <div class="lab__modes" role="group" aria-label="Lab detail level">
+            <button class="lab__mode" type="button" data-lab-mode="easy" aria-pressed="true" title="Big targets and plain-language checks">Easy</button>
+            <button class="lab__mode" type="button" data-lab-mode="pro" aria-pressed="false" title="Full rule checklist, piece inspector and facelet code">Pro</button>
+          </div>
+          <button class="icon-btn" id="labClose" type="button" aria-label="Close the Cube Lab">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="lab__intro">
+        <div>
+          <h2 class="guide__title" id="labTitle">Paint any cube.</h2>
+          <p class="guide__lede">Paint stickers, drag a run, fill a whole face, or turn real layers with a sequence. Every build is checked as you go, legal positions get a verified solve plan, and the live preview shows the cube in 3D. Built for beginners — deep enough for speedcubers.</p>
+        </div>
+        <div class="lab__size-row">
+          <div class="sizes" data-size-switch role="group" aria-label="Lab puzzle size">
+            <button class="sizes__btn" type="button" data-size="2" aria-pressed="false">2×2</button>
+            <button class="sizes__btn" type="button" data-size="3" aria-pressed="true">3×3</button>
+          </div>
+          <span class="lab__size" id="labSize">3×3 · 54 stickers</span>
+        </div>
+      </div>
+
+      <div class="custom__layout lab__layout">
+        <div class="custom__board lab__board">
+          <div class="lab__face-tabs" id="labFaceTabs" role="group" aria-label="Paint face"></div>
+          <div class="custom__net" id="labNet" role="group" aria-label="Cube sticker net"></div>
+
+          <p class="custom__hint">Tap or drag to paint · hover or focus to inspect its piece</p>
+          <p class="custom__hint lab__hint-touch">Pick a face above, then tap or drag its stickers</p>
+
+          <div class="lab__workbench">
+            <div class="lab__panel-tabs" role="tablist" aria-label="Building tools">
+              <button class="lab__panel-tab" id="labTabPaint" type="button" role="tab" aria-selected="true" aria-controls="labPanelPaint" data-lab-panel="paint">Paint</button>
+              <button class="lab__panel-tab" id="labTabTurns" type="button" role="tab" aria-selected="false" aria-controls="labPanelTurns" data-lab-panel="turns">Turn</button>
+              <button class="lab__panel-tab" id="labTabLibrary" type="button" role="tab" aria-selected="false" aria-controls="labPanelLibrary" data-lab-panel="library">Library</button>
+            </div>
+
+            <div class="lab__panel" id="labPanelPaint" role="tabpanel" aria-labelledby="labTabPaint" data-lab-panel-body="paint">
+              <h3 class="custom__label">Paint color</h3>
+              <div class="custom__palette" id="labPalette" role="group" aria-label="Sticker colors"></div>
+              <div class="lab__toolset" id="labToolset" role="group" aria-label="Paint tool">
+                <button class="lab__tool" type="button" data-lab-tool="brush" aria-pressed="true" title="Paint one sticker — drag across the net for a run">Brush</button>
+                <button class="lab__tool" type="button" data-lab-tool="face" aria-pressed="false" title="Fill a whole face with the brush color">Fill face</button>
+                <button class="lab__tool" type="button" data-lab-tool="pick" aria-pressed="false" title="Take the color of a sticker as the brush">Pick</button>
+              </div>
+              <div class="lab__tools">
+                <button class="btn btn--ghost" id="labUndo" type="button" title="Undo the last build step (Ctrl+Z)">Undo</button>
+                <button class="btn btn--ghost" id="labRedo" type="button" title="Redo the last undone step (Ctrl+Shift+Z)">Redo</button>
+                <button class="btn btn--ghost" id="labLoad" type="button" title="Load the position currently on the 3D cube">Load cube</button>
+                <button class="btn btn--ghost" id="labFill" type="button" title="Fill every sticker with its home color">Fill solved</button>
+              </div>
+              <p class="lab__muted">Brush paints one sticker; drag across the net for a run. Fill face recolors a side. Pick takes the color you tap.</p>
+            </div>
+
+            <div class="lab__panel" id="labPanelTurns" role="tabpanel" aria-labelledby="labTabTurns" data-lab-panel-body="turns" hidden>
+              <h3 class="custom__label">Turn a layer</h3>
+              <div class="lab__turn-grid" id="labTurnGrid" role="group" aria-label="Turn a layer"></div>
+              <div class="lab__seq-row">
+                <input class="lab__seq" id="labSeq" type="text" placeholder="R U R′ U′" aria-label="Move sequence" autocomplete="off" spellcheck="false" />
+                <button class="lab__mini" id="labSeqInvert" type="button" title="Reverse the sequence">Invert</button>
+              </div>
+              <div class="lab__seq-actions">
+                <button class="btn btn--ghost" id="labSeqApply" type="button">Apply moves</button>
+                <button class="btn btn--ghost" id="labSeqRandom" type="button">Random 8</button>
+              </div>
+              <p class="lab__muted">Turns always produce a reachable position. Type standard notation like R U R′ U′ and apply it — or press U R F D L B, with Shift for reverse.</p>
+            </div>
+
+            <div class="lab__panel" id="labPanelLibrary" role="tabpanel" aria-labelledby="labTabLibrary" data-lab-panel-body="library" hidden>
+              <label class="lab__preset" for="labPreset">
+                <span class="custom__label">Presets</span>
+                <select id="labPreset"></select>
+              </label>
+              <div class="lab__save">
+                <input class="lab__save-name" id="labSaveName" type="text" maxlength="40" placeholder="Name this position" aria-label="Position name" autocomplete="off" />
+                <button class="lab__mini lab__mini--solid" id="labSaveBtn" type="button">Save</button>
+              </div>
+              <div class="lab__library-head">
+                <span class="custom__label">Saved <b id="labLibraryCount">0</b></span>
+                <div class="lab__library-tools">
+                  <button class="lab__mini" id="labExport" type="button">Export</button>
+                  <button class="lab__mini" id="labImportBtn" type="button">Import</button>
+                </div>
+              </div>
+              <div class="lab__library" id="labLibraryList"></div>
+              <input class="lab__file" id="labImportFile" type="file" accept=".json,application/json" aria-label="Import saved positions from a JSON file" />
+              <p class="lab__muted">Saved in this browser. Export a JSON backup to move positions between devices.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="custom__side lab__side">
+          <div class="custom__status" id="labStatus" role="status" aria-live="polite" data-state="ok">Reachable position — ready to solve.</div>
+
+          <section class="lab__card lab__preview-card">
+            <div class="lab__card-head">
+              <h3 class="custom__label">Live preview</h3>
+              <span class="lab__preview-note">drag to orbit</span>
+            </div>
+            <div class="lab__preview-stage">
+              <canvas id="labPreviewCanvas" aria-label="Live 3D preview of the painted cube"></canvas>
+            </div>
+          </section>
+
+          <section class="lab__card" id="labChecksCard">
+            <h3 class="custom__label">Cube rules</h3>
+            <ul class="lab__checks" id="labChecks"></ul>
+          </section>
+
+          <section class="lab__card">
+            <h3 class="custom__label">Position</h3>
+            <div class="lab__stats" id="labStats"></div>
+          </section>
+
+          <section class="lab__card">
+            <div class="lab__card-head">
+              <h3 class="custom__label">Solve plan</h3>
+              <button class="lab__mini" id="labPlanCopy" type="button" title="Copy the solution moves" disabled>Copy plan</button>
+            </div>
+            <div class="lab__plan" id="labPlan"></div>
+          </section>
+
+          <section class="lab__card lab__pro-only">
+            <h3 class="custom__label">Piece inspector</h3>
+            <div class="lab__piece" id="labPiece"></div>
+          </section>
+
+          <section class="lab__card lab__pro-only">
+            <div class="lab__card-head">
+              <h3 class="custom__label">History</h3>
+              <span class="lab__muted" id="labHistoryCount">0 steps</span>
+            </div>
+            <div class="lab__history" id="labHistory"></div>
+            <p class="lab__muted">Every build step is kept. Click an entry to travel back — new edits branch from there.</p>
+          </section>
+
+          <section class="lab__card lab__pro-only">
+            <h3 class="custom__label">Facelet code</h3>
+            <textarea class="lab__code" id="labCode" spellcheck="false" rows="3" aria-label="Facelet code"></textarea>
+            <div class="lab__tools lab__tools--tight">
+              <button class="btn btn--ghost" id="labCopy" type="button">Copy</button>
+              <button class="btn btn--ghost" id="labApplyCode" type="button">Apply code</button>
+            </div>
+            <p class="lab__muted">Faces in order U R F D L B, each row by row. Whitespace is ignored.</p>
+          </section>
+
+          <div class="custom__actions custom__actions--main">
+            <button class="btn" id="labCancel" type="button">Cancel</button>
+            <button class="btn" id="labShow3D" type="button" title="Put this position on the main 3D cube">Show 3D</button>
+            <button class="btn btn--primary" id="labSolve" type="button">Solve position</button>
+          </div>
+          <p class="custom__foot">Only positions a real cube can reach pass the rules. Each plan is replayed and verified before the studio animates it.</p>
+        </aside>
+      </div>
+    </div>
+    <div class="lab__toast" id="labToast" role="status" aria-live="polite"></div>
+  </dialog>
+
+  <div class="fallback" id="fallback" hidden>
+    <div class="fallback__card panel">
+      <p class="eyebrow"><span class="eyebrow__line"></span>WebGL unavailable</p>
+      <h2>This studio needs WebGL.</h2>
+      <p id="fallbackText">Enable hardware acceleration in your browser and reload to run the 3D cube.</p>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="fallback">
+      <div class="fallback__card panel">
+        <h2>JavaScript is required.</h2>
+        <p>Enable JavaScript to run the self-solving 3D cube.</p>
+      </div>
+    </div>
+  </noscript>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
