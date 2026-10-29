@@ -58,6 +58,17 @@ export const GAMES = [
     cover: '/media/arcade/nepal-daily.jpg',
     accent: '#4ade80',
   },
+  {
+    id: 'ludo-himalaya',
+    title: 'Ludo Himalaya',
+    ne: 'लुडो हिमालय',
+    kicker: '3D BOARD CLASSIC',
+    tagline: 'Walnut, brass and glass. The classic, rebuilt.',
+    blurb: 'The ludo table you remember, in three dimensions. Roll six to leave the yard, capture rivals, race four glass marbles home and out-think up to three CPUs.',
+    meta: ['2–4 players', 'CPU or pass & play', '3D board'],
+    cover: '/media/arcade/ludo-himalaya.jpg',
+    accent: '#e2b566',
+  },
 ];
 
 // Locatable photographs with accurate coordinates. `hint` names the region

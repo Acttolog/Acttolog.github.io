@@ -4,6 +4,7 @@ import * as merge from './games/merge.js';
 import * as stack from './games/stack.js';
 import * as typerush from './games/typerush.js';
 import * as daily from './games/daily.js';
+import * as ludo from './games/ludo.js';
 
 initShell({
   'khoja-nepal': khoja,
@@ -11,4 +12,5 @@ initShell({
   'himalaya-stack': stack,
   'typerush-nepal': typerush,
   'nepal-daily': daily,
+  'ludo-himalaya': ludo,
 });
