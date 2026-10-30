@@ -6,10 +6,15 @@ import {
 } from './ludo-engine.js';
 import { esc, load, save, toast, reduceMotion, copyText, shareText } from '../util.js';
 
-const STEP_MS = 108;
-const DICE_MS = 640;
+const STEP_MS = 128;
+const DICE_MS = 1080;
 const CPU_DELAY = 760;
 const ORIENT = { 1: [0, 0], 2: [-90, 0], 3: [0, -90], 4: [0, 90], 5: [90, 0], 6: [0, 180] };
+// Board dice rest inside the acting player's yard corner; throws start from the outer corner.
+const BDICE_REST = { red: [5.15, 5.15], green: [9.85, 5.15], yellow: [9.85, 9.85], blue: [5.15, 9.85] };
+const BDICE_FROM = { red: [1.15, 1.15], green: [13.85, 1.15], yellow: [13.85, 13.85], blue: [1.15, 13.85] };
+const BDICE_TILT = { red: -7, green: 6, yellow: -5, blue: 7 };
+const RUN_ROT = { red: 0, green: 90, yellow: 180, blue: 270 };
 const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const colorName = (c) => META[c]?.name || c;
@@ -31,8 +36,9 @@ export function mount(root) {
   let speed = null;
   let testDice = [];
   let savedGame = null;
-  let diceX = 0;
-  let diceY = 0;
+  let bdiceX = 0;
+  let bdiceY = 0;
+  let bdiceZ = 0;
   const tokenNodes = new Map();
   let sfx = null;
 
@@ -132,6 +138,15 @@ export function mount(root) {
                   </span>
                 </div>
                 <div class="lh-marks" id="lhMarks"></div>
+                <div class="lh-board-dice" id="lhBoardDice" aria-hidden="true">
+                  <span class="lh-bdice-shadow" id="lhBShadow"></span>
+                  <span class="lh-bdice-ring" id="lhBRing"></span>
+                  <span class="lh-bdice-spot" id="lhBSpot">
+                    <span class="lh-bdice-lift" id="lhBLift">
+                      <span class="lh-bdice-cube" id="lhBCube">${faces}</span>
+                    </span>
+                  </span>
+                </div>
                 <div class="lh-fx" id="lhFx"></div>
                 <div class="lh-tokens" id="lhTokens"></div>
               </div>
@@ -168,6 +183,7 @@ export function mount(root) {
   const resultEl = q('#lhResult');
   const boardEl = q('#lhBoard');
   const stageEl = q('#lhStage');
+  const fieldEl = q('#lhField');
   const tokensEl = q('#lhTokens');
   const marksEl = q('#lhMarks');
   const fxEl = q('#lhFx');
@@ -175,6 +191,12 @@ export function mount(root) {
   const diceBtn = q('#lhDiceBtn');
   const diceEl = q('#lhDice');
   const hintEl = q('#lhHint');
+  const bdiceLayer = q('#lhBoardDice');
+  const bdiceSpot = q('#lhBSpot');
+  const bdiceLift = q('#lhBLift');
+  const bdiceCube = q('#lhBCube');
+  const bdiceShadow = q('#lhBShadow');
+  const bdiceRing = q('#lhBRing');
 
   /* ── score effects ──────────────────────────────────────── */
   function makeSfx() {
@@ -231,6 +253,7 @@ export function mount(root) {
     }
     return {
       roll() { for (let i = 0; i < 6; i++) noise(0.04, 0.028, 850 + Math.random() * 700, i * 0.065); },
+      clack() { noise(0.05, 0.034, 2100); tone(190, 0.04, 'square', 0.012, -60); },
       step() { tone(520, 0.045, 'triangle', 0.026, 180); },
       capture() { tone(240, 0.26, 'sawtooth', 0.05, -140); noise(0.18, 0.04, 420); },
       home() { tone(659, 0.15, 'sine', 0.05); tone(880, 0.2, 'sine', 0.045, 0, 0.12); },
@@ -273,11 +296,14 @@ export function mount(root) {
       const cls = ['lh-cell'];
       if (safe) cls.push('lh-safe');
       if (owner) cls.push(`lh-start-${owner}`);
-      cells += `<div class="${cls.join(' ')}" style="left:${pct(c)};top:${pct(r)};width:${pct(1)};height:${pct(1)}">${safe ? '<span class="lh-star" aria-hidden="true">★</span>' : ''}</div>`;
+      const mark = owner
+        ? `<span class="lh-runner" style="--rot:${RUN_ROT[owner]}deg" aria-hidden="true"></span>`
+        : safe ? '<span class="lh-star" aria-hidden="true">★</span>' : '';
+      cells += `<div class="${cls.join(' ')}" style="left:${pct(c)};top:${pct(r)};width:${pct(1)};height:${pct(1)}">${mark}</div>`;
     });
     for (const color of COLORS) {
       HOME_COL[color].forEach(([c, r], i) => {
-        cells += `<div class="lh-cell lh-homecell lh-tint-${color}${i === 4 ? ' lh-homecell-last' : ''}" style="left:${pct(c)};top:${pct(r)};width:${pct(1)};height:${pct(1)}"></div>`;
+        cells += `<div class="lh-cell lh-homecell lh-tint-${color}${i === 4 ? ' lh-homecell-last' : ''}" style="left:${pct(c)};top:${pct(r)};width:${pct(1)};height:${pct(1)}"><span class="lh-chev" style="--rot:${RUN_ROT[color]}deg" aria-hidden="true"></span></div>`;
       });
     }
     q('#lhCells').innerHTML = cells;
@@ -357,11 +383,13 @@ export function mount(root) {
       nameEl.textContent = 'Ludo Himalaya';
       dot.className = 'lh-turn-dot';
       streak.hidden = true;
+      delete boardEl.dataset.turn;
       q('#lhStatus').textContent = 'Choose a match to begin.';
       return;
     }
     const meta = META[p.color];
     bar.style.setProperty('--turn', meta.hex);
+    boardEl.dataset.turn = p.color;
     const humans = game.players.filter((x) => x.type === 'human').length;
     nameEl.textContent = p.type === 'cpu' ? `CPU ${meta.name}` : humans === 1 ? 'You' : `${meta.name} player`;
     dot.className = `lh-turn-dot lh-dot-${p.color}`;
@@ -579,53 +607,149 @@ export function mount(root) {
 
   /* ── dice ───────────────────────────────────────────────── */
   function resetDice() {
-    diceX = 0;
-    diceY = 0;
+    bdiceX = 0;
+    bdiceY = 0;
+    bdiceZ = 0;
     lastDice = null;
     diceEl.style.transition = 'none';
     diceEl.style.transform = 'rotateX(0deg) rotateY(180deg)';
     diceEl.classList.add('idle');
     void diceEl.offsetWidth;
     diceEl.style.transition = '';
+    bdiceLayer.classList.remove('is-visible', 'is-settled');
+    bdiceCube.style.transform = '';
   }
 
   function showDice(value, instant = false) {
     const base = ORIENT[value] || ORIENT[6];
-    diceX += 720;
-    diceY += 1080;
     diceEl.classList.remove('idle');
-    diceEl.style.transition = instant ? 'none' : `transform ${DICE_MS}ms cubic-bezier(.2,.75,.25,1)`;
-    diceEl.style.transform = `rotateX(${diceX + base[0]}deg) rotateY(${diceY + base[1]}deg)`;
+    diceEl.style.transition = instant ? 'none' : 'transform .32s cubic-bezier(.2,.8,.3,1)';
+    diceEl.style.transform = `rotateX(${base[0]}deg) rotateY(${base[1]}deg)`;
     if (instant) {
       void diceEl.offsetWidth;
       diceEl.style.transition = '';
     }
   }
 
+  function parkBoardDice(color, instant = false) {
+    const c = BDICE_REST[color] ? color : 'red';
+    const [x, y] = BDICE_REST[c];
+    const left = `${(x / 15) * 100}%`;
+    const top = `${(y / 15) * 100}%`;
+    bdiceLayer.style.setProperty('--btilt', `${BDICE_TILT[c] || 0}deg`);
+    if (instant) bdiceLayer.classList.add('is-throwing');
+    bdiceSpot.style.left = left;
+    bdiceSpot.style.top = top;
+    bdiceShadow.style.left = left;
+    bdiceShadow.style.top = `${((y + 0.5) / 15) * 100}%`;
+    bdiceRing.style.left = left;
+    bdiceRing.style.top = `${((y + 0.62) / 15) * 100}%`;
+    bdiceLayer.classList.add('is-visible');
+    if (instant) {
+      void bdiceSpot.offsetWidth;
+      bdiceLayer.classList.remove('is-throwing');
+    }
+  }
+
+  function settleBoardDice(value) {
+    const base = ORIENT[value] || ORIENT[6];
+    bdiceCube.style.transform = `rotateX(${bdiceX + base[0]}deg) rotateY(${bdiceY + base[1]}deg) rotateZ(${bdiceZ}deg)`;
+  }
+
+  function throwBoardDice(value, color, instant = false) {
+    parkBoardDice(color, true);
+    const base = ORIENT[value] || ORIENT[6];
+    bdiceX += 720;
+    bdiceY += 1080;
+    bdiceZ += 720;
+    const final = `rotateX(${bdiceX + base[0]}deg) rotateY(${bdiceY + base[1]}deg) rotateZ(${bdiceZ}deg)`;
+    bdiceLayer.classList.remove('is-settled');
+    if (instant || reduceMotion()) {
+      bdiceCube.style.transform = final;
+      return Promise.resolve();
+    }
+    const unit = (fieldEl.clientWidth || 480) / 15;
+    const die = bdiceCube.offsetWidth || unit * 1.4;
+    const [rx, ry] = BDICE_REST[color] || BDICE_REST.red;
+    const [sx, sy] = BDICE_FROM[color] || BDICE_FROM.red;
+    const dx = (sx - rx) * unit;
+    const dy = (sy - ry) * unit;
+    const ms = DICE_MS;
+    const travel = bdiceLift.animate([
+      { offset: 0, opacity: 0, transform: `translate3d(${dx}px, ${dy}px, 0) translateY(${-die * 1.1}px) translateZ(${die * 2.2}px)` },
+      { offset: 0.09, opacity: 1, transform: `translate3d(${dx * 0.93}px, ${dy * 0.93}px, 0) translateY(${-die * 1.6}px) translateZ(${die * 2.5}px)` },
+      { offset: 0.46, transform: `translate3d(${dx * 0.5}px, ${dy * 0.5}px, 0) translateY(${-die * 0.9}px) translateZ(${die * 1.05}px)` },
+      { offset: 0.68, transform: `translate3d(${dx * 0.07}px, ${dy * 0.07}px, 0) translateY(0) translateZ(0)` },
+      { offset: 0.77, transform: `translate3d(${dx * 0.025}px, ${dy * 0.025}px, 0) translateY(${-die * 0.5}px) translateZ(${die * 0.45}px)` },
+      { offset: 0.87, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
+      { offset: 0.94, transform: `translate3d(0, 0, 0) translateY(${-die * 0.14}px) translateZ(${die * 0.1}px)` },
+      { offset: 1, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
+    ], { duration: ms, easing: 'cubic-bezier(.25,.55,.3,1)' });
+    const spin = bdiceCube.animate([
+      { offset: 0, transform: `rotateX(${bdiceX + base[0] - 1080}deg) rotateY(${bdiceY + base[1] - 1440}deg) rotateZ(${bdiceZ - 720}deg)` },
+      { offset: 0.36, transform: `rotateX(${bdiceX + base[0] - 600}deg) rotateY(${bdiceY + base[1] - 880}deg) rotateZ(${bdiceZ - 360}deg)` },
+      { offset: 0.66, transform: `rotateX(${bdiceX + base[0] + 24}deg) rotateY(${bdiceY + base[1] - 72}deg) rotateZ(${bdiceZ + 18}deg)` },
+      { offset: 0.79, transform: `rotateX(${bdiceX + base[0] - 8}deg) rotateY(${bdiceY + base[1] + 12}deg) rotateZ(${bdiceZ - 5}deg)` },
+      { offset: 1, transform: final },
+    ], { duration: ms, easing: 'cubic-bezier(.3,.5,.35,1)' });
+    bdiceShadow.animate([
+      { offset: 0, opacity: 0.12, transform: 'translate(-50%,-50%) scale(.4)' },
+      { offset: 0.46, opacity: 0.34, transform: 'translate(-50%,-50%) scale(.72)' },
+      { offset: 0.68, opacity: 0.66, transform: 'translate(-50%,-50%) scale(1.08)' },
+      { offset: 0.77, opacity: 0.4, transform: 'translate(-50%,-50%) scale(.86)' },
+      { offset: 0.87, opacity: 0.62, transform: 'translate(-50%,-50%) scale(1.04)' },
+      { offset: 0.94, opacity: 0.52, transform: 'translate(-50%,-50%) scale(.96)' },
+      { offset: 1, opacity: 0.55, transform: 'translate(-50%,-50%) scale(1)' },
+    ], { duration: ms, easing: 'linear' });
+    bdiceCube.style.transform = final;
+    return Promise.all([
+      travel.finished.catch(() => {}),
+      spin.finished.catch(() => {}),
+    ]).then(() => {
+      if (destroyed) return;
+      bdiceLayer.classList.remove('is-settled');
+      void bdiceLayer.offsetWidth;
+      bdiceLayer.classList.add('is-settled');
+    });
+  }
+
   function restoreDice() {
-    diceX = 0;
-    diceY = 0;
+    bdiceX = 0;
+    bdiceY = 0;
+    bdiceZ = 0;
     const value = game?.dice || null;
     lastDice = value;
-    diceEl.style.transition = 'none';
-    if (value) {
-      diceEl.classList.remove('idle');
-      diceEl.style.transform = `rotateX(${ORIENT[value][0]}deg) rotateY(${ORIENT[value][1]}deg)`;
-    } else {
+    if (value) showDice(value, true);
+    else {
       diceEl.classList.add('idle');
+      diceEl.style.transition = 'none';
       diceEl.style.transform = 'rotateX(0deg) rotateY(180deg)';
+      void diceEl.offsetWidth;
+      diceEl.style.transition = '';
     }
-    void diceEl.offsetWidth;
-    diceEl.style.transition = '';
+    if (game) {
+      parkBoardDice(currentPlayer(game)?.color, true);
+      settleBoardDice(value || 6);
+    }
   }
 
   async function animateDice(value) {
+    const p = currentPlayer(game);
     const reduced = reduceMotion() || speed !== null;
     diceBtn.classList.add('is-rolling');
-    showDice(value, reduced);
+    diceBtn.classList.remove('is-settled');
     sfx.roll();
-    await SLEEP(reduced ? (speed ?? 70) : DICE_MS);
+    const done = throwBoardDice(value, p?.color, reduced);
+    if (!reduced) {
+      later(() => sfx.clack(), Math.round(DICE_MS * 0.66));
+      later(() => sfx.clack(), Math.round(DICE_MS * 0.86));
+    }
+    await done;
+    if (destroyed) return;
+    showDice(value);
     diceBtn.classList.remove('is-rolling');
+    diceBtn.classList.add('is-settled');
+    if (reduced) await SLEEP(speed ?? 90);
   }
 
   /* ── tokens ─────────────────────────────────────────────── */
@@ -688,6 +812,7 @@ export function mount(root) {
     statusText = '';
     const p = currentPlayer(game);
     if (!p) return;
+    parkBoardDice(p.color);
     if (game.phase === 'rolling') {
       setStatus(p.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.');
     } else if (game.phase === 'choosing') {
@@ -790,6 +915,41 @@ export function mount(root) {
     beginTurn();
   }
 
+  function landToken(color, token, cls, ms) {
+    if (reduceMotion() || speed !== null) return;
+    const node = tokenNodes.get(`${color}:${token}`);
+    if (!node) return;
+    node.classList.remove(cls);
+    void node.offsetWidth;
+    node.classList.add(cls);
+    later(() => node.classList.remove(cls), ms);
+  }
+
+  function flyHome(c) {
+    if (reduceMotion() || speed !== null) return;
+    const node = tokenNodes.get(`${c.color}:${c.token}`);
+    if (!node) return;
+    const unit = (fieldEl.clientWidth || boardEl.clientWidth || 480) / 15;
+    const [fx, fy] = xyAt(c.color, c.pos, c.token);
+    const [tx, ty] = xyAt(c.color, -1, c.token);
+    const dx = (tx - fx) * unit;
+    const dy = (ty - fy) * unit;
+    const ghost = node.cloneNode(true);
+    ghost.classList.remove('can-move', 'is-current', 'is-human', 'hop', 'landing', 'home-in');
+    ghost.classList.add('is-ghost');
+    ghost.style.left = node.style.left;
+    ghost.style.top = node.style.top;
+    ghost.style.pointerEvents = 'none';
+    tokensEl.appendChild(ghost);
+    const anim = ghost.animate([
+      { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)', opacity: 1 },
+      { offset: 0.32, transform: `translate(calc(-50% + ${dx * 0.3}px), calc(-50% + ${dy * 0.3 - unit * 1.2}px)) scale(1.16) rotate(-40deg)`, opacity: 1 },
+      { offset: 0.74, transform: `translate(calc(-50% + ${dx * 0.82}px), calc(-50% + ${dy * 0.82 - unit * 0.4}px)) scale(0.72) rotate(150deg)`, opacity: 0.85 },
+      { offset: 1, transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.25) rotate(250deg)`, opacity: 0 },
+    ], { duration: 660, easing: 'cubic-bezier(.3,.15,.4,1)' });
+    anim.finished.catch(() => {}).finally(() => ghost.remove());
+  }
+
   async function moveToken(token) {
     if (!game || paused || busy || destroyed || game.phase !== 'choosing') return;
     const p = currentPlayer(game);
@@ -802,11 +962,23 @@ export function mount(root) {
     hintEl.textContent = 'Moving…';
     const steps = move.from < 0 ? [0] : Array.from({ length: move.to - move.from }, (_, i) => move.from + i + 1);
     const stepMs = speed ?? (reduceMotion() ? 24 : STEP_MS);
+    const unit = (fieldEl.clientWidth || 480) / 15;
+    let walked = xyAt(p.color, move.from, token);
     for (const pos of steps) {
       anim = { color: p.color, token, progress: pos };
       renderTokens();
       const node = tokenNodes.get(`${p.color}:${token}`);
       if (node && !reduceMotion() && speed === null) {
+        const next = xyAt(p.color, pos, token);
+        const dx = (walked[0] - next[0]) * unit;
+        const dy = (walked[1] - next[1]) * unit;
+        if (dx || dy) {
+          node.animate([
+            { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))` },
+            { transform: 'translate(-50%,-50%)' },
+          ], { duration: stepMs, easing: 'cubic-bezier(.3,.6,.4,1)' });
+        }
+        walked = next;
         node.classList.remove('hop');
         void node.offsetWidth;
         node.classList.add('hop');
@@ -828,14 +1000,11 @@ export function mount(root) {
       renderAll();
       return;
     }
+    landToken(p.color, token, 'landing', 380);
     if (ev.captures.length) {
       sfx.capture();
       buzz(35);
-      for (const c of ev.captures) {
-        const victim = tokenNodes.get(`${c.color}:${c.token}`);
-        victim?.classList.add('captured');
-        setTimeout(() => victim?.classList.remove('captured'), 620);
-      }
+      for (const c of ev.captures) flyHome(c);
       const first = ev.captures[0];
       const [fx, fy] = xyAt(first.color, first.pos, first.token);
       floatFx(fx, fy, 'CAPTURED', 'bad');
@@ -844,6 +1013,7 @@ export function mount(root) {
     if (ev.finished) {
       sfx.home();
       floatFx(7.5, 7.5, 'HOME', 'good');
+      landToken(p.color, token, 'home-in', 640);
       pushLog(`${colorName(p.color)} brought a marble home.`, 'home');
     }
     if (ev.won) {
@@ -1117,6 +1287,8 @@ export function mount(root) {
     if (prefs.flat) root.querySelector('#lhRoot').classList.add('flat');
     else root.querySelector('#lhRoot').classList.remove('flat');
     const p = currentPlayer(game);
+    parkBoardDice(p.color, true);
+    settleBoardDice(6);
     setStatus(`${colorName(p.color)} starts. Roll a six to leave the yard.`);
     renderAll();
     saveGame();
@@ -1251,11 +1423,14 @@ export function mount(root) {
         if (prefs.sound) sfx.click();
       } else if (act === 'view') {
         prefs.flat = !prefs.flat;
+        boardEl.style.transition = 'none';
         q('#lhRoot').classList.toggle('flat', prefs.flat);
         savePrefs();
         syncTools();
         boardEl.style.setProperty('--rx', prefs.flat ? '0deg' : '16deg');
         boardEl.style.setProperty('--rz', '0deg');
+        void boardEl.offsetWidth;
+        setTimeout(() => { boardEl.style.transition = ''; }, 60);
       } else if (act === 'full') toggleFullscreen();
       else if (act === 'new') openSetup();
       else if (act === 'start') startFromSetup();
@@ -1421,6 +1596,7 @@ export function mount(root) {
         game.sixes = 0;
         paused = false;
         statusText = '';
+        parkBoardDice(currentPlayer(game).color, true);
         renderAll();
         saveGame();
         if (currentPlayer(game).type === 'cpu') scheduleCpuRoll();
