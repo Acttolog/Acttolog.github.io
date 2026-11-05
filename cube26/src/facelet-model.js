@@ -152,13 +152,20 @@ export function createFaceletModel(size = 3) {
     const u = cellCoord(col, size);
     const v = cellCoord(row, size);
     switch (face) {
-      case 'U': return [u, 1, v];
-      case 'D': return [u, -1, -v];
-      case 'F': return [u, -v, 1];
-      case 'B': return [-u, -v, -1];
-      case 'R': return [1, -v, -u];
-      case 'L': return [-1, -v, u];
-      default: return null;
+      case 'U':
+        return [u, 1, v];
+      case 'D':
+        return [u, -1, -v];
+      case 'F':
+        return [u, -v, 1];
+      case 'B':
+        return [-u, -v, -1];
+      case 'R':
+        return [1, -v, -u];
+      case 'L':
+        return [-1, -v, u];
+      default:
+        return null;
     }
   }
 

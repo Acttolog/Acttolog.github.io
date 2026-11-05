@@ -118,7 +118,10 @@ export class CubeView {
       opacity: 0.055,
       depthWrite: false,
     });
-    for (const [radius, opacity] of [[4.2, 0.06], [6.2, 0.03]]) {
+    for (const [radius, opacity] of [
+      [4.2, 0.06],
+      [6.2, 0.03],
+    ]) {
       const pts = [];
       for (let i = 0; i <= 200; i++) {
         const a = (i / 200) * Math.PI * 2;
@@ -138,7 +141,7 @@ export class CubeView {
         transparent: true,
         depthWrite: false,
         opacity: 0.9,
-      })
+      }),
     );
     contact.rotation.x = -Math.PI / 2;
     contact.position.y = -2.0;
@@ -203,7 +206,6 @@ export class CubeView {
         fog: false,
       });
     }
-
   }
 
   buildCube() {
@@ -223,7 +225,14 @@ export class CubeView {
       for (const [face, color] of Object.entries(cubie.stickers)) {
         const sticker = new THREE.Mesh(this.stickerGeo, this.stickerMaterials[color]);
         sticker.userData.face = face;
-        const normal = { U: [0, 1, 0], D: [0, -1, 0], R: [1, 0, 0], L: [-1, 0, 0], F: [0, 0, 1], B: [0, 0, -1] }[face];
+        const normal = {
+          U: [0, 1, 0],
+          D: [0, -1, 0],
+          R: [1, 0, 0],
+          L: [-1, 0, 0],
+          F: [0, 0, 1],
+          B: [0, 0, -1],
+        }[face];
         sticker.position.set(normal[0] * 0.494, normal[1] * 0.494, normal[2] * 0.494);
         sticker.rotation.set(...STICKER_ROTATION[face]);
         group.add(sticker);
@@ -287,9 +296,7 @@ export class CubeView {
     if (!clientWidth || !clientHeight) return;
     const width = Math.max(1, clientWidth);
     const height = Math.max(1, clientHeight);
-    this.renderer.setPixelRatio(
-      Math.min(window.devicePixelRatio || 1, this.reducedMotion ? 1 : 2)
-    );
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.reducedMotion ? 1 : 2));
     this.renderer.setSize(width, height, false);
     if (!this.camera) return;
 
@@ -407,11 +414,7 @@ export class CubeView {
         for (const group of selected) {
           this.cubeGroup.attach(group);
           const cubie = this.cube.cubies[group.userData.index];
-          group.position.set(
-            cubie.pos[0] * spread,
-            cubie.pos[1] * spread,
-            cubie.pos[2] * spread
-          );
+          group.position.set(cubie.pos[0] * spread, cubie.pos[1] * spread, cubie.pos[2] * spread);
           group.quaternion.normalize();
         }
         this.cubeGroup.remove(pivot);

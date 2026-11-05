@@ -54,10 +54,13 @@ function picksFor(mode) {
   return shuffle(PHOTOS).slice(0, ROUNDS);
 }
 
-const squares = (points) => points.map((p) => {
-  const r = p / MAX_ROUND;
-  return r >= 0.8 ? '🟩' : r >= 0.55 ? '🟨' : r >= 0.3 ? '🟧' : '🟥';
-}).join('');
+const squares = (points) =>
+  points
+    .map((p) => {
+      const r = p / MAX_ROUND;
+      return r >= 0.8 ? '🟩' : r >= 0.55 ? '🟨' : r >= 0.3 ? '🟧' : '🟥';
+    })
+    .join('');
 
 export function mount(root) {
   let mode = 'daily';
@@ -107,11 +110,20 @@ export function mount(root) {
     </div>`;
 
   const el = {
-    img: $('#khImg', root), avif: $('#khAvif', root), credit: $('#khCredit', root),
-    round: $('#khRound', root), mode: $('#khMode', root), hint: $('#khHint', root),
-    mapEl: $('#khMap', root), msg: $('#khMsg', root), confirm: $('#khConfirm', root),
-    hintBtn: $('#khHintBtn', root), center: $('#khCenter', root),
-    result: $('#khResult', root), switchBtn: $('#khSwitch', root), root: $('#khRoot', root),
+    img: $('#khImg', root),
+    avif: $('#khAvif', root),
+    credit: $('#khCredit', root),
+    round: $('#khRound', root),
+    mode: $('#khMode', root),
+    hint: $('#khHint', root),
+    mapEl: $('#khMap', root),
+    msg: $('#khMsg', root),
+    confirm: $('#khConfirm', root),
+    hintBtn: $('#khHintBtn', root),
+    center: $('#khCenter', root),
+    result: $('#khResult', root),
+    switchBtn: $('#khSwitch', root),
+    root: $('#khRoot', root),
   };
 
   function renderRound() {
@@ -134,9 +146,18 @@ export function mount(root) {
     el.msg.innerHTML = 'Tap the map to drop your pin.';
     el.result.hidden = true;
     el.result.innerHTML = '';
-    if (guessMarker) { guessMarker.remove(); guessMarker = null; }
-    if (truthMarker) { truthMarker.remove(); truthMarker = null; }
-    if (line) { line.remove(); line = null; }
+    if (guessMarker) {
+      guessMarker.remove();
+      guessMarker = null;
+    }
+    if (truthMarker) {
+      truthMarker.remove();
+      truthMarker = null;
+    }
+    if (line) {
+      line.remove();
+      line = null;
+    }
     if (map) {
       map.flyTo([28.3949, 84.124], 7, { duration: 0.3 });
       map.closePopup();
@@ -149,7 +170,12 @@ export function mount(root) {
     if (guessMarker) guessMarker.setLatLng(latlng);
     else {
       guessMarker = window.L.marker(latlng, {
-        icon: window.L.divIcon({ className: '', html: '<span class="kh-pin"></span>', iconSize: [22, 22], iconAnchor: [11, 22] }),
+        icon: window.L.divIcon({
+          className: '',
+          html: '<span class="kh-pin"></span>',
+          iconSize: [22, 22],
+          iconAnchor: [11, 22],
+        }),
         keyboard: false,
       }).addTo(map);
     }
@@ -180,13 +206,35 @@ export function mount(root) {
     total += pts;
 
     truthMarker = window.L.marker([p.lat, p.lng], {
-      icon: window.L.divIcon({ className: '', html: '<span class="kh-pin truth"></span>', iconSize: [22, 22], iconAnchor: [11, 22] }),
+      icon: window.L.divIcon({
+        className: '',
+        html: '<span class="kh-pin truth"></span>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 22],
+      }),
       keyboard: false,
-    }).addTo(map).bindTooltip(esc(p.title), { direction: 'top', offset: [0, -18] });
-    line = window.L.polyline([[guess.lat, guess.lng], [p.lat, p.lng]], {
-      color: '#43e0d3', weight: 2, dashArray: '6 6', opacity: 0.9,
-    }).addTo(map);
-    map.fitBounds(window.L.latLngBounds([[guess.lat, guess.lng], [p.lat, p.lng]]).pad(0.35), { animate: false });
+    })
+      .addTo(map)
+      .bindTooltip(esc(p.title), { direction: 'top', offset: [0, -18] });
+    line = window.L.polyline(
+      [
+        [guess.lat, guess.lng],
+        [p.lat, p.lng],
+      ],
+      {
+        color: '#43e0d3',
+        weight: 2,
+        dashArray: '6 6',
+        opacity: 0.9,
+      },
+    ).addTo(map);
+    map.fitBounds(
+      window.L.latLngBounds([
+        [guess.lat, guess.lng],
+        [p.lat, p.lng],
+      ]).pad(0.35),
+      { animate: false },
+    );
 
     el.confirm.disabled = true;
     el.hintBtn.disabled = true;
@@ -208,7 +256,10 @@ export function mount(root) {
     el.msg.innerHTML = `You scored <b>${fmt(pts)}</b> this round.`;
     el.result.querySelector('#khNext').addEventListener('click', () => {
       if (last) finish();
-      else { round += 1; renderRound(); }
+      else {
+        round += 1;
+        renderRound();
+      }
     });
   }
 
@@ -246,7 +297,9 @@ export function mount(root) {
       overlay.remove();
       mode = 'practice';
       picks = picksFor('practice');
-      round = 0; total = 0; points = [];
+      round = 0;
+      total = 0;
+      points = [];
       renderRound();
     });
     overlay.querySelector('#khCopy').addEventListener('click', () => copyText(share));
@@ -257,7 +310,9 @@ export function mount(root) {
     const next = mode === 'daily' ? 'practice' : 'daily';
     mode = next;
     picks = picksFor(next);
-    round = 0; total = 0; points = [];
+    round = 0;
+    total = 0;
+    points = [];
     const stale = el.root.querySelector('.overlay');
     if (stale) stale.remove();
     renderRound();
@@ -271,39 +326,51 @@ export function mount(root) {
     if (map) placeGuess(map.getCenter());
   });
 
-  loadLeaflet().then((L) => {
-    if (destroyed) return;
-    map = L.map(el.mapEl, {
-      center: [28.3949, 84.124],
-      zoom: 7,
-      minZoom: 5,
-      maxZoom: 13,
-      zoomControl: true,
-      attributionControl: true,
-      worldCopyJump: false,
+  loadLeaflet()
+    .then((L) => {
+      if (destroyed) return;
+      map = L.map(el.mapEl, {
+        center: [28.3949, 84.124],
+        zoom: 7,
+        minZoom: 5,
+        maxZoom: 13,
+        zoomControl: true,
+        attributionControl: true,
+        worldCopyJump: false,
+      });
+      L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution:
+            'Tiles &copy; <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+          maxZoom: 19,
+        },
+      ).addTo(map);
+      L.tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        {
+          maxZoom: 19,
+          opacity: 0.9,
+        },
+      ).addTo(map);
+      map.on('click', (e) => placeGuess(e.latlng));
+      observer = new ResizeObserver(() => map && map.invalidateSize({ pan: false }));
+      observer.observe(el.mapEl);
+      setTimeout(() => map && map.invalidateSize({ pan: false }), 120);
+      renderRound();
+    })
+    .catch(() => {
+      el.mapEl.innerHTML = `<div style="padding:28px;color:var(--mut);font-size:13px">The map could not load. Check your connection and reload — the photos still work.</div>`;
     });
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
-      maxZoom: 19,
-    }).addTo(map);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-      opacity: 0.9,
-    }).addTo(map);
-    map.on('click', (e) => placeGuess(e.latlng));
-    observer = new ResizeObserver(() => map && map.invalidateSize({ pan: false }));
-    observer.observe(el.mapEl);
-    setTimeout(() => map && map.invalidateSize({ pan: false }), 120);
-    renderRound();
-  }).catch(() => {
-    el.mapEl.innerHTML = `<div style="padding:28px;color:var(--mut);font-size:13px">The map could not load. Check your connection and reload — the photos still work.</div>`;
-  });
 
   renderRound();
 
   return () => {
     destroyed = true;
     if (observer) observer.disconnect();
-    if (map) { map.remove(); map = null; }
+    if (map) {
+      map.remove();
+      map = null;
+    }
   };
 }

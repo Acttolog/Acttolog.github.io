@@ -79,13 +79,15 @@ export function mount(root) {
   const cells = Array.from({ length: N * N }, () => '<div class="mh-cell"></div>').join('');
 
   function render() {
-    const tiles = board.map((v, i) => {
-      if (!v) return '';
-      const x = i % N;
-      const y = Math.floor(i / N);
-      const cls = `mh-tile${i === newAt ? ' new' : ''}`;
-      return `<div class="${cls}" data-v="${v}" style="left:calc(8px + ${x} * (25% - 2px));top:calc(8px + ${y} * (25% - 2px));background:${colorFor(v)}"><b>${v}</b><span>${esc(nameFor(v))}</span></div>`;
-    }).join('');
+    const tiles = board
+      .map((v, i) => {
+        if (!v) return '';
+        const x = i % N;
+        const y = Math.floor(i / N);
+        const cls = `mh-tile${i === newAt ? ' new' : ''}`;
+        return `<div class="${cls}" data-v="${v}" style="left:calc(8px + ${x} * (25% - 2px));top:calc(8px + ${y} * (25% - 2px));background:${colorFor(v)}"><b>${v}</b><span>${esc(nameFor(v))}</span></div>`;
+      })
+      .join('');
     boardEl.innerHTML = cells + tiles;
     scoreEl.textContent = fmt(score);
     bestEl.textContent = fmt(best);
@@ -130,7 +132,9 @@ export function mount(root) {
       const vals = idxs.map((i) => board[i]);
       const res = slideLine(vals);
       gained += res.gained;
-      idxs.forEach((idx, k) => { board[idx] = res.out[k]; });
+      idxs.forEach((idx, k) => {
+        board[idx] = res.out[k];
+      });
       // highlight cells whose value was produced by a merge
       for (let k = 0; k < N; k++) {
         const val = res.out[k];
@@ -184,8 +188,13 @@ export function mount(root) {
         </div>
       </div>`;
     overlayHost.appendChild(ov);
-    ov.querySelector('#mhKeep').addEventListener('click', () => { ov.remove(); });
-    ov.querySelector('#mhFresh').addEventListener('click', () => { ov.remove(); reset(); });
+    ov.querySelector('#mhKeep').addEventListener('click', () => {
+      ov.remove();
+    });
+    ov.querySelector('#mhFresh').addEventListener('click', () => {
+      ov.remove();
+      reset();
+    });
     ov.querySelector('#mhKeep').focus();
   }
 
@@ -205,7 +214,10 @@ export function mount(root) {
         </div>
       </div>`;
     overlayHost.appendChild(ov);
-    ov.querySelector('#mhAgain').addEventListener('click', () => { ov.remove(); reset(); });
+    ov.querySelector('#mhAgain').addEventListener('click', () => {
+      ov.remove();
+      reset();
+    });
     ov.querySelector('#mhAgain').focus();
   }
 
@@ -226,7 +238,20 @@ export function mount(root) {
 
   const keyHandler = (e) => {
     if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
-    const map = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down', A: 'left', D: 'right', W: 'up', S: 'down' };
+    const map = {
+      ArrowLeft: 'left',
+      ArrowRight: 'right',
+      ArrowUp: 'up',
+      ArrowDown: 'down',
+      a: 'left',
+      d: 'right',
+      w: 'up',
+      s: 'down',
+      A: 'left',
+      D: 'right',
+      W: 'up',
+      S: 'down',
+    };
     const dir = map[e.key];
     if (!dir) return;
     e.preventDefault();
@@ -246,7 +271,7 @@ export function mount(root) {
     touchStart = null;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
     e.preventDefault();
-    move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+    move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : dy > 0 ? 'down' : 'up');
   };
 
   root.querySelectorAll('[data-dir]').forEach((b) => b.addEventListener('click', () => move(b.dataset.dir)));

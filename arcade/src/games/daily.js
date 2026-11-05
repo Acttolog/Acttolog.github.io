@@ -75,16 +75,19 @@ export function mount(root) {
       </div>`;
     main.querySelector('#ndLockedPractice').addEventListener('click', () => start('practice'));
     main.querySelector('#ndLockedShare').addEventListener('click', () => {
-      shareText(`ACTTOLOG ARCADE — Nepal Daily\n${today} · ${saved.score}/${COUNT}\n${hits}\nacttolog.github.io/games/nepal-daily`);
+      shareText(
+        `ACTTOLOG ARCADE — Nepal Daily\n${today} · ${saved.score}/${COUNT}\n${hits}\nacttolog.github.io/games/nepal-daily`,
+      );
     });
   }
 
   function start(nextMode) {
     host.querySelectorAll('.overlay').forEach((o) => o.remove());
     mode = nextMode;
-    questions = nextMode === 'daily'
-      ? seededPick(TRIVIA, COUNT, `daily:${today}`, (q) => q.c)
-      : seededPick(TRIVIA, COUNT, `practice:${Date.now()}:${Math.random()}`, (q) => q.c);
+    questions =
+      nextMode === 'daily'
+        ? seededPick(TRIVIA, COUNT, `daily:${today}`, (q) => q.c)
+        : seededPick(TRIVIA, COUNT, `practice:${Date.now()}:${Math.random()}`, (q) => q.c);
     index = 0;
     answers = [];
     paintGrid();
@@ -95,13 +98,16 @@ export function mount(root) {
     answered = false;
     selected = -1;
     const q = questions[index];
-    if (!q) { finish(); return; }
+    if (!q) {
+      finish();
+      return;
+    }
     main.innerHTML = `
       <div class="nd-qhead">
         <span class="nd-cat">${esc(q.c)}</span>
         <span class="nd-count">QUESTION ${index + 1} / ${COUNT}</span>
       </div>
-      <div class="progress" style="margin:-2px 0 14px"><i style="width:${((index) / COUNT) * 100}%"></i></div>
+      <div class="progress" style="margin:-2px 0 14px"><i style="width:${(index / COUNT) * 100}%"></i></div>
       <h3 class="nd-q" id="ndQ">${esc(q.q)}</h3>
       <div class="nd-options" id="ndOptions" role="group" aria-label="Answer options">
         ${q.o.map((opt, i) => `<button type="button" class="nd-opt" data-opt="${i}"><kbd>${i + 1}</kbd><span class="txt">${esc(opt)}</span></button>`).join('')}
@@ -110,7 +116,9 @@ export function mount(root) {
       <div class="g-row" style="margin-top:14px">
         <button type="button" class="btn primary small" id="ndNext" hidden>${index === COUNT - 1 ? 'See result' : 'Next question'} →</button>
       </div>`;
-    main.querySelectorAll('[data-opt]').forEach((b) => b.addEventListener('click', () => answer(Number(b.dataset.opt))));
+    main
+      .querySelectorAll('[data-opt]')
+      .forEach((b) => b.addEventListener('click', () => answer(Number(b.dataset.opt))));
     main.querySelector('#ndNext').addEventListener('click', next);
     paintGrid();
   }
@@ -173,7 +181,10 @@ export function mount(root) {
         </div>
       </div>`;
     host.appendChild(ov);
-    ov.querySelector('#ndAgain').addEventListener('click', () => { ov.remove(); start('practice'); });
+    ov.querySelector('#ndAgain').addEventListener('click', () => {
+      ov.remove();
+      start('practice');
+    });
     ov.querySelector('#ndCopy').addEventListener('click', () => copyText(share));
     ov.querySelector('#ndAgain').focus();
   }

@@ -4,9 +4,7 @@ import { isSolid2, planSolve2 } from './solver2.js';
 import { CubeView } from './cube-view.js';
 import { SoundEngine } from './sound.js';
 import { FACE_BY_INDEX, FACE_INDEX } from './facelet-model.js';
-import {
-  COLOR_LABEL, NET_LAYOUT, PALETTE_ORDER, applyStateToCube, puzzleFor,
-} from './custom-state.js';
+import { COLOR_LABEL, NET_LAYOUT, PALETTE_ORDER, applyStateToCube, puzzleFor } from './custom-state.js';
 
 const SIZE_META = {
   2: {
@@ -312,7 +310,7 @@ function buildSteps() {
       makeEl('span', 'step__num', String(index + 1).padStart(2, '0')),
       makeEl('span', 'step__name', phase),
       makeEl('span', 'step__tag', tags[phase] || ''),
-      makeEl('span', 'step__state')
+      makeEl('span', 'step__state'),
     );
     item.lastChild.setAttribute('aria-hidden', 'true');
     stepsEl.appendChild(item);
@@ -352,13 +350,13 @@ function moodCopy(mood) {
     case 'Solving':
       return state.size === 2
         ? {
-          title: 'Computing solution',
-          desc: 'Reading 24 facelets, then looking up the exact orient + permute corner solution.',
-        }
+            title: 'Computing solution',
+            desc: 'Reading 24 facelets, then looking up the exact orient + permute corner solution.',
+          }
         : {
-          title: 'Computing solution',
-          desc: 'Reading 54 facelets, then searching cross, corners, F2L and the last layer.',
-        };
+            title: 'Computing solution',
+            desc: 'Reading 54 facelets, then searching cross, corners, F2L and the last layer.',
+          };
     case 'Solved':
       return {
         title: 'Solved',
@@ -394,9 +392,7 @@ function setProgress(done, total) {
 }
 
 function updateCounters() {
-  metricMoves.textContent = state.total > 0
-    ? `${String(state.done).padStart(2, '0')} / ${state.total}`
-    : '—';
+  metricMoves.textContent = state.total > 0 ? `${String(state.done).padStart(2, '0')} / ${state.total}` : '—';
   setProgress(state.done, state.total);
 }
 
@@ -469,10 +465,7 @@ function showToast(message, isError = false) {
 
 /* ---------- sequence panel ---------- */
 
-function clearSequence(
-  message = 'Awaiting a run.',
-  sub = 'Scramble or solve to populate the queue.'
-) {
+function clearSequence(message = 'Awaiting a run.', sub = 'Scramble or solve to populate the queue.') {
   sequenceTitle.textContent = 'Sequence';
   sequenceCount.textContent = '000';
   sequenceScroll.innerHTML = '';
@@ -673,7 +666,10 @@ async function doScramble(id) {
   setMood('Scramble');
   clearSequence('Building a scramble…', `${meta.scrambleLength} random turns.`);
   resetMetrics();
-  renderSequence(moves.map((move) => ({ move, phase: 'Scramble' })), 'Scramble');
+  renderSequence(
+    moves.map((move) => ({ move, phase: 'Scramble' })),
+    'Scramble',
+  );
   state.total = moves.length;
   state.done = 0;
   updateCounters();
@@ -851,15 +847,18 @@ async function manualTurn(face, prime) {
   if (puzzleIsSolved()) {
     state.mode = 'solved';
     setStatus('solved', 'Solved');
-    setMood('Solved', state.size === 2
-      ? {
-        title: 'Solved by hand',
-        desc: 'Every face is one color. With no fixed centers, that counts as solved on a 2×2.',
-      }
-      : {
-        title: 'Solved by hand',
-        desc: 'Every sticker home. Toggle Auto on to resume the loop.',
-      });
+    setMood(
+      'Solved',
+      state.size === 2
+        ? {
+            title: 'Solved by hand',
+            desc: 'Every face is one color. With no fixed centers, that counts as solved on a 2×2.',
+          }
+        : {
+            title: 'Solved by hand',
+            desc: 'Every sticker home. Toggle Auto on to resume the loop.',
+          },
+    );
     view.celebrate();
     sound.chime();
   } else {
@@ -956,10 +955,10 @@ function readLabLibrary() {
       .filter((entry) => {
         const size = Number(entry?.size);
         return (
-          (size === 2 || size === 3)
-          && typeof entry.code === 'string'
-          && entry.code.length === size * size * 6
-          && typeof entry.name === 'string'
+          (size === 2 || size === 3) &&
+          typeof entry.code === 'string' &&
+          entry.code.length === size * size * 6 &&
+          typeof entry.name === 'string'
         );
       })
       .slice(0, 60)
@@ -1011,9 +1010,7 @@ function startLabTimeline(label) {
 }
 
 function solvedWithMoves(puzzle, moves) {
-  return Uint8Array.from(
-    puzzle.model.applyMoves(Uint8Array.from(puzzle.model.SOLVED), moves)
-  );
+  return Uint8Array.from(puzzle.model.applyMoves(Uint8Array.from(puzzle.model.SOLVED), moves));
 }
 
 function randomLabState(puzzle) {
@@ -1305,12 +1302,15 @@ function buildLabTurns() {
       button.type = 'button';
       button.dataset.move = move;
       button.style.setProperty('--turn', STICKER_HEX[face]);
-      button.setAttribute('aria-label', `Turn the ${face} layer ${prime ? 'counter-clockwise' : 'clockwise'}`);
+      button.setAttribute(
+        'aria-label',
+        `Turn the ${face} layer ${prime ? 'counter-clockwise' : 'clockwise'}`,
+      );
       button.title = `${face}${prime ? '′' : ''} — ${COLOR_LABEL[face]} layer ${prime ? 'counter-clockwise' : 'clockwise'}`;
       button.append(
         makeEl('i', ''),
         makeEl('span', '', prime ? `${face}′` : face),
-        makeEl('small', '', prime ? '↺' : '↻')
+        makeEl('small', '', prime ? '↺' : '↻'),
       );
       button.addEventListener('click', () => applyLabTurns([move]));
       labTurnGrid.appendChild(button);
@@ -1368,7 +1368,7 @@ function paintLabNet() {
     const fixed = cell.dataset.fixed === 'true' ? ' — fixed' : '';
     cell.setAttribute(
       'aria-label',
-      `${COLOR_LABEL[colorFace]} sticker on the ${face} face, row ${row}, column ${col}${fixed}`
+      `${COLOR_LABEL[colorFace]} sticker on the ${face} face, row ${row}, column ${col}${fixed}`,
     );
   }
 
@@ -1409,7 +1409,8 @@ function renderLabStatus(result) {
   if (stats.isSolved) {
     labStatusEl.textContent = 'Solved cube — paint any sticker to start a position.';
   } else if (stats.isSolid) {
-    labStatusEl.textContent = 'Every face is one color — solid but rotated. Solve will orient the corners home.';
+    labStatusEl.textContent =
+      'Every face is one color — solid but rotated. Solve will orient the corners home.';
   } else {
     labStatusEl.textContent = `Reachable position — ${stats.misplacedStickers} sticker${stats.misplacedStickers === 1 ? '' : 's'} away from solved.`;
   }
@@ -1420,19 +1421,16 @@ function renderLabChecks(result) {
   for (const check of result.checks) {
     const item = makeEl(
       'li',
-      `lab__check${check.status === 'ok' ? ' is-ok' : check.status === 'error' ? ' is-error' : ''}`
+      `lab__check${check.status === 'ok' ? ' is-ok' : check.status === 'error' ? ' is-error' : ''}`,
     );
     const icon = makeEl(
       'span',
       'lab__check__icon',
-      check.status === 'ok' ? '✓' : check.status === 'error' ? '!' : '–'
+      check.status === 'ok' ? '✓' : check.status === 'error' ? '!' : '–',
     );
     icon.setAttribute('aria-hidden', 'true');
     const body = document.createElement('div');
-    body.append(
-      makeEl('b', '', check.label),
-      makeEl('small', '', check.detail)
-    );
+    body.append(makeEl('b', '', check.label), makeEl('small', '', check.detail));
     item.append(icon, body);
     labChecksEl.appendChild(item);
   }
@@ -1513,8 +1511,8 @@ function renderLabPlan(result) {
     makeEl(
       'span',
       '',
-      `${lab.size === 2 ? 'two-phase' : 'layer-by-layer'} · ${Math.max(1, Math.round(lab.plan.ms))} ms`
-    )
+      `${lab.size === 2 ? 'two-phase' : 'layer-by-layer'} · ${Math.max(1, Math.round(lab.plan.ms))} ms`,
+    ),
   );
 
   const meta = makeEl('div', 'lab__plan-meta');
@@ -1522,8 +1520,8 @@ function renderLabPlan(result) {
     makeEl(
       'span',
       `lab__verify${lab.plan.verified ? '' : ' is-error'}`,
-      lab.plan.verified ? '✓ plan replayed and solved' : '! plan failed verification'
-    )
+      lab.plan.verified ? '✓ plan replayed and solved' : '! plan failed verification',
+    ),
   );
 
   const phases = makeEl('div', 'lab__plan-phases');
@@ -1562,9 +1560,7 @@ function renderLabPlan(result) {
 function renderLabPiece() {
   labPieceEl.innerHTML = '';
   if (lab.selected === null || !lab.cells[lab.selected]) {
-    labPieceEl.appendChild(
-      makeEl('p', 'lab__muted', 'Hover, focus or tap a sticker to inspect its piece.')
-    );
+    labPieceEl.appendChild(makeEl('p', 'lab__muted', 'Hover, focus or tap a sticker to inspect its piece.'));
     return;
   }
 
@@ -1629,16 +1625,13 @@ function renderLabHistory() {
     const entry = lab.timeline[index];
     const row = makeEl(
       'button',
-      `lab__hist${index === lab.index ? ' is-current' : ''}${index > lab.index ? ' is-future' : ''}`
+      `lab__hist${index === lab.index ? ' is-current' : ''}${index > lab.index ? ' is-future' : ''}`,
     );
     row.type = 'button';
     row.disabled = index === lab.index;
     row.dataset.index = String(index);
     row.title = `${entry.label} — step ${index} of ${steps}`;
-    row.append(
-      makeEl('i', '', String(index).padStart(2, '0')),
-      makeEl('span', '', entry.label)
-    );
+    row.append(makeEl('i', '', String(index).padStart(2, '0')), makeEl('span', '', entry.label));
     if (index === lab.index) row.appendChild(makeEl('b', '', 'now'));
     row.addEventListener('click', () => jumpLabEntry(index));
     labHistoryEl.appendChild(row);
@@ -1659,7 +1652,7 @@ function renderLabLibrary() {
 
   if (!labLibrary.length) {
     labLibraryList.appendChild(
-      makeEl('p', 'lab__muted', 'Nothing saved yet — name a position and press Save.')
+      makeEl('p', 'lab__muted', 'Nothing saved yet — name a position and press Save.'),
     );
     return;
   }
@@ -1671,14 +1664,17 @@ function renderLabLibrary() {
     load.title = `Load “${entry.name}” (${entry.size}×${entry.size})`;
     load.append(
       makeEl('b', '', entry.name),
-      makeEl('small', '', `${entry.size}×${entry.size} · ${formatSavedAt(entry.savedAt)}`)
+      makeEl('small', '', `${entry.size}×${entry.size} · ${formatSavedAt(entry.savedAt)}`),
     );
     load.addEventListener('click', () => loadLabLibraryEntry(entry.id));
 
     const remove = makeEl('button', 'lab__lib-del', labDeleteArmed === entry.id ? 'Delete?' : 'Delete');
     remove.type = 'button';
     remove.classList.toggle('is-armed', labDeleteArmed === entry.id);
-    remove.setAttribute('aria-label', labDeleteArmed === entry.id ? `Confirm delete ${entry.name}` : `Delete ${entry.name}`);
+    remove.setAttribute(
+      'aria-label',
+      labDeleteArmed === entry.id ? `Confirm delete ${entry.name}` : `Delete ${entry.name}`,
+    );
     remove.addEventListener('click', () => deleteLabLibraryEntry(entry.id));
 
     row.append(load, remove);
@@ -1946,7 +1942,7 @@ function applyLabTurns(moves, label = null) {
   lab.selected = null;
   const text = moves.join(' ');
   commitLab(
-    label || (moves.length === 1 ? `Turn ${prettyMove(moves[0])}` : `Sequence ${shortLabSequence(text)}`)
+    label || (moves.length === 1 ? `Turn ${prettyMove(moves[0])}` : `Sequence ${shortLabSequence(text)}`),
   );
   refreshLab();
   if (moves.length === 1) sound.move(moves[0], { soft: true });
@@ -1994,10 +1990,13 @@ function invertLabSequence() {
     showLabToast(parsed.error, true);
     return;
   }
-  const inverted = parsed.moves.slice().reverse().map((move) => {
-    if (move.endsWith('2')) return move;
-    return move.endsWith("'") ? move.slice(0, -1) : `${move}'`;
-  });
+  const inverted = parsed.moves
+    .slice()
+    .reverse()
+    .map((move) => {
+      if (move.endsWith('2')) return move;
+      return move.endsWith("'") ? move.slice(0, -1) : `${move}'`;
+    });
   labSeqEl.value = inverted.join(' ');
   labSeqEl.focus();
   showLabToast('Sequence inverted — apply to undo it');
@@ -2040,7 +2039,7 @@ function saveLabPosition() {
   const code = currentPuzzle().codeOf(lab.state);
   const size = lab.size;
   const existing = labLibrary.findIndex(
-    (entry) => entry.size === size && entry.name.toLowerCase() === name.toLowerCase()
+    (entry) => entry.size === size && entry.name.toLowerCase() === name.toLowerCase(),
   );
   const entry = {
     id: existing >= 0 ? labLibrary[existing].id : newLabId(),
@@ -2144,16 +2143,16 @@ async function importLabLibrary(file) {
   let added = 0;
   for (const raw of entries.slice(0, 100)) {
     const size = Number(raw?.size);
-    const name = String(raw?.name || '').trim().slice(0, 40);
+    const name = String(raw?.name || '')
+      .trim()
+      .slice(0, 40);
     const code = String(raw?.code || '');
     if (size !== 2 && size !== 3) continue;
     const puzzle = puzzleFor(size);
     const parsed = puzzle.fromCode(code);
     if (!parsed.ok) continue;
     const normalized = puzzle.codeOf(parsed.state);
-    const duplicate = labLibrary.some(
-      (entry) => entry.size === size && entry.code === normalized
-    );
+    const duplicate = labLibrary.some((entry) => entry.size === size && entry.code === normalized);
     if (duplicate) continue;
     labLibrary.unshift({
       id: newLabId(),
@@ -2171,7 +2170,7 @@ async function importLabLibrary(file) {
   renderLabLibrary();
   showLabToast(
     added ? `Imported ${added} position${added === 1 ? '' : 's'}` : 'No new positions found',
-    !added
+    !added,
   );
 }
 
@@ -2190,10 +2189,7 @@ function applyLabPreset(id) {
   refreshLab({ immediate: true });
   labPresetEl.value = '';
   const result = currentPuzzle().validate(lab.state);
-  showLabToast(
-    result.ok ? `${preset.label} loaded` : `${preset.label} — see the rule errors`,
-    !result.ok
-  );
+  showLabToast(result.ok ? `${preset.label} loaded` : `${preset.label} — see the rule errors`, !result.ok);
 }
 
 function applyLabCode() {
@@ -2626,9 +2622,15 @@ function boot() {
   if (state.auto) scheduleAuto(1600);
 
   window.cube26 = {
-    get cube() { return activeCube; },
-    get view() { return view; },
-    get labLibrary() { return labLibrary; },
+    get cube() {
+      return activeCube;
+    },
+    get view() {
+      return view;
+    },
+    get labLibrary() {
+      return labLibrary;
+    },
     state,
     lab,
     scramble,

@@ -2,7 +2,9 @@
   {
     "slug": "everest-pano",
     "title": { "en": "Everest at Sunset", "ne": "सगरमाथा" },
-    "alt": { "en": "Mount Everest's summit glowing orange-red at sunset, piercing through drifting clouds above dark, snow-covered peaks of the Mahalangur Himal in Sagarmatha National Park." },
+    "alt": {
+      "en": "Mount Everest's summit glowing orange-red at sunset, piercing through drifting clouds above dark, snow-covered peaks of the Mahalangur Himal in Sagarmatha National Park."
+    },
     "credit": "Megaurab09 via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sunset_Glow_on_Mount_Everest.jpg",
@@ -14,7 +16,9 @@
   {
     "slug": "machhapuchare",
     "title": { "en": "Machhapuchhare at Dusk", "ne": "माछापुच्छ्रे" },
-    "alt": { "en": "The fishtail silhouette of Machhapuchhare (Fishtail) peak in the Annapurna range against an orange and blue dusk sky with crepuscular rays fanning above the ridge." },
+    "alt": {
+      "en": "The fishtail silhouette of Machhapuchhare (Fishtail) peak in the Annapurna range against an orange and blue dusk sky with crepuscular rays fanning above the ridge."
+    },
     "credit": "Bijay Chaurasia via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Machapuchare_Himal-3797.jpg",
@@ -26,7 +30,9 @@
   {
     "slug": "phewa-lake",
     "title": { "en": "Phewa Lake at Dawn", "ne": "फेवा ताल" },
-    "alt": { "en": "Phewa Lake in Pokhara at dawn, with the snow-capped Annapurna and Machhapuchhare ranges mirrored in the glassy water and a tree-fringed shore with houses in the middle distance." },
+    "alt": {
+      "en": "Phewa Lake in Pokhara at dawn, with the snow-capped Annapurna and Machhapuchhare ranges mirrored in the glassy water and a tree-fringed shore with houses in the middle distance."
+    },
     "credit": "Wolfgang Beyer via Wikimedia Commons",
     "license": "CC BY-SA 3.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pokhara2.jpg",
@@ -38,7 +44,9 @@
   {
     "slug": "swayambhunath",
     "title": { "en": "Swayambhunath Stupa", "ne": "स्वयम्भू" },
-    "alt": { "en": "The gilded spire and painted Buddha eyes of Swayambhunath stupa in Kathmandu, strung with prayer flags as birds wheel above the white dome against a deep blue sky." },
+    "alt": {
+      "en": "The gilded spire and painted Buddha eyes of Swayambhunath stupa in Kathmandu, strung with prayer flags as birds wheel above the white dome against a deep blue sky."
+    },
     "credit": "Nirmal Dulal via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Swayambhunath_temple_-_an_ancient_religious_architecture_of_Nepal.jpg",
@@ -50,7 +58,9 @@
   {
     "slug": "boudhanath",
     "title": { "en": "Boudhanath at Dusk", "ne": "बौद्धनाथ" },
-    "alt": { "en": "The illuminated white dome and golden tower of Boudhanath stupa in Kathmandu at twilight, silhouetted devotees and photographers gathered on its plinth and prayer lines stretching from the spire." },
+    "alt": {
+      "en": "The illuminated white dome and golden tower of Boudhanath stupa in Kathmandu at twilight, silhouetted devotees and photographers gathered on its plinth and prayer lines stretching from the spire."
+    },
     "credit": "Gr8prajwalb via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:People_praying_and_photographing_the_Boudhanath_Stupa,_Kathmandu_Nepal.jpg",
@@ -62,7 +72,9 @@
   {
     "slug": "bhaktapur-durbar",
     "title": { "en": "Bhaktapur Durbar Square", "ne": "भक्तपुर दरबार स्क्वायर" },
-    "alt": { "en": "View from beneath a carved wooden colonnade across the brick courtyard of Bhaktapur Durbar Square, with tiered Hindu temples and palace buildings under a cloudy sky." },
+    "alt": {
+      "en": "View from beneath a carved wooden colonnade across the brick courtyard of Bhaktapur Durbar Square, with tiered Hindu temples and palace buildings under a cloudy sky."
+    },
     "credit": "Goutam1962 via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Durbar_Square_Bhaktapur_Nepal_91.jpg",
@@ -74,7 +86,9 @@
   {
     "slug": "patan-durbar",
     "title": { "en": "Patan Durbar Square", "ne": "पाटन दरबार स्क्वायर" },
-    "alt": { "en": "The stone Hindu temple complex of Patan Durbar Square in Lalitpur, showing sculpted shikhara temples, the historic clock tower and brick courtyards." },
+    "alt": {
+      "en": "The stone Hindu temple complex of Patan Durbar Square in Lalitpur, showing sculpted shikhara temples, the historic clock tower and brick courtyards."
+    },
     "credit": "Alexander Shafir via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nepal_Patan_Durbar_Square_10_(full_res).jpg",
@@ -86,7 +100,9 @@
   {
     "slug": "woodcarving-basantapur",
     "title": { "en": "Carved Columns of Basantapur", "ne": "बसन्तपुर" },
-    "alt": { "en": "Close-up of richly carved wooden columns and struts of the Basantapur tower at Hanuman Dhoka, Kathmandu Durbar Square, covered in interlaced figures and floral reliefs." },
+    "alt": {
+      "en": "Close-up of richly carved wooden columns and struts of the Basantapur tower at Hanuman Dhoka, Kathmandu Durbar Square, covered in interlaced figures and floral reliefs."
+    },
     "credit": "Jorge Láscar via Wikimedia Commons",
     "license": "CC BY 2.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carved_columns_of_Basantapur_Tower_(17665181789).jpg",
@@ -98,7 +114,9 @@
   {
     "slug": "lumbini-maya-devi",
     "title": { "en": "Maya Devi Temple, Lumbini", "ne": "मायादेवी मन्दिर, लुम्बिनी" },
-    "alt": { "en": "The white colonnaded Maya Devi temple at Lumbini, the birthplace of the Buddha, reflected in a still pool beneath a clear sky." },
+    "alt": {
+      "en": "The white colonnaded Maya Devi temple at Lumbini, the birthplace of the Buddha, reflected in a still pool beneath a clear sky."
+    },
     "credit": "Rangan Datta Wiki via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lumbini_Maya_Devi_Temple_1.jpg",
@@ -110,7 +128,9 @@
   {
     "slug": "greater-rhinoceros",
     "title": { "en": "Greater One-horned Rhinoceros", "ne": "गैंडा" },
-    "alt": { "en": "A greater one-horned rhinoceros walking directly toward the camera along a sandy path through the grassland and sal forest of Chitwan National Park." },
+    "alt": {
+      "en": "A greater one-horned rhinoceros walking directly toward the camera along a sandy path through the grassland and sal forest of Chitwan National Park."
+    },
     "credit": "Lurey Rohit via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:One-horned_Rhinoceros_at_Chitwan_National_Park.jpg",
@@ -122,7 +142,9 @@
   {
     "slug": "canoe-rapti",
     "title": { "en": "Canoeing the Rapti", "ne": "राप्ती नदी" },
-    "alt": { "en": "View from a wooden canoe gliding on the calm, mirror-like Rapti river in Chitwan, a boatman poling ahead beneath dense jungle forest lining the banks. (Bottom 10% of the original cropped to remove a burned-in camera date stamp.)" },
+    "alt": {
+      "en": "View from a wooden canoe gliding on the calm, mirror-like Rapti river in Chitwan, a boatman poling ahead beneath dense jungle forest lining the banks. (Bottom 10% of the original cropped to remove a burned-in camera date stamp.)"
+    },
     "credit": "Zenith Rauniyar via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Canoeing_at_Rapti_River_-_chitwan_national_park.jpg",
@@ -134,7 +156,9 @@
   {
     "slug": "lo-manthang",
     "title": { "en": "Lo Manthang, Upper Mustang", "ne": "लो मन्थाङ" },
-    "alt": { "en": "The walled capital Lo Manthang in arid Upper Mustang, its pale houses and temples ringed by fortress walls, with green terraced fields at the foot of barren brown Himalayan mountains." },
+    "alt": {
+      "en": "The walled capital Lo Manthang in arid Upper Mustang, its pale houses and temples ringed by fortress walls, with green terraced fields at the foot of barren brown Himalayan mountains."
+    },
     "credit": "Safalphotos via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lo_Manthang,_Upper_Mustang,_Nepal.jpg",
@@ -146,7 +170,9 @@
   {
     "slug": "rara-lake",
     "title": { "en": "Rara Lake", "ne": "रारा ताल" },
-    "alt": { "en": "Rara Lake in Mugu, far-western Nepal: a deep-blue alpine lake ringed by pine-clad hills, with clouds and forested slopes perfectly mirrored on its glassy surface." },
+    "alt": {
+      "en": "Rara Lake in Mugu, far-western Nepal: a deep-blue alpine lake ringed by pine-clad hills, with clouds and forested slopes perfectly mirrored on its glassy surface."
+    },
     "credit": "scvishnu7 (phuchche) via Wikimedia Commons",
     "license": "CC0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rara_lake_nepal.jpg",
@@ -158,7 +184,9 @@
   {
     "slug": "helambu-trekkers",
     "title": { "en": "Tea Break in Machhermo", "ne": "माछेरमो" },
-    "alt": { "en": "Trekkers resting at an outdoor table in the stone village of Machhermo in the Nepali Himalaya, hikers with loaded backpacks passing on a cobbled path while snow peaks rise behind the teahouses." },
+    "alt": {
+      "en": "Trekkers resting at an outdoor table in the stone village of Machhermo in the Nepali Himalaya, hikers with loaded backpacks passing on a cobbled path while snow peaks rise behind the teahouses."
+    },
     "credit": "Vyacheslav Argenberg via Wikimedia Commons",
     "license": "CC BY 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Machermo,_Hikers,_Nepal.jpg",
@@ -170,7 +198,9 @@
   {
     "slug": "namche-prayer-flags",
     "title": { "en": "Prayer Flags on the Sagarmatha Trail", "ne": "प्राथना झण्डा" },
-    "alt": { "en": "A tall prayer-flag mast draped with white and multicolored wind-horse flags on the Sagarmatha (Everest region) trek, with Lhotse and Everest catching the evening sun above the cloud line." },
+    "alt": {
+      "en": "A tall prayer-flag mast draped with white and multicolored wind-horse flags on the Sagarmatha (Everest region) trek, with Lhotse and Everest catching the evening sun above the cloud line."
+    },
     "credit": "McKay Savage via Wikimedia Commons",
     "license": "CC BY 2.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nepal_-_Sagamartha_Trek_-_242_-_Prayer_flag_pole_with_Lhotse_and_Everest_(497863693).jpg",
@@ -182,7 +212,9 @@
   {
     "slug": "surnaya-bridge",
     "title": { "en": "Suspension Bridge over the Surnaya", "ne": "झुलेपुल" },
-    "alt": { "en": "A simple cable-suspended footbridge crossing the stony Surnaya river in the hills of far-western Nepal, with stone approaches and forested slopes rising on both banks." },
+    "alt": {
+      "en": "A simple cable-suspended footbridge crossing the stony Surnaya river in the hills of far-western Nepal, with stone approaches and forested slopes rising on both banks."
+    },
     "credit": "Nirajan Pant via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:A_suspension_bridge_above_the_Surnaya_River.jpg",
@@ -194,7 +226,9 @@
   {
     "slug": "tihar-diyo",
     "title": { "en": "Lighting Diyo at Tihar", "ne": "तीहार" },
-    "alt": { "en": "A Nepali woman lighting rows of traditional clay oil lamps (diyo) inside a home during the festival of Tihar, the earthen floor and walls glowing with flame and strands of colored lights above." },
+    "alt": {
+      "en": "A Nepali woman lighting rows of traditional clay oil lamps (diyo) inside a home during the festival of Tihar, the earthen floor and walls glowing with flame and strands of colored lights above."
+    },
     "credit": "Mithunkunwar9 via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sister_lighting_traditional_lamp_during_Tihar_festival.jpg",
@@ -206,7 +240,9 @@
   {
     "slug": "holi-festival",
     "title": { "en": "Holi, the Festival of Colours", "ne": "होली" },
-    "alt": { "en": "A young woman whose face and clothes are dusted with pink, green and yellow powder smiles and raises her painted hand amid a crowd celebrating Holi in Nepal." },
+    "alt": {
+      "en": "A young woman whose face and clothes are dusted with pink, green and yellow powder smiles and raises her painted hand amid a crowd celebrating Holi in Nepal."
+    },
     "credit": "Sarita Khadka via Wikimedia Commons",
     "license": "CC0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Holi_(247925049).jpeg",
@@ -218,7 +254,9 @@
   {
     "slug": "dal-bhat",
     "title": { "en": "Dal Bhat Tarkari", "ne": "दाल भात तरकारी" },
-    "alt": { "en": "A traditional Nepali dal-bhat thali on a steel plate: a mound of steamed rice with a bowl of yellow lentil soup, vegetable curries, pickle and a toasted papad." },
+    "alt": {
+      "en": "A traditional Nepali dal-bhat thali on a steel plate: a mound of steamed rice with a bowl of yellow lentil soup, vegetable curries, pickle and a toasted papad."
+    },
     "credit": "Gaurav Dhwaj Khadka via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dal_Bhat_Tarkari_2.jpg",
@@ -230,7 +268,9 @@
   {
     "slug": "momo",
     "title": { "en": "Buff Momo", "ne": "मोमो" },
-    "alt": { "en": "A foil plate of steamed buff-meat momos (Nepali dumplings) with a side of red tomato achar dipping sauce and a plastic spoon." },
+    "alt": {
+      "en": "A foil plate of steamed buff-meat momos (Nepali dumplings) with a side of red tomato achar dipping sauce and a plastic spoon."
+    },
     "credit": "Gaurav Dhwaj Khadka via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Buff_Momo_6.jpg",
@@ -242,7 +282,9 @@
   {
     "slug": "newar-samaya-baji",
     "title": { "en": "Samaya Baji Offering", "ne": "समय बाजी" },
-    "alt": { "en": "A Newar woman in traditional red-and-white dress arranges Samaya Baji, a mound-shaped ritual feast of rice, fruits, seeds and offerings spread on a floral cloth during the Bhumsen Jatra at Sunakothi, Lalitpur." },
+    "alt": {
+      "en": "A Newar woman in traditional red-and-white dress arranges Samaya Baji, a mound-shaped ritual feast of rice, fruits, seeds and offerings spread on a floral cloth during the Bhumsen Jatra at Sunakothi, Lalitpur."
+    },
     "credit": "Janak Bhatta via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Samaya_Baji3.jpg",
@@ -254,7 +296,9 @@
   {
     "slug": "terrace-farming",
     "title": { "en": "Terraced Paddy Fields", "ne": "खेती" },
-    "alt": { "en": "Emerald terraced paddy fields stepped up a mid-hill slope in Chamunda, Dailekh, western Nepal, with the contour lines of each terrace clearly carved into the hillside." },
+    "alt": {
+      "en": "Emerald terraced paddy fields stepped up a mid-hill slope in Chamunda, Dailekh, western Nepal, with the contour lines of each terrace clearly carved into the hillside."
+    },
     "credit": "Kuber Rana Magar via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Terrace_Farming_in_Chamunda_VDC_of_Dailekh.jpg",
@@ -266,7 +310,9 @@
   {
     "slug": "bandipur",
     "title": { "en": "Bandipur Hilltown", "ne": "बन्दीपुर" },
-    "alt": { "en": "The preserved Newari hilltop town of Bandipur in Tanahun, its cluster of slate-roofed houses and mountaintop shrine perched on a forested ridge above deep river valleys." },
+    "alt": {
+      "en": "The preserved Newari hilltop town of Bandipur in Tanahun, its cluster of slate-roofed houses and mountaintop shrine perched on a forested ridge above deep river valleys."
+    },
     "credit": "Bijay Chaurasia via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bandipur,_Nepal-WLV-1911.jpg",
@@ -278,7 +324,9 @@
   {
     "slug": "janaki-temple",
     "title": { "en": "Janaki Temple, Janakpur", "ne": "जानकी मन्दिर, जनकपुर" },
-    "alt": { "en": "The white, multi-shrined Janaki temple of Janakpur, dedicated to the goddess Sita, rising above its wide paved courtyard where visitors walk beneath a bright cloudy sky." },
+    "alt": {
+      "en": "The white, multi-shrined Janaki temple of Janakpur, dedicated to the goddess Sita, rising above its wide paved courtyard where visitors walk beneath a bright cloudy sky."
+    },
     "credit": "Bijay Chaurasia via Wikimedia Commons",
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Janaki_Temple,_Janakpur-September_22,_2016-IMG_7493.jpg",

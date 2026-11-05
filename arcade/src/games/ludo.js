@@ -1,8 +1,28 @@
 import {
-  COLORS, META, VERSION, PLAYER_SETS, DEFAULT_OPTIONS, PATH_STEPS,
-  RING, START, SAFE_RINGS, HOME_COL, HOME_QUADRANT, BASE_SLOTS,
-  createGame, legalMoves, rollDice, commitMove, endTurn, cpuPickMove,
-  currentPlayer, xyAt, tokenCount, progressSum, standings, isValidGame,
+  COLORS,
+  META,
+  VERSION,
+  PLAYER_SETS,
+  DEFAULT_OPTIONS,
+  PATH_STEPS,
+  RING,
+  START,
+  SAFE_RINGS,
+  HOME_COL,
+  HOME_QUADRANT,
+  BASE_SLOTS,
+  createGame,
+  legalMoves,
+  rollDice,
+  commitMove,
+  endTurn,
+  cpuPickMove,
+  currentPlayer,
+  xyAt,
+  tokenCount,
+  progressSum,
+  standings,
+  isValidGame,
 } from './ludo-engine.js';
 import { esc, load, save, toast, reduceMotion, copyText, shareText } from '../util.js';
 
@@ -19,7 +39,9 @@ const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6,
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const colorName = (c) => META[c]?.name || c;
 
-function pct(v) { return `${(v / 15) * 100}%`; }
+function pct(v) {
+  return `${(v / 15) * 100}%`;
+}
 
 export function mount(root) {
   let destroyed = false;
@@ -70,7 +92,12 @@ export function mount(root) {
   const rawSave = load('ludo:save', null);
   if (rawSave && isValidGame(rawSave.game) && rawSave.game.phase !== 'over') savedGame = rawSave;
 
-  const faces = [1, 2, 3, 4, 5, 6].map((v) => `<span class="lh-face lh-face-${v}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[v].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`).join('');
+  const faces = [1, 2, 3, 4, 5, 6]
+    .map(
+      (v) =>
+        `<span class="lh-face lh-face-${v}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[v].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`,
+    )
+    .join('');
 
   root.innerHTML = `
     <div class="lh-wrap${prefs.flat ? ' flat' : ''}" id="lhRoot">
@@ -228,7 +255,9 @@ export function mount(root) {
         osc.connect(g).connect(ac.destination);
         osc.start(t);
         osc.stop(t + dur + 0.02);
-      } catch { /* audio is a bonus, never a blocker */ }
+      } catch {
+        /* audio is a bonus, never a blocker */
+      }
     }
     function noise(dur = 0.1, gain = 0.03, freq = 1200, delay = 0) {
       const ac = get();
@@ -249,23 +278,59 @@ export function mount(root) {
         g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
         src.connect(filter).connect(g).connect(ac.destination);
         src.start(t);
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
     }
     return {
-      roll() { for (let i = 0; i < 6; i++) noise(0.04, 0.028, 850 + Math.random() * 700, i * 0.065); },
-      clack() { noise(0.05, 0.034, 2100); tone(190, 0.04, 'square', 0.012, -60); },
-      step() { tone(520, 0.045, 'triangle', 0.026, 180); },
-      capture() { tone(240, 0.26, 'sawtooth', 0.05, -140); noise(0.18, 0.04, 420); },
-      home() { tone(659, 0.15, 'sine', 0.05); tone(880, 0.2, 'sine', 0.045, 0, 0.12); },
-      win() { [523, 659, 784, 1046].forEach((f, i) => tone(f, 0.24, 'triangle', 0.05, 0, i * 0.11)); },
-      forfeit() { tone(300, 0.2, 'square', 0.04, -90); },
-      nope() { tone(150, 0.18, 'square', 0.035, -40); },
-      click() { tone(900, 0.03, 'sine', 0.02); },
-      dispose() { muted = true; try { ctx?.close(); } catch { /* ignore */ } },
+      roll() {
+        for (let i = 0; i < 6; i++) noise(0.04, 0.028, 850 + Math.random() * 700, i * 0.065);
+      },
+      clack() {
+        noise(0.05, 0.034, 2100);
+        tone(190, 0.04, 'square', 0.012, -60);
+      },
+      step() {
+        tone(520, 0.045, 'triangle', 0.026, 180);
+      },
+      capture() {
+        tone(240, 0.26, 'sawtooth', 0.05, -140);
+        noise(0.18, 0.04, 420);
+      },
+      home() {
+        tone(659, 0.15, 'sine', 0.05);
+        tone(880, 0.2, 'sine', 0.045, 0, 0.12);
+      },
+      win() {
+        [523, 659, 784, 1046].forEach((f, i) => tone(f, 0.24, 'triangle', 0.05, 0, i * 0.11));
+      },
+      forfeit() {
+        tone(300, 0.2, 'square', 0.04, -90);
+      },
+      nope() {
+        tone(150, 0.18, 'square', 0.035, -40);
+      },
+      click() {
+        tone(900, 0.03, 'sine', 0.02);
+      },
+      dispose() {
+        muted = true;
+        try {
+          ctx?.close();
+        } catch {
+          /* ignore */
+        }
+      },
     };
   }
   sfx = makeSfx();
-  const buzz = (pattern) => { try { navigator.vibrate?.(pattern); } catch { /* ignore */ } };
+  const buzz = (pattern) => {
+    try {
+      navigator.vibrate?.(pattern);
+    } catch {
+      /* ignore */
+    }
+  };
 
   /* ── static board ────────────────────────────────────────── */
   function buildBoard() {
@@ -298,7 +363,9 @@ export function mount(root) {
       if (owner) cls.push(`lh-start-${owner}`);
       const mark = owner
         ? `<span class="lh-runner" style="--rot:${RUN_ROT[owner]}deg" aria-hidden="true"></span>`
-        : safe ? '<span class="lh-star" aria-hidden="true">★</span>' : '';
+        : safe
+          ? '<span class="lh-star" aria-hidden="true">★</span>'
+          : '';
       cells += `<div class="${cls.join(' ')}" style="left:${pct(c)};top:${pct(r)};width:${pct(1)};height:${pct(1)}">${mark}</div>`;
     });
     for (const color of COLORS) {
@@ -403,17 +470,23 @@ export function mount(root) {
     if (!game) return 'Choose a match to begin.';
     if (game.phase === 'over') {
       const winner = game.players.find((p) => p.color === game.winner);
-      return winner ? `${actorName(winner)} win${actorName(winner) === 'You' ? '' : 's'} the table.` : 'Match complete.';
+      return winner
+        ? `${actorName(winner)} win${actorName(winner) === 'You' ? '' : 's'} the table.`
+        : 'Match complete.';
     }
     const p = currentPlayer(game);
     if (!p) return '';
     if (game.phase === 'forfeit') return 'Three sixes — the turn is forfeited.';
     if (game.phase === 'no-move') return 'No legal move — the turn passes.';
     if (game.phase === 'rolling') {
-      return p.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.';
+      return p.type === 'cpu'
+        ? `CPU ${colorName(p.color)} is readying the dice…`
+        : 'Your turn — roll the dice.';
     }
     if (game.phase === 'choosing') {
-      return p.type === 'cpu' ? `CPU ${colorName(p.color)} is choosing a token…` : `Rolled ${game.dice} — choose a marble to move.`;
+      return p.type === 'cpu'
+        ? `CPU ${colorName(p.color)} is choosing a token…`
+        : `Rolled ${game.dice} — choose a marble to move.`;
     }
     return '';
   }
@@ -426,19 +499,21 @@ export function mount(root) {
       return;
     }
     const humans = game.players.filter((p) => p.type === 'human').length;
-    roster.innerHTML = game.players.map((p, i) => {
-      const home = tokenCount(p);
-      const prog = Math.round((progressSum(p) / (4 * PATH_STEPS)) * 100);
-      const active = i === game.turn && game.phase !== 'over';
-      const tag = p.type === 'cpu' ? 'CPU' : humans === 1 ? 'YOU' : `P${i + 1}`;
-      return `<div class="lh-player${active ? ' active' : ''}" style="--pc:${META[p.color].hex}">
+    roster.innerHTML = game.players
+      .map((p, i) => {
+        const home = tokenCount(p);
+        const prog = Math.round((progressSum(p) / (4 * PATH_STEPS)) * 100);
+        const active = i === game.turn && game.phase !== 'over';
+        const tag = p.type === 'cpu' ? 'CPU' : humans === 1 ? 'YOU' : `P${i + 1}`;
+        return `<div class="lh-player${active ? ' active' : ''}" style="--pc:${META[p.color].hex}">
         <span class="lh-pdot"></span>
         <div class="lh-pname"><strong>${esc(playerName(p, i))}</strong><span>${home} of 4 home</span></div>
         <span class="lh-ppips" aria-label="${home} tokens home">${[0, 1, 2, 3].map((k) => `<i class="${k < home ? 'on' : ''}"></i>`).join('')}</span>
         <span class="lh-ptrack"><i style="width:${prog}%"></i></span>
         <span class="lh-ptag">${tag}</span>
       </div>`;
-    }).join('');
+      })
+      .join('');
     q('#lhRound').textContent = `${game.rolls} roll${game.rolls === 1 ? '' : 's'}`;
   }
 
@@ -448,8 +523,11 @@ export function mount(root) {
       log.innerHTML = '<li class="empty">The table is set.</li>';
       return;
     }
-    log.innerHTML = feed.slice(-7).reverse()
-      .map((e) => `<li class="${e.kind || ''}">${esc(e.text)}</li>`).join('');
+    log.innerHTML = feed
+      .slice(-7)
+      .reverse()
+      .map((e) => `<li class="${e.kind || ''}">${esc(e.text)}</li>`)
+      .join('');
   }
 
   function renderStreak() {
@@ -520,9 +598,24 @@ export function mount(root) {
       }
     }
     const offsets = (n) => {
-      if (n === 2) return [[-0.17, 0], [0.17, 0]];
-      if (n === 3) return [[0, -0.18], [-0.17, 0.15], [0.17, 0.15]];
-      if (n === 4) return [[-0.16, -0.16], [0.16, -0.16], [-0.16, 0.16], [0.16, 0.16]];
+      if (n === 2)
+        return [
+          [-0.17, 0],
+          [0.17, 0],
+        ];
+      if (n === 3)
+        return [
+          [0, -0.18],
+          [-0.17, 0.15],
+          [0.17, 0.15],
+        ];
+      if (n === 4)
+        return [
+          [-0.16, -0.16],
+          [0.16, -0.16],
+          [-0.16, 0.16],
+          [0.16, 0.16],
+        ];
       return Array.from({ length: n }, (_, i) => {
         const a = (i / n) * Math.PI * 2;
         return [Math.cos(a) * 0.22, Math.sin(a) * 0.22];
@@ -531,7 +624,10 @@ export function mount(root) {
     for (const group of groups.values()) {
       if (group.length < 2) continue;
       const offs = offsets(group.length);
-      group.forEach((it, k) => { it.x += offs[k][0]; it.y += offs[k][1]; });
+      group.forEach((it, k) => {
+        it.x += offs[k][0];
+        it.y += offs[k][1];
+      });
     }
 
     for (const it of items) {
@@ -548,11 +644,18 @@ export function mount(root) {
       node.classList.toggle('is-human', it.p.type === 'human');
       node.tabIndex = isMovable ? 0 : -1;
       node.setAttribute('aria-disabled', String(canHuman && !isMovable));
-      const loc = it.pos < 0 ? 'in the yard'
-        : it.pos >= PATH_STEPS ? 'home'
-          : it.pos >= 51 ? `home column, ${it.pos - 50} of 5`
-            : `on the board, ${it.pos} step${it.pos === 1 ? '' : 's'} from start`;
-      node.setAttribute('aria-label', `${colorName(it.p.color)} marble ${it.i + 1}, ${loc}${isMovable ? ', can move' : ''}`);
+      const loc =
+        it.pos < 0
+          ? 'in the yard'
+          : it.pos >= PATH_STEPS
+            ? 'home'
+            : it.pos >= 51
+              ? `home column, ${it.pos - 50} of 5`
+              : `on the board, ${it.pos} step${it.pos === 1 ? '' : 's'} from start`;
+      node.setAttribute(
+        'aria-label',
+        `${colorName(it.p.color)} marble ${it.i + 1}, ${loc}${isMovable ? ', can move' : ''}`,
+      );
     }
   }
 
@@ -675,37 +778,75 @@ export function mount(root) {
     const dx = (sx - rx) * unit;
     const dy = (sy - ry) * unit;
     const ms = DICE_MS;
-    const travel = bdiceLift.animate([
-      { offset: 0, opacity: 0, transform: `translate3d(${dx}px, ${dy}px, 0) translateY(${-die * 1.1}px) translateZ(${die * 2.2}px)` },
-      { offset: 0.09, opacity: 1, transform: `translate3d(${dx * 0.93}px, ${dy * 0.93}px, 0) translateY(${-die * 1.6}px) translateZ(${die * 2.5}px)` },
-      { offset: 0.46, transform: `translate3d(${dx * 0.5}px, ${dy * 0.5}px, 0) translateY(${-die * 0.9}px) translateZ(${die * 1.05}px)` },
-      { offset: 0.68, transform: `translate3d(${dx * 0.07}px, ${dy * 0.07}px, 0) translateY(0) translateZ(0)` },
-      { offset: 0.77, transform: `translate3d(${dx * 0.025}px, ${dy * 0.025}px, 0) translateY(${-die * 0.5}px) translateZ(${die * 0.45}px)` },
-      { offset: 0.87, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
-      { offset: 0.94, transform: `translate3d(0, 0, 0) translateY(${-die * 0.14}px) translateZ(${die * 0.1}px)` },
-      { offset: 1, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
-    ], { duration: ms, easing: 'cubic-bezier(.25,.55,.3,1)' });
-    const spin = bdiceCube.animate([
-      { offset: 0, transform: `rotateX(${bdiceX + base[0] - 1080}deg) rotateY(${bdiceY + base[1] - 1440}deg) rotateZ(${bdiceZ - 720}deg)` },
-      { offset: 0.36, transform: `rotateX(${bdiceX + base[0] - 600}deg) rotateY(${bdiceY + base[1] - 880}deg) rotateZ(${bdiceZ - 360}deg)` },
-      { offset: 0.66, transform: `rotateX(${bdiceX + base[0] + 24}deg) rotateY(${bdiceY + base[1] - 72}deg) rotateZ(${bdiceZ + 18}deg)` },
-      { offset: 0.79, transform: `rotateX(${bdiceX + base[0] - 8}deg) rotateY(${bdiceY + base[1] + 12}deg) rotateZ(${bdiceZ - 5}deg)` },
-      { offset: 1, transform: final },
-    ], { duration: ms, easing: 'cubic-bezier(.3,.5,.35,1)' });
-    bdiceShadow.animate([
-      { offset: 0, opacity: 0.12, transform: 'translate(-50%,-50%) scale(.4)' },
-      { offset: 0.46, opacity: 0.34, transform: 'translate(-50%,-50%) scale(.72)' },
-      { offset: 0.68, opacity: 0.66, transform: 'translate(-50%,-50%) scale(1.08)' },
-      { offset: 0.77, opacity: 0.4, transform: 'translate(-50%,-50%) scale(.86)' },
-      { offset: 0.87, opacity: 0.62, transform: 'translate(-50%,-50%) scale(1.04)' },
-      { offset: 0.94, opacity: 0.52, transform: 'translate(-50%,-50%) scale(.96)' },
-      { offset: 1, opacity: 0.55, transform: 'translate(-50%,-50%) scale(1)' },
-    ], { duration: ms, easing: 'linear' });
+    const travel = bdiceLift.animate(
+      [
+        {
+          offset: 0,
+          opacity: 0,
+          transform: `translate3d(${dx}px, ${dy}px, 0) translateY(${-die * 1.1}px) translateZ(${die * 2.2}px)`,
+        },
+        {
+          offset: 0.09,
+          opacity: 1,
+          transform: `translate3d(${dx * 0.93}px, ${dy * 0.93}px, 0) translateY(${-die * 1.6}px) translateZ(${die * 2.5}px)`,
+        },
+        {
+          offset: 0.46,
+          transform: `translate3d(${dx * 0.5}px, ${dy * 0.5}px, 0) translateY(${-die * 0.9}px) translateZ(${die * 1.05}px)`,
+        },
+        {
+          offset: 0.68,
+          transform: `translate3d(${dx * 0.07}px, ${dy * 0.07}px, 0) translateY(0) translateZ(0)`,
+        },
+        {
+          offset: 0.77,
+          transform: `translate3d(${dx * 0.025}px, ${dy * 0.025}px, 0) translateY(${-die * 0.5}px) translateZ(${die * 0.45}px)`,
+        },
+        { offset: 0.87, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
+        {
+          offset: 0.94,
+          transform: `translate3d(0, 0, 0) translateY(${-die * 0.14}px) translateZ(${die * 0.1}px)`,
+        },
+        { offset: 1, transform: 'translate3d(0, 0, 0) translateY(0) translateZ(0)' },
+      ],
+      { duration: ms, easing: 'cubic-bezier(.25,.55,.3,1)' },
+    );
+    const spin = bdiceCube.animate(
+      [
+        {
+          offset: 0,
+          transform: `rotateX(${bdiceX + base[0] - 1080}deg) rotateY(${bdiceY + base[1] - 1440}deg) rotateZ(${bdiceZ - 720}deg)`,
+        },
+        {
+          offset: 0.36,
+          transform: `rotateX(${bdiceX + base[0] - 600}deg) rotateY(${bdiceY + base[1] - 880}deg) rotateZ(${bdiceZ - 360}deg)`,
+        },
+        {
+          offset: 0.66,
+          transform: `rotateX(${bdiceX + base[0] + 24}deg) rotateY(${bdiceY + base[1] - 72}deg) rotateZ(${bdiceZ + 18}deg)`,
+        },
+        {
+          offset: 0.79,
+          transform: `rotateX(${bdiceX + base[0] - 8}deg) rotateY(${bdiceY + base[1] + 12}deg) rotateZ(${bdiceZ - 5}deg)`,
+        },
+        { offset: 1, transform: final },
+      ],
+      { duration: ms, easing: 'cubic-bezier(.3,.5,.35,1)' },
+    );
+    bdiceShadow.animate(
+      [
+        { offset: 0, opacity: 0.12, transform: 'translate(-50%,-50%) scale(.4)' },
+        { offset: 0.46, opacity: 0.34, transform: 'translate(-50%,-50%) scale(.72)' },
+        { offset: 0.68, opacity: 0.66, transform: 'translate(-50%,-50%) scale(1.08)' },
+        { offset: 0.77, opacity: 0.4, transform: 'translate(-50%,-50%) scale(.86)' },
+        { offset: 0.87, opacity: 0.62, transform: 'translate(-50%,-50%) scale(1.04)' },
+        { offset: 0.94, opacity: 0.52, transform: 'translate(-50%,-50%) scale(.96)' },
+        { offset: 1, opacity: 0.55, transform: 'translate(-50%,-50%) scale(1)' },
+      ],
+      { duration: ms, easing: 'linear' },
+    );
     bdiceCube.style.transform = final;
-    return Promise.all([
-      travel.finished.catch(() => {}),
-      spin.finished.catch(() => {}),
-    ]).then(() => {
+    return Promise.all([travel.finished.catch(() => {}), spin.finished.catch(() => {})]).then(() => {
       if (destroyed) return;
       bdiceLayer.classList.remove('is-settled');
       void bdiceLayer.offsetWidth;
@@ -814,9 +955,15 @@ export function mount(root) {
     if (!p) return;
     parkBoardDice(p.color);
     if (game.phase === 'rolling') {
-      setStatus(p.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.');
+      setStatus(
+        p.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.',
+      );
     } else if (game.phase === 'choosing') {
-      setStatus(p.type === 'cpu' ? `CPU ${colorName(p.color)} is choosing a token…` : `Rolled ${game.dice} — choose a marble to move.`);
+      setStatus(
+        p.type === 'cpu'
+          ? `CPU ${colorName(p.color)} is choosing a token…`
+          : `Rolled ${game.dice} — choose a marble to move.`,
+      );
     }
     renderAll();
     saveGame();
@@ -826,21 +973,27 @@ export function mount(root) {
 
   function scheduleCpuRoll(delay = CPU_DELAY) {
     if (!game || paused) return;
-    later(() => {
-      if (!game || paused || busy || rolling) return;
-      if (game.phase !== 'rolling' || currentPlayer(game)?.type !== 'cpu') return;
-      requestRoll(true);
-    }, delay + Math.random() * 420);
+    later(
+      () => {
+        if (!game || paused || busy || rolling) return;
+        if (game.phase !== 'rolling' || currentPlayer(game)?.type !== 'cpu') return;
+        requestRoll(true);
+      },
+      delay + Math.random() * 420,
+    );
   }
 
   function scheduleCpuMove() {
     if (!game || paused || game.phase !== 'choosing') return;
     const choice = cpuPickMove(game, legalMoves(game), setupState.difficulty);
     if (!choice) return;
-    later(() => {
-      if (!game || paused || busy || game.phase !== 'choosing') return;
-      moveToken(choice.token);
-    }, 620 + Math.random() * 380);
+    later(
+      () => {
+        if (!game || paused || busy || game.phase !== 'choosing') return;
+        moveToken(choice.token);
+      },
+      620 + Math.random() * 380,
+    );
   }
 
   async function requestRoll(auto = false) {
@@ -903,7 +1056,11 @@ export function mount(root) {
       moveToken(choice.token);
       return;
     }
-    setStatus(value === 6 ? 'You rolled a six — choose a marble to move.' : `You rolled ${value} — choose a marble to move.`);
+    setStatus(
+      value === 6
+        ? 'You rolled a six — choose a marble to move.'
+        : `You rolled ${value} — choose a marble to move.`,
+    );
     renderAll();
   }
 
@@ -941,12 +1098,27 @@ export function mount(root) {
     ghost.style.top = node.style.top;
     ghost.style.pointerEvents = 'none';
     tokensEl.appendChild(ghost);
-    const anim = ghost.animate([
-      { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)', opacity: 1 },
-      { offset: 0.32, transform: `translate(calc(-50% + ${dx * 0.3}px), calc(-50% + ${dy * 0.3 - unit * 1.2}px)) scale(1.16) rotate(-40deg)`, opacity: 1 },
-      { offset: 0.74, transform: `translate(calc(-50% + ${dx * 0.82}px), calc(-50% + ${dy * 0.82 - unit * 0.4}px)) scale(0.72) rotate(150deg)`, opacity: 0.85 },
-      { offset: 1, transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.25) rotate(250deg)`, opacity: 0 },
-    ], { duration: 660, easing: 'cubic-bezier(.3,.15,.4,1)' });
+    const anim = ghost.animate(
+      [
+        { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)', opacity: 1 },
+        {
+          offset: 0.32,
+          transform: `translate(calc(-50% + ${dx * 0.3}px), calc(-50% + ${dy * 0.3 - unit * 1.2}px)) scale(1.16) rotate(-40deg)`,
+          opacity: 1,
+        },
+        {
+          offset: 0.74,
+          transform: `translate(calc(-50% + ${dx * 0.82}px), calc(-50% + ${dy * 0.82 - unit * 0.4}px)) scale(0.72) rotate(150deg)`,
+          opacity: 0.85,
+        },
+        {
+          offset: 1,
+          transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.25) rotate(250deg)`,
+          opacity: 0,
+        },
+      ],
+      { duration: 660, easing: 'cubic-bezier(.3,.15,.4,1)' },
+    );
     anim.finished.catch(() => {}).finally(() => ghost.remove());
   }
 
@@ -960,7 +1132,8 @@ export function mount(root) {
     busy = true;
     marksEl.innerHTML = '';
     hintEl.textContent = 'Moving…';
-    const steps = move.from < 0 ? [0] : Array.from({ length: move.to - move.from }, (_, i) => move.from + i + 1);
+    const steps =
+      move.from < 0 ? [0] : Array.from({ length: move.to - move.from }, (_, i) => move.from + i + 1);
     const stepMs = speed ?? (reduceMotion() ? 24 : STEP_MS);
     const unit = (fieldEl.clientWidth || 480) / 15;
     let walked = xyAt(p.color, move.from, token);
@@ -973,10 +1146,13 @@ export function mount(root) {
         const dx = (walked[0] - next[0]) * unit;
         const dy = (walked[1] - next[1]) * unit;
         if (dx || dy) {
-          node.animate([
-            { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))` },
-            { transform: 'translate(-50%,-50%)' },
-          ], { duration: stepMs, easing: 'cubic-bezier(.3,.6,.4,1)' });
+          node.animate(
+            [
+              { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))` },
+              { transform: 'translate(-50%,-50%)' },
+            ],
+            { duration: stepMs, easing: 'cubic-bezier(.3,.6,.4,1)' },
+          );
         }
         walked = next;
         node.classList.remove('hop');
@@ -1008,7 +1184,10 @@ export function mount(root) {
       const first = ev.captures[0];
       const [fx, fy] = xyAt(first.color, first.pos, first.token);
       floatFx(fx, fy, 'CAPTURED', 'bad');
-      pushLog(`${colorName(p.color)} captured ${colorName(first.color)}'s marble and sent it home.`, 'capture');
+      pushLog(
+        `${colorName(p.color)} captured ${colorName(first.color)}'s marble and sent it home.`,
+        'capture',
+      );
     }
     if (ev.finished) {
       sfx.home();
@@ -1033,8 +1212,10 @@ export function mount(root) {
     renderAll();
     saveGame();
     if (ev.extra) {
-      statusText = ev.finished ? 'Marble home — roll again.'
-        : ev.captures.length ? 'Capture — roll again.'
+      statusText = ev.finished
+        ? 'Marble home — roll again.'
+        : ev.captures.length
+          ? 'Capture — roll again.'
           : 'Six — roll again.';
       renderAll();
       if (currentPlayer(game)?.type === 'cpu') scheduleCpuRoll(620);
@@ -1079,14 +1260,15 @@ export function mount(root) {
 
   /* ── setup and modals ───────────────────────────────────── */
   function chipsMarkup() {
-    return (PLAYER_SETS[setupState.players] || PLAYER_SETS[2]).map((c) => (
-      `<span class="lh-chip lh-chip-${c}"><i></i>${META[c].name}</span>`
-    )).join('');
+    return (PLAYER_SETS[setupState.players] || PLAYER_SETS[2])
+      .map((c) => `<span class="lh-chip lh-chip-${c}"><i></i>${META[c].name}</span>`)
+      .join('');
   }
 
   function resumeMarkup() {
     const live = game && game.phase !== 'over';
-    const saved = savedGame && isValidGame(savedGame.game) && savedGame.game.phase !== 'over' ? savedGame : null;
+    const saved =
+      savedGame && isValidGame(savedGame.game) && savedGame.game.phase !== 'over' ? savedGame : null;
     if (!live && !saved) return '';
     const source = live ? game : saved.game;
     const colors = source.players.map((p) => colorName(p.color)).join(' vs ');
@@ -1172,7 +1354,9 @@ export function mount(root) {
     if (chips) chips.innerHTML = chipsMarkup();
   }
 
-  function qa2(scope, sel) { return [...scope.querySelectorAll(sel)]; }
+  function qa2(scope, sel) {
+    return [...scope.querySelectorAll(sel)];
+  }
 
   function openSetup() {
     if (busy || rolling) {
@@ -1248,12 +1432,18 @@ export function mount(root) {
     renderAll();
     if (game.phase === 'rolling') {
       const p = currentPlayer(game);
-      setStatus(p?.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.');
+      setStatus(
+        p?.type === 'cpu' ? `CPU ${colorName(p.color)} is readying the dice…` : 'Your turn — roll the dice.',
+      );
       renderTurnbar();
       if (p?.type === 'cpu') scheduleCpuRoll(450);
     } else if (game.phase === 'choosing') {
       const p = currentPlayer(game);
-      setStatus(p?.type === 'cpu' ? `CPU ${colorName(p.color)} is choosing a token…` : `Rolled ${game.dice} — choose a marble.`);
+      setStatus(
+        p?.type === 'cpu'
+          ? `CPU ${colorName(p.color)} is choosing a token…`
+          : `Rolled ${game.dice} — choose a marble.`,
+      );
       renderAll();
       if (p?.type === 'cpu') scheduleCpuMove();
     }
@@ -1299,9 +1489,10 @@ export function mount(root) {
   function startFromSetup() {
     if (busy || rolling) return;
     const colors = PLAYER_SETS[setupState.players] || PLAYER_SETS[2];
-    const types = setupState.mode === 'cpu'
-      ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu'))
-      : colors.map(() => 'human');
+    const types =
+      setupState.mode === 'cpu'
+        ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu'))
+        : colors.map(() => 'human');
     prefs.difficulty = setupState.difficulty;
     savePrefs();
     startGame({ colors, types, options: { ...setupState.options } });
@@ -1341,20 +1532,24 @@ export function mount(root) {
     const table = standings(game);
     const humanWin = winner?.type === 'human';
     const title = hasCpu() && humanWin ? 'You win.' : `${colorName(winner?.color || 'red')} wins.`;
-    const confetti = reduceMotion() ? '' : Array.from({ length: 28 }, (_, i) => {
-      const color = COLORS[i % 4];
-      return `<i style="--x:${(i * 37) % 100}%;--d:${(i % 9) * 0.11}s;--r:${(i * 53) % 360}deg;--c:${META[color].hex}"></i>`;
-    }).join('');
-    const rows = table.map((row, i) => {
-      const p = game.players[row.index];
-      const human = p.type === 'human';
-      return `<div class="lh-standing${row.isWinner ? ' win' : ''}">
+    const confetti = reduceMotion()
+      ? ''
+      : Array.from({ length: 28 }, (_, i) => {
+          const color = COLORS[i % 4];
+          return `<i style="--x:${(i * 37) % 100}%;--d:${(i % 9) * 0.11}s;--r:${(i * 53) % 360}deg;--c:${META[color].hex}"></i>`;
+        }).join('');
+    const rows = table
+      .map((row, i) => {
+        const p = game.players[row.index];
+        const human = p.type === 'human';
+        return `<div class="lh-standing${row.isWinner ? ' win' : ''}">
         <span class="lh-rank">${i + 1}</span>
         <span class="lh-pdot" style="--pc:${META[row.color].hex}"></span>
         <span class="lh-standing-name"><b>${esc(playerName(p, row.index))}</b><small>${row.home} home · ${row.progress} steps${row.captures ? ` · ${row.captures} captures` : ''}</small></span>
         <span class="lh-standing-tag">${p.type === 'cpu' ? 'CPU' : human && hasCpu() ? 'YOU' : 'HUMAN'}</span>
       </div>`;
-    }).join('');
+      })
+      .join('');
     resultEl.innerHTML = `
       <div class="lh-modal lh-resultcard" role="dialog" aria-modal="true" aria-labelledby="lhResultTitle">
         <div class="lh-confetti" aria-hidden="true">${confetti}</div>
@@ -1380,7 +1575,9 @@ export function mount(root) {
   function resultText() {
     const winner = game.players.find((p) => p.color === game.winner);
     const table = standings(game);
-    const lines = table.map((row, i) => `${i + 1}. ${colorName(row.color)} — ${row.home} home, ${row.progress} steps`);
+    const lines = table.map(
+      (row, i) => `${i + 1}. ${colorName(row.color)} — ${row.home} home, ${row.progress} steps`,
+    );
     return `ACTTOLOG — Ludo Himalaya\n${hasCpu() && winner?.type === 'human' ? 'You win!' : `${colorName(winner?.color || 'red')} wins.`} ${game.rolls} rolls, ${game.players.length} players.\n${lines.join('\n')}\nacttolog.github.io/games/ludo-himalaya`;
   }
 
@@ -1430,7 +1627,9 @@ export function mount(root) {
         boardEl.style.setProperty('--rx', prefs.flat ? '0deg' : '16deg');
         boardEl.style.setProperty('--rz', '0deg');
         void boardEl.offsetWidth;
-        setTimeout(() => { boardEl.style.transition = ''; }, 60);
+        setTimeout(() => {
+          boardEl.style.transition = '';
+        }, 60);
       } else if (act === 'full') toggleFullscreen();
       else if (act === 'new') openSetup();
       else if (act === 'start') startFromSetup();
@@ -1468,7 +1667,8 @@ export function mount(root) {
       if (what === 'again') {
         const cfg = currentConfig();
         const colors = PLAYER_SETS[cfg.players] || PLAYER_SETS[2];
-        const types = cfg.mode === 'cpu' ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu')) : colors.map(() => 'human');
+        const types =
+          cfg.mode === 'cpu' ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu')) : colors.map(() => 'human');
         startGame({ colors, types, options: cfg.options });
       } else if (what === 'setup') {
         resultEl.hidden = true;
@@ -1560,7 +1760,8 @@ export function mount(root) {
         const players = [2, 3, 4].includes(cfg.players) ? cfg.players : 2;
         const colors = PLAYER_SETS[players];
         const mode = cfg.mode === 'human' ? 'human' : 'cpu';
-        const types = mode === 'cpu' ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu')) : colors.map(() => 'human');
+        const types =
+          mode === 'cpu' ? colors.map((c, i) => (i === 0 ? 'human' : 'cpu')) : colors.map(() => 'human');
         setupState.players = players;
         setupState.mode = mode;
         setupState.difficulty = cfg.difficulty === 'easy' ? 'easy' : 'sharp';
@@ -1602,7 +1803,9 @@ export function mount(root) {
         if (currentPlayer(game).type === 'cpu') scheduleCpuRoll();
         return true;
       },
-      speed: (ms) => { speed = Number.isFinite(ms) ? Math.max(0, ms) : null; },
+      speed: (ms) => {
+        speed = Number.isFinite(ms) ? Math.max(0, ms) : null;
+      },
       feed: () => feed.map((f) => f.text),
     };
     window.__ludo = api;
@@ -1612,7 +1815,11 @@ export function mount(root) {
     destroyed = true;
     flowId += 1;
     cancelAnimationFrame(stageRaf);
-    try { saveGame(); } catch { /* ignore */ }
+    try {
+      saveGame();
+    } catch {
+      /* ignore */
+    }
     ro.disconnect();
     window.removeEventListener('keydown', onKey);
     document.removeEventListener('fullscreenchange', onFullscreenChange);

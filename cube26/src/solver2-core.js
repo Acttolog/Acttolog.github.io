@@ -8,10 +8,14 @@ import { FACE_BY_INDEX, idx } from './facelet2.js';
 const FACE_INDEX = { U: 0, R: 1, F: 2, D: 3, L: 4, B: 5 };
 const FACE_NAMES = ['U', 'R', 'F', 'D', 'L', 'B'];
 const CORNER_ORDER = {
-  '1,1,1': ['U', 'R', 'F'], '-1,1,1': ['U', 'F', 'L'],
-  '-1,1,-1': ['U', 'L', 'B'], '1,1,-1': ['U', 'B', 'R'],
-  '1,-1,1': ['D', 'F', 'R'], '-1,-1,1': ['D', 'L', 'F'],
-  '-1,-1,-1': ['D', 'B', 'L'], '1,-1,-1': ['D', 'R', 'B'],
+  '1,1,1': ['U', 'R', 'F'],
+  '-1,1,1': ['U', 'F', 'L'],
+  '-1,1,-1': ['U', 'L', 'B'],
+  '1,1,-1': ['U', 'B', 'R'],
+  '1,-1,1': ['D', 'F', 'R'],
+  '-1,-1,1': ['D', 'L', 'F'],
+  '-1,-1,-1': ['D', 'B', 'L'],
+  '1,-1,-1': ['D', 'R', 'B'],
 };
 const isUD = (face) => face === 'U' || face === 'D';
 
@@ -21,9 +25,7 @@ for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) CORNE
 const SLOT_FACES = CORNER_POSITIONS.map((pos) => CORNER_ORDER[pos.join(',')]);
 const SLOT_KEYS = SLOT_FACES.map((faces) => [...faces].sort().join(''));
 const HOME_INDEX = new Map(SLOT_KEYS.map((key, index) => [key, index]));
-const SLOT_INDICES = SLOT_FACES.map((faces, s) =>
-  faces.map((face) => idx(CORNER_POSITIONS[s], face))
-);
+const SLOT_INDICES = SLOT_FACES.map((faces, s) => faces.map((face) => idx(CORNER_POSITIONS[s], face)));
 
 const TOKENS = [];
 for (const face of FACE_NAMES) for (const suffix of ['', "'", '2']) TOKENS.push(face + suffix);
@@ -44,8 +46,14 @@ for (const token of TOKENS) {
     for (let d = 0; d < 8; d++) {
       const destPos = CORNER_POSITIONS[d];
       const cubie = moved.cubieAt(destPos[0], destPos[1], destPos[2]);
-      const have = SLOT_FACES[d].map((face) => cubie.stickers[face]).sort().join('');
-      if (have === [...colors].sort().join('')) { dest = d; break; }
+      const have = SLOT_FACES[d]
+        .map((face) => cubie.stickers[face])
+        .sort()
+        .join('');
+      if (have === [...colors].sort().join('')) {
+        dest = d;
+        break;
+      }
     }
     if (dest < 0) throw new Error(`2x2 move table: no destination for ${token} slot ${s}`);
     const cubie = moved.cubieAt(...CORNER_POSITIONS[dest]);
@@ -58,12 +66,10 @@ for (const token of TOKENS) {
 }
 
 // Phase-2 moves keep every corner's U/D sticker on a U/D face.
-const PERM_TOKEN_INDEX = TOKENS
-  .map((token, index) => index)
-  .filter((index) => {
-    const face = TOKENS[index][0];
-    return face === 'U' || face === 'D' || TOKENS[index].endsWith('2');
-  });
+const PERM_TOKEN_INDEX = TOKENS.map((token, index) => index).filter((index) => {
+  const face = TOKENS[index][0];
+  return face === 'U' || face === 'D' || TOKENS[index].endsWith('2');
+});
 
 export { TOKENS, MOVE_PERM, MOVE_DELTA, SLOT_FACES, SLOT_KEYS, CORNER_POSITIONS };
 
@@ -138,7 +144,10 @@ function permFromIndex(index) {
   const weights = [5040, 720, 120, 24, 6, 2, 1];
   const digits = [];
   let rest = index;
-  for (let i = 0; i < 7; i += 1) { digits.push(Math.floor(rest / weights[i])); rest %= weights[i]; }
+  for (let i = 0; i < 7; i += 1) {
+    digits.push(Math.floor(rest / weights[i]));
+    rest %= weights[i];
+  }
   digits.push(0);
   const perm = new Int8Array(8);
   const used = new Array(8).fill(false);
@@ -161,7 +170,11 @@ function oriFromIndex(index) {
   const co = new Int8Array(8);
   let rest = index;
   let sum = 0;
-  for (let s = 6; s >= 0; s -= 1) { co[s] = rest % 3; sum += co[s]; rest = Math.floor(rest / 3); }
+  for (let s = 6; s >= 0; s -= 1) {
+    co[s] = rest % 3;
+    sum += co[s];
+    rest = Math.floor(rest / 3);
+  }
   co[7] = (3 - (sum % 3)) % 3;
   return co;
 }
@@ -241,7 +254,8 @@ function collectOrientationSolutions(co, depth, tables, out) {
     for (let t = 0; t < TOKENS.length; t += 1) {
       const face = TOKEN_FACE[t];
       if (face === lastFace) continue;
-      if (lastFace && OPPOSITE[face] === lastFace && FACE_ORDER_INDEX[face] < FACE_ORDER_INDEX[lastFace]) continue;
+      if (lastFace && OPPOSITE[face] === lastFace && FACE_ORDER_INDEX[face] < FACE_ORDER_INDEX[lastFace])
+        continue;
       const perm = MOVE_PERM[t];
       const delta = MOVE_DELTA[t];
       const next = new Int8Array(8);

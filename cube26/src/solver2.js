@@ -3,7 +3,10 @@
 import { FACES } from './cube-engine.js';
 import * as model2 from './facelet2.js';
 import {
-  buildTwoPhaseTables, cornerStateFromFacelet, isCornerSolved, solveTwoPhase,
+  buildTwoPhaseTables,
+  cornerStateFromFacelet,
+  isCornerSolved,
+  solveTwoPhase,
 } from './solver2-core.js';
 
 let tables = null;

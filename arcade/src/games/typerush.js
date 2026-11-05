@@ -199,7 +199,10 @@ export function mount(root) {
         </div>
       </div>`;
     host.appendChild(ov);
-    ov.querySelector('#trAgain').addEventListener('click', () => { ov.remove(); restart(); });
+    ov.querySelector('#trAgain').addEventListener('click', () => {
+      ov.remove();
+      restart();
+    });
     ov.querySelector('#trCopy').addEventListener('click', () => copyText(share));
     ov.querySelector('#trAgain').focus();
   }
@@ -234,7 +237,9 @@ export function mount(root) {
   function setMode(next) {
     if (next === mode) return;
     mode = next;
-    root.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    root
+      .querySelectorAll('[data-mode]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
     restart();
   }
 
@@ -257,10 +262,14 @@ export function mount(root) {
   };
 
   window.addEventListener('keydown', onKey);
-  stage.addEventListener('click', () => { if (!finished) input.focus({ preventScroll: true }); });
+  stage.addEventListener('click', () => {
+    if (!finished) input.focus({ preventScroll: true });
+  });
   endBtn.addEventListener('click', () => finish('early'));
   $('#trRestart', root).addEventListener('click', restart);
-  root.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  root
+    .querySelectorAll('[data-mode]')
+    .forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
 
   renderText();
 

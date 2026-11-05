@@ -75,7 +75,10 @@ export function simplifyMoves(moves) {
   const out = [];
   for (const m of moves) {
     const next = typeof m === 'string' ? m : formatMove(m.face, m.amount);
-    if (!out.length) { out.push(next); continue; }
+    if (!out.length) {
+      out.push(next);
+      continue;
+    }
     const last = parseMove(out[out.length - 1]);
     const cur = parseMove(next);
     if (last.face === cur.face) {
@@ -207,12 +210,42 @@ export class Cube {
     const axis = ['x', 'y', 'z'].indexOf(FACE_AXIS[face][0]);
     let uAxis, vAxis, uSign, vSign;
     switch (face) {
-      case 'U': uAxis = 0; uSign = 1; vAxis = 2; vSign = 1; break;
-      case 'D': uAxis = 0; uSign = 1; vAxis = 2; vSign = -1; break;
-      case 'F': uAxis = 0; uSign = 1; vAxis = 1; vSign = -1; break;
-      case 'B': uAxis = 0; uSign = -1; vAxis = 1; vSign = -1; break;
-      case 'R': uAxis = 2; uSign = -1; vAxis = 1; vSign = -1; break;
-      case 'L': uAxis = 2; uSign = 1; vAxis = 1; vSign = -1; break;
+      case 'U':
+        uAxis = 0;
+        uSign = 1;
+        vAxis = 2;
+        vSign = 1;
+        break;
+      case 'D':
+        uAxis = 0;
+        uSign = 1;
+        vAxis = 2;
+        vSign = -1;
+        break;
+      case 'F':
+        uAxis = 0;
+        uSign = 1;
+        vAxis = 1;
+        vSign = -1;
+        break;
+      case 'B':
+        uAxis = 0;
+        uSign = -1;
+        vAxis = 1;
+        vSign = -1;
+        break;
+      case 'R':
+        uAxis = 2;
+        uSign = -1;
+        vAxis = 1;
+        vSign = -1;
+        break;
+      case 'L':
+        uAxis = 2;
+        uSign = 1;
+        vAxis = 1;
+        vSign = -1;
+        break;
     }
     const pos = [0, 0, 0];
     pos[axis] = FACE_AXIS[face][1];

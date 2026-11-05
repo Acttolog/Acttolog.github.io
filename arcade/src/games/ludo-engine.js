@@ -17,17 +17,56 @@ export const META = {
 
 // Clockwise ring, starting at red's first square (1,6). [col, row]
 export const RING = [
-  [1, 6], [2, 6], [3, 6], [4, 6], [5, 6],
-  [6, 5], [6, 4], [6, 3], [6, 2], [6, 1], [6, 0],
+  [1, 6],
+  [2, 6],
+  [3, 6],
+  [4, 6],
+  [5, 6],
+  [6, 5],
+  [6, 4],
+  [6, 3],
+  [6, 2],
+  [6, 1],
+  [6, 0],
   [7, 0],
-  [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5],
-  [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [14, 6],
+  [8, 0],
+  [8, 1],
+  [8, 2],
+  [8, 3],
+  [8, 4],
+  [8, 5],
+  [9, 6],
+  [10, 6],
+  [11, 6],
+  [12, 6],
+  [13, 6],
+  [14, 6],
   [14, 7],
-  [14, 8], [13, 8], [12, 8], [11, 8], [10, 8], [9, 8],
-  [8, 9], [8, 10], [8, 11], [8, 12], [8, 13], [8, 14],
+  [14, 8],
+  [13, 8],
+  [12, 8],
+  [11, 8],
+  [10, 8],
+  [9, 8],
+  [8, 9],
+  [8, 10],
+  [8, 11],
+  [8, 12],
+  [8, 13],
+  [8, 14],
   [7, 14],
-  [6, 14], [6, 13], [6, 12], [6, 11], [6, 10], [6, 9],
-  [5, 8], [4, 8], [3, 8], [2, 8], [1, 8], [0, 8],
+  [6, 14],
+  [6, 13],
+  [6, 12],
+  [6, 11],
+  [6, 10],
+  [6, 9],
+  [5, 8],
+  [4, 8],
+  [3, 8],
+  [2, 8],
+  [1, 8],
+  [0, 8],
   [0, 7],
   [0, 6],
 ];
@@ -37,10 +76,34 @@ export const SAFE_RINGS = [0, 8, 13, 21, 26, 34, 39, 47];
 export const CENTER = [7, 7];
 
 export const HOME_COL = {
-  red: [[1, 7], [2, 7], [3, 7], [4, 7], [5, 7]],
-  green: [[7, 1], [7, 2], [7, 3], [7, 4], [7, 5]],
-  yellow: [[13, 7], [12, 7], [11, 7], [10, 7], [9, 7]],
-  blue: [[7, 13], [7, 12], [7, 11], [7, 10], [7, 9]],
+  red: [
+    [1, 7],
+    [2, 7],
+    [3, 7],
+    [4, 7],
+    [5, 7],
+  ],
+  green: [
+    [7, 1],
+    [7, 2],
+    [7, 3],
+    [7, 4],
+    [7, 5],
+  ],
+  yellow: [
+    [13, 7],
+    [12, 7],
+    [11, 7],
+    [10, 7],
+    [9, 7],
+  ],
+  blue: [
+    [7, 13],
+    [7, 12],
+    [7, 11],
+    [7, 10],
+    [7, 9],
+  ],
 };
 
 export const HOME_QUADRANT = {
@@ -52,18 +115,58 @@ export const HOME_QUADRANT = {
 
 // Token parking spots inside each yard, in board units (15 = full board).
 export const BASE_SLOTS = {
-  red: [[2.25, 2.25], [3.75, 2.25], [2.25, 3.75], [3.75, 3.75]],
-  green: [[11.25, 2.25], [12.75, 2.25], [11.25, 3.75], [12.75, 3.75]],
-  yellow: [[11.25, 11.25], [12.75, 11.25], [11.25, 12.75], [12.75, 12.75]],
-  blue: [[2.25, 11.25], [3.75, 11.25], [2.25, 12.75], [3.75, 12.75]],
+  red: [
+    [2.25, 2.25],
+    [3.75, 2.25],
+    [2.25, 3.75],
+    [3.75, 3.75],
+  ],
+  green: [
+    [11.25, 2.25],
+    [12.75, 2.25],
+    [11.25, 3.75],
+    [12.75, 3.75],
+  ],
+  yellow: [
+    [11.25, 11.25],
+    [12.75, 11.25],
+    [11.25, 12.75],
+    [12.75, 12.75],
+  ],
+  blue: [
+    [2.25, 11.25],
+    [3.75, 11.25],
+    [2.25, 12.75],
+    [3.75, 12.75],
+  ],
 };
 
 // Finished tokens sit inside their colour's centre triangle.
 export const FINISH_SLOTS = {
-  red: [[6.52, 6.92], [6.52, 7.31], [6.52, 7.7], [6.52, 8.09]],
-  green: [[6.92, 6.52], [7.31, 6.52], [7.7, 6.52], [8.09, 6.52]],
-  yellow: [[8.48, 6.92], [8.48, 7.31], [8.48, 7.7], [8.48, 8.09]],
-  blue: [[6.92, 8.48], [7.31, 8.48], [7.7, 8.48], [8.09, 8.48]],
+  red: [
+    [6.52, 6.92],
+    [6.52, 7.31],
+    [6.52, 7.7],
+    [6.52, 8.09],
+  ],
+  green: [
+    [6.92, 6.52],
+    [7.31, 6.52],
+    [7.7, 6.52],
+    [8.09, 6.52],
+  ],
+  yellow: [
+    [8.48, 6.92],
+    [8.48, 7.31],
+    [8.48, 7.7],
+    [8.48, 8.09],
+  ],
+  blue: [
+    [6.92, 8.48],
+    [7.31, 8.48],
+    [7.7, 8.48],
+    [8.09, 8.48],
+  ],
 };
 
 export const DEFAULT_OPTIONS = {
@@ -114,13 +217,13 @@ export function progressSum(player) {
 }
 
 export function createGame(config = {}) {
-  const colors = (config.colors && config.colors.length >= 2
-    ? config.colors
-    : PLAYER_SETS[config.players] || PLAYER_SETS[2]
+  const colors = (
+    config.colors && config.colors.length >= 2 ? config.colors : PLAYER_SETS[config.players] || PLAYER_SETS[2]
   ).slice(0, 4);
   const players = colors.map((color, i) => ({
     color,
-    type: config.types && config.types[i] === 'cpu' ? 'cpu' : config.types ? 'human' : i === 0 ? 'human' : 'cpu',
+    type:
+      config.types && config.types[i] === 'cpu' ? 'cpu' : config.types ? 'human' : i === 0 ? 'human' : 'cpu',
     tokens: [-1, -1, -1, -1],
     captures: 0,
   }));
@@ -157,9 +260,7 @@ function tokensOnRing(state, color, ring) {
 }
 
 function enemyBlockade(state, selfColor, ring) {
-  return state.players.some(
-    (p) => p.color !== selfColor && tokensOnRing(state, p.color, ring).length >= 2,
-  );
+  return state.players.some((p) => p.color !== selfColor && tokensOnRing(state, p.color, ring).length >= 2);
 }
 
 /** All legal moves for the player whose turn it is, using state.dice. */
@@ -361,24 +462,33 @@ export function standings(state) {
       captures: p.captures || 0,
       isWinner: p.color === state.winner,
     }))
-    .sort((a, b) => Number(b.isWinner) - Number(a.isWinner) || b.home - a.home || b.progress - a.progress || b.captures - a.captures);
+    .sort(
+      (a, b) =>
+        Number(b.isWinner) - Number(a.isWinner) ||
+        b.home - a.home ||
+        b.progress - a.progress ||
+        b.captures - a.captures,
+    );
 }
 
 export function isValidGame(g) {
   return Boolean(
-    g
-      && g.v === VERSION
-      && Array.isArray(g.players)
-      && g.players.length >= 2
-      && g.players.length <= 4
-      && g.players.every((p) => META[p.color]
-        && (p.type === 'human' || p.type === 'cpu')
-        && Array.isArray(p.tokens)
-        && p.tokens.length === 4
-        && p.tokens.every((t) => Number.isInteger(t) && t >= -1 && t <= PATH_STEPS))
-      && ['rolling', 'choosing', 'no-move', 'forfeit', 'over'].includes(g.phase)
-      && Number.isInteger(g.turn)
-      && g.turn >= 0
-      && g.turn < g.players.length,
+    g &&
+    g.v === VERSION &&
+    Array.isArray(g.players) &&
+    g.players.length >= 2 &&
+    g.players.length <= 4 &&
+    g.players.every(
+      (p) =>
+        META[p.color] &&
+        (p.type === 'human' || p.type === 'cpu') &&
+        Array.isArray(p.tokens) &&
+        p.tokens.length === 4 &&
+        p.tokens.every((t) => Number.isInteger(t) && t >= -1 && t <= PATH_STEPS),
+    ) &&
+    ['rolling', 'choosing', 'no-move', 'forfeit', 'over'].includes(g.phase) &&
+    Number.isInteger(g.turn) &&
+    g.turn >= 0 &&
+    g.turn < g.players.length,
   );
 }

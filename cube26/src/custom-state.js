@@ -18,10 +18,14 @@ export const PALETTE_ORDER = ['U', 'D', 'F', 'B', 'R', 'L'];
 
 const AXIS_INDEX = { x: 0, y: 1, z: 2 };
 const CORNER_ORDER = {
-  '1,1,1': ['U', 'R', 'F'], '-1,1,1': ['U', 'F', 'L'],
-  '-1,1,-1': ['U', 'L', 'B'], '1,1,-1': ['U', 'B', 'R'],
-  '1,-1,1': ['D', 'F', 'R'], '-1,-1,1': ['D', 'L', 'F'],
-  '-1,-1,-1': ['D', 'B', 'L'], '1,-1,-1': ['D', 'R', 'B'],
+  '1,1,1': ['U', 'R', 'F'],
+  '-1,1,1': ['U', 'F', 'L'],
+  '-1,1,-1': ['U', 'L', 'B'],
+  '1,1,-1': ['U', 'B', 'R'],
+  '1,-1,1': ['D', 'F', 'R'],
+  '-1,-1,1': ['D', 'L', 'F'],
+  '-1,-1,-1': ['D', 'B', 'L'],
+  '1,-1,-1': ['D', 'R', 'B'],
 };
 const isUD = (face) => face === 'U' || face === 'D';
 const isFB = (face) => face === 'F' || face === 'B';
@@ -34,7 +38,10 @@ function outwardFaces(pos, size) {
 }
 
 function prettyName(colors) {
-  return [...colors].sort(mapColorOrder).map((color) => COLOR_LABEL[color]).join('-');
+  return [...colors]
+    .sort(mapColorOrder)
+    .map((color) => COLOR_LABEL[color])
+    .join('-');
 }
 
 function mapColorOrder(a, b) {
@@ -75,7 +82,9 @@ function createPuzzle(size) {
             homeKey: [...faces].sort().join(''),
           };
           corners.push(piece);
-          piece.indices.forEach((index) => { pieceBySticker[index] = piece; });
+          piece.indices.forEach((index) => {
+            pieceBySticker[index] = piece;
+          });
         } else if (outward.length === 2) {
           const refFace = outward.find(isUD) || outward.find(isFB);
           const piece = {
@@ -87,7 +96,9 @@ function createPuzzle(size) {
             refFace,
           };
           edges.push(piece);
-          piece.indices.forEach((index) => { pieceBySticker[index] = piece; });
+          piece.indices.forEach((index) => {
+            pieceBySticker[index] = piece;
+          });
         } else if (outward.length === 1) {
           const piece = {
             kind: 'center',
@@ -273,9 +284,12 @@ function createPuzzle(size) {
         id: 'twist',
         label: 'Corner twist',
         status: twist % 3 === 0 ? 'ok' : 'error',
-        detail: twist % 3 === 0
-          ? twistedPieces ? `${twistedPieces} corners turned — total balances` : 'All corners aligned'
-          : 'Twist total does not divide by three',
+        detail:
+          twist % 3 === 0
+            ? twistedPieces
+              ? `${twistedPieces} corners turned — total balances`
+              : 'All corners aligned'
+            : 'Twist total does not divide by three',
       });
 
       if (size === 3) {
@@ -306,7 +320,12 @@ function createPuzzle(size) {
       });
       if (size === 3) {
         checks.push({ id: 'flip', label: 'Edge flips', status: 'na', detail: 'Needs legal pieces first' });
-        checks.push({ id: 'parity', label: 'Permutation parity', status: 'na', detail: 'Needs legal pieces first' });
+        checks.push({
+          id: 'parity',
+          label: 'Permutation parity',
+          status: 'na',
+          detail: 'Needs legal pieces first',
+        });
       }
     }
 
@@ -326,7 +345,9 @@ function createPuzzle(size) {
   }
 
   function fromCode(text) {
-    const code = String(text || '').toUpperCase().replace(/\s+/g, '');
+    const code = String(text || '')
+      .toUpperCase()
+      .replace(/\s+/g, '');
     const expected = size * size * 6;
     const bad = [...new Set([...code].filter((ch) => FACE_INDEX[ch] === undefined))];
     if (bad.length) {
@@ -345,7 +366,9 @@ function createPuzzle(size) {
       }
     }
     const state = new Uint8Array(model.SLOTS.length);
-    order.forEach((index, i) => { state[index] = FACE_INDEX[code[i]]; });
+    order.forEach((index, i) => {
+      state[index] = FACE_INDEX[code[i]];
+    });
     return { ok: true, state };
   }
 

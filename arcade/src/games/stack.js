@@ -65,7 +65,12 @@ export function mount(root) {
   const stars = [];
 
   for (let i = 0; i < 46; i++) {
-    stars.push({ x: Math.random(), y: Math.random() * 0.7, r: Math.random() * 1.4 + 0.4, p: Math.random() * 6.28 });
+    stars.push({
+      x: Math.random(),
+      y: Math.random() * 0.7,
+      r: Math.random() * 1.4 + 0.4,
+      p: Math.random() * 6.28,
+    });
   }
   const makeCloud = (initial) => ({
     x: Math.random(),
@@ -197,7 +202,10 @@ export function mount(root) {
     host.appendChild(ov);
     ov.querySelector('#hsAgain').addEventListener('click', reset);
     ov.querySelector('#hsCopy').addEventListener('click', () =>
-      copyText(`ACTTOLOG ARCADE — Himalaya Stack\nAltitude reached: ${fmt(alt)} m\nBest: ${fmt(best)} m\nacttolog.github.io/games/himalaya-stack`));
+      copyText(
+        `ACTTOLOG ARCADE — Himalaya Stack\nAltitude reached: ${fmt(alt)} m\nBest: ${fmt(best)} m\nacttolog.github.io/games/himalaya-stack`,
+      ),
+    );
     ov.querySelector('#hsAgain').focus();
   }
 
@@ -223,8 +231,14 @@ export function mount(root) {
     const sky = ctx.createLinearGradient(0, 0, 0, H);
     const glow = Math.min(1, progress * 2.4);
     sky.addColorStop(0, progress > 0.45 ? '#060b16' : '#070c15');
-    sky.addColorStop(0.55, `rgb(${Math.round(10 + glow * 12)},${Math.round(18 + glow * 22)},${Math.round(32 + glow * 40)})`);
-    sky.addColorStop(1, `rgb(${Math.round(16 + glow * 40)},${Math.round(26 + glow * 46)},${Math.round(44 + glow * 40)})`);
+    sky.addColorStop(
+      0.55,
+      `rgb(${Math.round(10 + glow * 12)},${Math.round(18 + glow * 22)},${Math.round(32 + glow * 40)})`,
+    );
+    sky.addColorStop(
+      1,
+      `rgb(${Math.round(16 + glow * 40)},${Math.round(26 + glow * 46)},${Math.round(44 + glow * 40)})`,
+    );
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, H);
 
@@ -249,8 +263,9 @@ export function mount(root) {
       const n = 34;
       for (let i = 0; i <= n; i++) {
         const t = i / n;
-        const h = amp * (0.3 + 0.7 * Math.pow(Math.abs(Math.sin(t * 5.7 + phase)), 1.5))
-          + Math.sin(t * 21 + phase * 2) * amp * 0.12;
+        const h =
+          amp * (0.3 + 0.7 * Math.pow(Math.abs(Math.sin(t * 5.7 + phase)), 1.5)) +
+          Math.sin(t * 21 + phase * 2) * amp * 0.12;
         ctx.lineTo(-30 + (W + 60) * t, baseY - h);
       }
       ctx.lineTo(W + 30, H);
@@ -269,12 +284,13 @@ export function mount(root) {
 
     // drifting clouds, parallax against the climb
     for (const c of clouds) {
-      const y = (H - 70) + cam * 0.45 - c.alt;
+      const y = H - 70 + cam * 0.45 - c.alt;
       if (y < -180 || y > H + 180) {
         // keep the cloud band stocked in both directions as the camera rises
-        c.alt = y < -180
-          ? (H - 70) + cam * 0.45 + 120 + Math.random() * H * 0.8
-          : (H - 70) + cam * 0.45 - 140 - Math.random() * H * 1.4;
+        c.alt =
+          y < -180
+            ? H - 70 + cam * 0.45 + 120 + Math.random() * H * 0.8
+            : H - 70 + cam * 0.45 - 140 - Math.random() * H * 1.4;
         c.x = Math.random();
         c.s = 0.6 + Math.random() * 1.2;
         c.a = 0.05 + Math.random() * 0.1;
@@ -435,7 +451,9 @@ export function mount(root) {
   canvas.addEventListener('pointerdown', onDown);
   window.addEventListener('pointerup', onUp);
   window.addEventListener('keydown', onKey);
-  const ro = new ResizeObserver(() => { resize(); });
+  const ro = new ResizeObserver(() => {
+    resize();
+  });
   ro.observe(canvas);
 
   resize();

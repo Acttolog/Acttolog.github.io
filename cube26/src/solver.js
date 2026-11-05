@@ -4,8 +4,15 @@
 
 import { FACES, FACE_VECTORS, OPPOSITE } from './cube-engine.js';
 import {
-  FACE_BY_INDEX, FACE_INDEX, MOVE_TOKENS, SOLVED, applyMove, fromCube, isSolved,
-  isPieceSolved, idx,
+  FACE_BY_INDEX,
+  FACE_INDEX,
+  MOVE_TOKENS,
+  SOLVED,
+  applyMove,
+  fromCube,
+  isSolved,
+  isPieceSolved,
+  idx,
 } from './facelet.js';
 
 const FACE_AXIS_INDEX = { x: 0, y: 1, z: 2 };
@@ -137,29 +144,19 @@ const APERM_ALG = "R' F R' B2 R F' R' B2 R2";
 const UPERM_ALG = "R U' R U R U R U' R' U' R2";
 const TPERM_ALG = "R U R' U' R' F R2 U' R' U' R U R' F'";
 
-const U_TURNS = [
-  macro('U', 'U', ['U']),
-  macro("U'", 'U', ["U'"]),
-  macro('U2', 'U', ['U2']),
-];
+const U_TURNS = [macro('U', 'U', ['U']), macro("U'", 'U', ["U'"]), macro('U2', 'U', ['U2'])];
 
 function rightInsert(front) {
   const right = FACE_RIGHT[front];
-  return macro(
-    `insertR-${front}`,
-    'F2L',
-    ['U', right, "U'", `${right}'`, "U'", `${front}'`, 'U', front],
-    { slot: posOfColors(front, right) }
-  );
+  return macro(`insertR-${front}`, 'F2L', ['U', right, "U'", `${right}'`, "U'", `${front}'`, 'U', front], {
+    slot: posOfColors(front, right),
+  });
 }
 function leftInsert(front) {
   const left = FACE_LEFT[front];
-  return macro(
-    `insertL-${front}`,
-    'F2L',
-    ["U'", `${left}'`, 'U', left, 'U', front, "U'", `${front}'`],
-    { slot: posOfColors(front, left) }
-  );
+  return macro(`insertL-${front}`, 'F2L', ["U'", `${left}'`, 'U', left, 'U', front, "U'", `${front}'`], {
+    slot: posOfColors(front, left),
+  });
 }
 
 function ollMacros() {
@@ -181,7 +178,9 @@ function pllMacros() {
 function cornerMacros(right) {
   const macros = [...U_TURNS];
   for (const c of D_CORNERS) {
-    macros.push(macro(`extract-${c.right}`, 'Corners', [c.right, 'U', `${c.right}'`], { slot: c.pos, kind: 'extract' }));
+    macros.push(
+      macro(`extract-${c.right}`, 'Corners', [c.right, 'U', `${c.right}'`], { slot: c.pos, kind: 'extract' }),
+    );
   }
   macros.push(macro('insert', 'Corners', [right, 'U', `${right}'`, "U'"], { kind: 'insert' }));
   macros.push(macro('insertB', 'Corners', [right, "U'", `${right}'`, 'U'], { kind: 'insert' }));

@@ -15,14 +15,18 @@ function coverArt(id) {
   }
   if (id === 'merge-himalaya') {
     const values = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 64, 128, 16, 32, 8];
-    const cells = values.map((v) => {
-      const t = MERGE_TILES.find((x) => x.v === v);
-      return `<div class="mini-tile" style="background:${t.color}">${v}</div>`;
-    }).join('');
+    const cells = values
+      .map((v) => {
+        const t = MERGE_TILES.find((x) => x.v === v);
+        return `<div class="mini-tile" style="background:${t.color}">${v}</div>`;
+      })
+      .join('');
     return `<div class="cover-art"><div class="mh-art"><div class="mini-board">${cells}</div></div></div>`;
   }
   if (id === 'himalaya-stack') {
-    const blocks = [240, 218, 196, 168, 142, 118, 96, 72].map((w) => `<div class="hs-block" style="width:${w}px"></div>`).join('');
+    const blocks = [240, 218, 196, 168, 142, 118, 96, 72]
+      .map((w) => `<div class="hs-block" style="width:${w}px"></div>`)
+      .join('');
     return `<div class="cover-art"><div class="hs-art"><div class="peak"></div><div class="hs-blocks">${blocks}</div></div></div>`;
   }
   if (id === 'typerush-nepal') {
@@ -70,7 +74,8 @@ function renderCover(id) {
 function renderCards(onPlay) {
   const grid = $('#gameGrid');
   if (!grid) return;
-  grid.innerHTML = GAMES.map((g) => `
+  grid.innerHTML = GAMES.map(
+    (g) => `
     <a class="gcard" href="?game=${g.id}" data-game="${g.id}" aria-label="Play ${esc(g.title)}">
       <div class="gcard-cover">
         <img src="${g.cover}" alt="" loading="lazy" width="1200" height="675">
@@ -87,7 +92,8 @@ function renderCards(onPlay) {
           <span class="gcard-cta" style="margin-left:auto">PLAY NOW →</span>
         </div>
       </div>
-    </a>`).join('');
+    </a>`,
+  ).join('');
   grid.querySelectorAll('[data-game]').forEach((a) => {
     a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
@@ -100,7 +106,10 @@ function renderCards(onPlay) {
 function renderCredits() {
   const list = $('#creditList');
   if (!list) return;
-  list.innerHTML = PHOTOS.map((p) => `<li><a href="${p.source}" target="_blank" rel="noopener noreferrer">${esc(p.title)}</a> — ${esc(p.credit)} (${esc(p.license)})</li>`).join('');
+  list.innerHTML = PHOTOS.map(
+    (p) =>
+      `<li><a href="${p.source}" target="_blank" rel="noopener noreferrer">${esc(p.title)}</a> — ${esc(p.credit)} (${esc(p.license)})</li>`,
+  ).join('');
 }
 
 export function initShell(registry) {
@@ -119,7 +128,11 @@ export function initShell(registry) {
 
   const close = (push = true) => {
     if (!current) return;
-    try { destroy?.(); } catch (err) { console.error(err); }
+    try {
+      destroy?.();
+    } catch (err) {
+      console.error(err);
+    }
     destroy = null;
     current = null;
     mount.innerHTML = '';
@@ -139,7 +152,11 @@ export function initShell(registry) {
     }
     if (current && current.id === id) return;
     if (current) {
-      try { destroy?.(); } catch (err) { console.error(err); }
+      try {
+        destroy?.();
+      } catch (err) {
+        console.error(err);
+      }
       destroy = null;
       mount.innerHTML = '';
     }
