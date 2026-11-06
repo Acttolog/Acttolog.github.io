@@ -1,4 +1,4 @@
 :HL["/_next/static/css/d9b80804d9c20b9d.css","style"]
-:HL["/_next/static/css/34400b2b630c014e.css","style"]
+:HL["/_next/static/css/12052039b3718437.css","style"]
 :HL["/media/cube26.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"games","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"cube-26","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"24CsRuFg5I_b5cPDhPdiu"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"games","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"cube-26","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"lar25Gl-eWhY0QzQkVhk-"}
