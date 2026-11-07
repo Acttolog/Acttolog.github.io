@@ -1,4 +1,4 @@
 :HL["/_next/static/css/d9b80804d9c20b9d.css","style"]
-:HL["/_next/static/css/b17dfa9894c73d49.css","style"]
+:HL["/_next/static/css/21a3075bfcb3ce11.css","style"]
 :HL["/media/arcade/thumbs/typerush-nepal.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"games","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"typerush-nepal","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"LJsmLpZYC0_30xDhMMCW6"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"games","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"typerush-nepal","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"bhJmpi4iFsrpygbf6OQy7"}
