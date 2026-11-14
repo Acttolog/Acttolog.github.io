@@ -32,6 +32,34 @@ function coverArt(id) {
   if (id === 'typerush-nepal') {
     return `<div class="cover-art"><div class="tr-art">Nepal is home to <span class="done">eight of the ten</span> <span class="cur">highest</span> mountains on Earth. From the Terai plains to Himalayan ice, deserts and glaciers fit inside one country.</div></div>`;
   }
+  if (id === 'snake-himalaya') {
+    const path = [2, 3, 4, 5, 6, 10, 14, 18, 17, 16];
+    const cells = Array.from({ length: 25 }, (_, i) => {
+      const on = path.includes(i);
+      const head = i === 16;
+      return `<span class="sv-cell${on ? ' on' : ''}${head ? ' head' : ''}"></span>`;
+    }).join('');
+    return `<div class="cover-art"><div class="sv-art"><div class="sv-grid">${cells}</div><span class="sv-momo"></span></div></div>`;
+  }
+  if (id === 'himalaya-breakout') {
+    const rows = ['#5ea2ff', '#e8eefc', '#ff5f7a', '#3ddc97', '#ffc46b']
+      .map(
+        (c) =>
+          `<div class="bo-row">${Array.from({ length: 8 }, () => `<span style="background:${c}"></span>`).join('')}</div>`,
+      )
+      .join('');
+    return `<div class="cover-art"><div class="bw-art">${rows}<span class="bw-ball"></span><span class="bw-paddle"></span></div></div>`;
+  }
+  if (id === 'danphe-flight') {
+    return `<div class="cover-art"><div class="df-art"><span class="df-pillar top"></span><span class="df-pillar bot"></span><span class="df-bird"></span><span class="df-ridge"></span></div></div>`;
+  }
+  if (id === 'memory-nepal') {
+    const faces = ['🏔️', '', '🌺', '', '🥟', '', '', '🙏'];
+    const cards = faces
+      .map((f, i) => `<span class="mn-mini${i % 3 === 0 ? ' up' : ''}">${i % 3 === 0 ? f : '✦'}</span>`)
+      .join('');
+    return `<div class="cover-art"><div class="mm-art">${cards}</div></div>`;
+  }
   return `<div class="cover-art"><div class="nd-art">
     <div class="q">Which is the deepest lake in Nepal?</div>
     <div class="opt">Tilicho Lake</div>
@@ -94,6 +122,10 @@ function renderCards(onPlay) {
       </div>
     </a>`,
   ).join('');
+  const note = $('.series-note');
+  if (note) note.textContent = `${GAMES.length} games · free · no account`;
+  const pill = $('.hero-tags .pill');
+  if (pill) pill.textContent = `🎮 ${GAMES.length} games`;
   grid.querySelectorAll('[data-game]').forEach((a) => {
     a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;

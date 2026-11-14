@@ -75,6 +75,54 @@ export const GAMES = [
     cover: '/media/arcade/ludo-himalaya.jpg',
     accent: '#e2b566',
   },
+  {
+    id: 'snake-himalaya',
+    title: 'Snake Himalaya',
+    ne: 'स्नेक हिमालय',
+    kicker: 'NEON TRAIL',
+    tagline: 'Eat momo. Grow long. Never bite yourself.',
+    blurb:
+      'The classic snake rebuilt as a neon trail across the high grid. Every momo quickens the pulse; walls and your own tail end the run.',
+    meta: ['Arrows / swipe', 'Best score saved', 'Endless'],
+    cover: '/media/arcade/snake-himalaya.jpg',
+    accent: '#3ddc97',
+  },
+  {
+    id: 'himalaya-breakout',
+    title: 'Himalaya Breakout',
+    ne: 'हिमालय ब्रेकआउट',
+    kicker: 'PRAYER-FLAG WALL',
+    tagline: 'Break the wall of flags, brick by brick.',
+    blurb:
+      'Five rows of prayer-flag bricks, one glowing ball, three lives. Clear the wall to climb a level — the ball only gets faster.',
+    meta: ['Mouse / touch / keys', 'Levels + lives', 'Best saved'],
+    cover: '/media/arcade/himalaya-breakout.jpg',
+    accent: '#5ea2ff',
+  },
+  {
+    id: 'danphe-flight',
+    title: 'Danphe Flight',
+    ne: 'डाँफे उडान',
+    kicker: 'ONE-TAP FLIGHT',
+    tagline: 'Fly the national bird between temple pillars.',
+    blurb:
+      'Nepal’s Himalayan monal glows in nine colours. One tap per wingbeat; thread the carved pillars as the gap tightens with every point.',
+    meta: ['One-tap', 'Tightening gaps', 'Best saved'],
+    cover: '/media/arcade/danphe-flight.jpg',
+    accent: '#ffc46b',
+  },
+  {
+    id: 'memory-nepal',
+    title: 'Memory Nepal',
+    ne: 'मेमोरी नेपाल',
+    kicker: 'PAIR MATCH',
+    tagline: 'Eight pairs of Nepal. Fewest moves wins.',
+    blurb:
+      'Flip, remember, match. Eight pairs of Nepal icons — momo, danphe, laligurans and more — with a move counter, a clock and a personal best.',
+    meta: ['16 cards', 'Moves + time', 'Best moves saved'],
+    cover: '/media/arcade/memory-nepal.jpg',
+    accent: '#ff4ecd',
+  },
 ];
 
 // Locatable photographs with accurate coordinates. `hint` names the region
