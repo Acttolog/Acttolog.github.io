@@ -1,0 +1,26 @@
+1:"$Sreact.fragment"
+2:I[61304,[],"ClientPageRoot"]
+3:I[79062,["7618","static/chunks/app/admin/reports/page-c9fee78f979f8095.js"],"default"]
+6:I[90484,[],"OutletBoundary"]
+7:"$Sreact.suspense"
+b:I[90484,[],"ViewportBoundary"]
+c:I[90484,[],"MetadataBoundary"]
+d:I[86869,[],"IconMark"]
+f:I[57121,[],""]
+10:I[74581,[],""]
+13:I[26470,["8500","static/chunks/8500-01a63dafd809e317.js","7581","static/chunks/app/admin/layout-eab2995a0c92528a.js"],"AdminGate"]
+a:X
+12:X
+12:C
+0:{"buildId":"RxV-P2getoCjhbGG2q8Xg","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],null,["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":"$@9","staleTime":"$a","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$Lb",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#05060c"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Admin | ACTTOLOG | ACTTOLOG"}],["$","meta","1",{"name":"description","content":"ACTTOLOG joins thesis and research support, courses, verified resources, stories and games into one bilingual world built in Nepal. Start the descent."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","meta","3",{"name":"robots","content":"noindex, nofollow"}],["$","link","4",{"rel":"canonical","href":"https://acttolog.github.io"}],["$","meta","5",{"property":"og:title","content":"ACTTOLOG — Research, Learning, Media & Games from Nepal"}],["$","meta","6",{"property":"og:description","content":"ACTTOLOG joins thesis and research support, courses, verified resources, stories and games into one bilingual world built in Nepal. Start the descent."}],["$","meta","7",{"property":"og:url","content":"https://acttolog.github.io"}],["$","meta","8",{"property":"og:site_name","content":"ACTTOLOG"}],["$","meta","9",{"property":"og:locale","content":"en_US"}],["$","meta","10",{"property":"og:image","content":"https://acttolog.github.io/media/og-home.jpg"}],["$","meta","11",{"property":"og:image:width","content":"1200"}],["$","meta","12",{"property":"og:image:height","content":"630"}],["$","meta","13",{"property":"og:image:alt","content":"ACTTOLOG — Research, Learning, Media & Games from Nepal"}],["$","meta","14",{"property":"og:type","content":"website"}],["$","meta","15",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","16",{"name":"twitter:title","content":"ACTTOLOG — Research, Learning, Media & Games from Nepal"}],["$","meta","17",{"name":"twitter:description","content":"ACTTOLOG joins thesis and research support, courses, verified resources, stories and games into one bilingual world built in Nepal. Start the descent."}],["$","meta","18",{"name":"twitter:image","content":"https://acttolog.github.io/media/og-home.jpg"}],["$","link","19",{"rel":"icon","href":"/brand/favicon.svg","type":"image/svg+xml"}],["$","link","20",{"rel":"apple-touch-icon","href":"/brand/icon-dark.svg"}],["$","$Ld","21",{}]]}]}]}],null]}],"isPartial":"$@e","staleTime":"$a","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lf",null,{"parallelRouterKey":"children","template":["$","$L10",null,{}]}]]}],"isPartial":"$@11","staleTime":"$a","varyParams":"$12"},{"rsc":["$","$1","c",{"children":[null,["$","$L13",null,{"children":["$","$Lf",null,{"parallelRouterKey":"children","template":["$","$L10",null,{}]}]}]]}],"isPartial":"$@14","staleTime":"$a","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@15","rootVaryParams":null,"needsRuntimeRequest":"$@16"}
+4:{}
+5:"$0:data:0:rsc:props:children:0:props:serverProvidedParams:params"
+8:null
+16:true
+a:300
+a:C
+15:0
+e:"$undefined"
+11:"$undefined"
+14:"$undefined"
+9:"$undefined"
